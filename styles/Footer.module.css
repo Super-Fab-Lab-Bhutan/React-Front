@@ -1,0 +1,45 @@
+.footer {
+  background-color: rgba(1, 13, 137, 0.812);
+  padding: 20px;
+}
+
+.footer hr {
+  width: 90%;
+  height: 3px;
+  background-color: gray;
+  color: gray;
+}
+
+.footer p {
+  font-weight: bold;
+  color: #fff;
+}
+
+.rows {
+  display: flex;
+  justify-content: center;
+}
+
+.rows div {
+  display: grid;
+  width: 30%;
+  float: left;
+  align-items: center;
+}
+
+.button {
+  width: fit-content;
+  border-radius: 15px;
+  font-weight: bold;
+  font-family: "Times New Roman", Times, serif;
+  padding: 5px 12px 5px 12px;
+  background-color: transparent;
+  border-color: yellow;
+  color: white;
+}
+
+.button:hover,
+.button:focus,
+.button:active {
+  background-color: yellow;
+}

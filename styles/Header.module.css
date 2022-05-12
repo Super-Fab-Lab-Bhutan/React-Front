@@ -1,0 +1,105 @@
+/*navigation*/
+.navbar {
+  display: flex;
+  justify-content: center;
+  background-color: white;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.2);
+  z-index: 2;
+}
+
+.navbar span {
+  margin: 20px 10px 20px 10px;
+  float: left;
+  display: block;
+  color: black;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+.navbar a:hover {
+  color: blue;
+}
+
+/*login button*/
+.navbtn {
+  border-radius: 20px;
+  border-width: 0;
+  padding: 10px 22px 10px 22px;
+  background-color: orangered;
+  color: white;
+  font-family: "Times New Roman", Times, serif;
+  font-size: 17px;
+}
+
+.navbtn:hover,
+.navbtn:focus,
+.navbtn:active {
+  background-color: blue;
+}
+
+/*dropdown*/
+.dropbtn {
+  background-color: white;
+  color: black;
+  font-size: 17px;
+  font-family: "Times New Roman", Times, serif;
+  border: none;
+}
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+.dropcontent {
+  display: none;
+  position: absolute;
+  background-color: white;
+  min-width: 160px;
+  text-align: left;
+}
+.dropcontent a {
+  padding: 5px;
+  width: 100%;
+  font-size: 15px;
+  float: left;
+  clear: both;
+  margin: 1px;
+  justify-content: left;
+}
+.dropcontent button {
+  border: none;
+  background-color: white;
+  padding: 5px;
+  width: 100%;
+  text-align: left;
+  font-family: "Times New Roman", Times, serif;
+  font-size: 15px;
+  float: left;
+  clear: both;
+  margin: 1px;
+  justify-content: left;
+}
+
+.dropdown:hover .dropcontent {
+  display: block;
+}
+
+.dropcontent a:hover {
+  background-color: rgba(0, 0, 255, 0.7);
+  width: 100%;
+  color: black;
+}
+
+.dropcontent button:hover {
+  background-color: rgba(0, 0, 255, 0.7);
+  width: 100%;
+  color: black;
+}
+
+.dropdown:hover .dropbtn {
+  color: blue;
+}

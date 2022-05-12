@@ -1,0 +1,115 @@
+.grid_main {
+  display: grid;
+  grid-template-columns: 17% 83%;
+  min-height: 100vh;
+}
+
+.navigation {
+  background-color: rgba(8, 122, 235, 0.7);
+  padding: 30px;
+  /* min-width: 200px; */
+  height: 100%;
+}
+
+.navigation a {
+  padding: 8px;
+  color: white;
+  opacity: 0.6;
+  width: 100%;
+  font-size: 15px;
+  float: left;
+  clear: both;
+  margin-top: 6px;
+  justify-content: left;
+}
+
+.navigation div {
+  padding: 8px;
+  color: white;
+  opacity: 0.6;
+  width: 100%;
+  font-size: 15px;
+  float: left;
+  clear: both;
+  margin: 6px;
+  justify-content: left;
+}
+
+.navigation a:hover {
+  opacity: 1;
+}
+.navigation div:hover {
+  opacity: 1;
+}
+
+.main_container {
+  background-color: rgba(211, 233, 255, 0.2);
+  height: 100%;
+}
+
+.main_content {
+  padding: 30px;
+}
+
+.add_btn {
+  border-radius: 10px;
+  font-family: "Times New Roman", Times, serif;
+  border: none;
+  padding: 10px;
+  background-color: rgba(8, 122, 235, 0.9);
+  width: 100px;
+  margin: 5px;
+}
+.add_btn:hover {
+  color: white;
+}
+
+.edit_btn {
+  border-radius: 10px;
+  font-family: "Times New Roman", Times, serif;
+  border: none;
+  padding: 10px;
+  background-color: aqua;
+  width: 60px;
+  margin: 5px;
+}
+.edit_btn:hover {
+  color: gray;
+}
+
+.delete_btn {
+  border-radius: 10px;
+  font-family: "Times New Roman", Times, serif;
+  border: none;
+  padding: 10px;
+  background-color: red;
+  width: 60px;
+  margin: 5px;
+}
+.delete_btn:hover {
+  color: gray;
+}
+
+.cancel_btn {
+  border: none;
+  float: right;
+  background-color: transparent;
+}
+.cancel_btn:hover {
+  color: red;
+}
+
+.form {
+  background-color: white;
+  border-radius: 20px;
+  padding: 20px;
+  min-height: "400px";
+}
+.form input[type="text"] {
+  width: 300px;
+  padding: 12px 20px;
+  margin: 8px 0;
+  box-sizing: border-box;
+  border: 2px solid rgba(95, 94, 94, 0.19);
+  border-radius: 4px;
+}

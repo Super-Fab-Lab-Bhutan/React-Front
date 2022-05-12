@@ -1,0 +1,63 @@
+.grid {
+  display: grid;
+  grid-template-columns: auto auto auto;
+  justify-items: center;
+  /* margin: auto; */
+}
+
+.grid2 {
+  display: grid;
+  grid-template-columns: 34% 33% 33%;
+  justify-items: center;
+  border: 1px solid red;
+  margin: 50px;
+}
+
+.card2 {
+  border: 1px solid red;
+  width: 100%;
+  min-height: 250px;
+}
+
+.card2:hover {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  transition: color 0.15s ease, border-color 0.15s ease;
+  border-color: blue;
+}
+
+.form input[type="date"] {
+  padding: 5px;
+  border: 2px solid darkblue;
+  border-radius: 5px;
+}
+
+.grid3 {
+  display: grid;
+  grid-template-columns: 80% 20%;
+  padding: 30px;
+}
+
+.card3 {
+  min-width: 400px;
+}
+
+.card4 {
+  min-width: 200px;
+}
+
+.booked {
+  background-color: rgb(163, 70, 70);
+  background-size: cover;
+  min-width: 70px;
+  min-height: 50px;
+}
+
+.unbooked {
+  background-color: rgb(69, 194, 69);
+  background-size: cover;
+  min-width: 70px;
+  min-height: 50px;
+}
+.unbooked:hover {
+  background-color: rgb(52, 176, 39);
+}
