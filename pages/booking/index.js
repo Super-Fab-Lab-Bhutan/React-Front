@@ -1,13 +1,13 @@
-import Link from "next/link";
+import { Col, DatePicker, Row, Segmented } from "antd";
 import styles from "../../styles/Booking.module.css";
-import { verify } from "jsonwebtoken";
 import Header from "../../components/header";
 
-const server = process.env.SERVER;
-const secreteKEY = process.env.JWT_KEY;
+import { verify } from "jsonwebtoken";
+import { useState } from "react";
+const secreteKEY = process.env.JWT_KEY; //server side
+const server = process.env.NEXT_PUBLIC_SERVER; //client side
 
-export async function getServerSideProps({req}) {
-
+export async function getServerSideProps({ req }) {
   // check for login
   const jwt = req.cookies.jwt;
 
@@ -18,224 +18,196 @@ export async function getServerSideProps({req}) {
     isLoggedIn = true;
   } catch (error) {
     isLoggedIn = false;
+    return {
+      redirect: {
+        //redirects if cookie is invalid
+        permanent: false,
+        destination: "/login",
+      },
+    };
   }
+
+  let DD = new Date();
+  let newdate = `${DD.getFullYear()}-${DD.getMonth()}-${DD.getDate()}`;
+  //get initial booking
+  let initialData = [];
+  try {
+    let data = await fetch(server + "/user/Bookings", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ date: newdate, role: users.role }),
+    });
+    data = await data.json();
+    initialData = data;
+  } catch (error) {}
 
   return {
     props: {
       users,
       isLoggedIn,
-    }, // will be passed to the page component as props
+      initialData,
+    },
   };
 }
 
+export default function Booking({ initialData, isLoggedIn, users }) {
+  const equipmentTypeOptions = ["Carpentry", "Electronic", "Heavy", "Metal"];
 
+  const [Data, setData] = useState(initialData);
+  const [date, setDate] = useState(new Date());
+  const [equipmentType, setType] = useState(equipmentTypeOptions[0]);
 
-export default function Booking({  users, isLoggedIn }) {
+  //calls api to update booking
+  const GetBookings = async () => {
+    try {
+      let data = await fetch(server + "/user/Bookings", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          date: newdate,
+          role: users.role,
+          type: equipmentType,
+        }),
+      });
+      data = await data.json();
+      setData(data);
+    } catch (error) {}
+  };
+
+  // send booking
+  async function sendData(EquipmentId, date, time) {
+    try {
+      const res = await fetch(server + "/user/addBooking", {
+        method: "POST",
+        body: JSON.stringify({
+          userID: users.id,
+          date: date,
+          EquipmentId: EquipmentId,
+          time: time,
+        }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const data = await res.json();
+      alert(data.message);
+      GetBookings(); //refresh data
+    } catch (err) {
+      console.log(err);
+    }
+  }
+  const holidays = [new Date(2022, 4, 3), new Date(2023, 0, 11)];
+
+  const handleClick = (event) => {
+    var data = event.target.dataset.value;
+    var time = data.split(" ")[0];
+    var EquipmentId = data.split(" ")[1];
+    console.log(date + time + EquipmentId);
+    if (confirm(`are you sure you want to book on ${date} from ${time}`)) {
+      sendData(EquipmentId, date, time);
+    }
+  };
+
   return (
-    <main>
-      <Header isLoggedIn={isLoggedIn} users={users} />
-      <p className="title">Booking</p>
-      <p className="title2">
-        In order to use the machines, all users must undertake an induction
-        training
-      </p>
+    <Header isLoggedIn={isLoggedIn} users={users}>
+      <main>
+        <p className="title">Booking</p>
 
-      <div style={{ padding: "30px" }}>
-        <p className="title2" style={{ fontSize: "23px" }}>
-          Induction Training
-        </p>
-        <p>
-          SFL has many machines that can be categorized into different levels of
-          complexity, skill requirements and risk. Based on this, for lab users,
-          standard induction training for the use of machines and the lab will
-          be developed.
-        </p>
-        <ul>
-          <li>
-            The training program will consist of dos and don&apos;ts of the
-            labs, Standard operating procedures of the lab.
-          </li>
-          <li>
-            For all the machines, separate training sessions and competency
-            exams will have to be taken.
-          </li>
-          <li>
-            For all the first time users and users who will need refreshers
-            training, you will have to go through the training and get competent
-            in the use of the machines.
-          </li>
-          <li>
-            The induction training will be given based on the access they have
-            to the different types of machines. Training will also be given
-            based on the membership plans they receive
-          </li>
-        </ul>
-      </div>
-      <div className={styles.grid}>
-        <div
-          style={{
-            backgroundImage: `url(https://th.bing.com/th/id/R.1fa6676f82f058e11409b316f2cc6b4e?rik=wXdge7HsT9LrdA&pid=ImgRaw&r=0)`,
-            backgroundSize: "cover",
-            borderRadius: "20px",
-            width: "350px",
-            height: "250px",
-          }}
-        />
-        <div
-          style={{
-            backgroundImage: `url(https://th.bing.com/th/id/R.1fa6676f82f058e11409b316f2cc6b4e?rik=wXdge7HsT9LrdA&pid=ImgRaw&r=0)`,
-            backgroundSize: "cover",
-            borderRadius: "20px",
-            width: "350px",
-            height: "250px",
-          }}
-        />
-        <div
-          style={{
-            backgroundImage: `url(https://th.bing.com/th/id/R.1fa6676f82f058e11409b316f2cc6b4e?rik=wXdge7HsT9LrdA&pid=ImgRaw&r=0)`,
-            backgroundSize: "cover",
-            borderRadius: "20px",
-            width: "350px",
-            height: "250px",
-          }}
-        />
-      </div>
-      <div style={{ margin: "30px" }}>
-        <center>
-          <Link href="/" passHref>
-            <button className="button2">Book your Induction Training</button>
-          </Link>
-        </center>
-      </div>
-      <div>
-        <p className="title2" style={{ fontSize: "2rem" }}>
-          Membership Access
-        </p>
-        <p className="title2">
-          Machines will be categorized into different levels and accordingly,
-          training will be provided.
-        </p>
-        {/*Basic */}
-        <div className={styles.grid2}>
-          <div
-            className={styles.card2}
-            style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
+        <div style={{ padding: "10px" }}>
+          Date:{" "}
+          <DatePicker
+            onChange={(x, val) => {
+              setDate(val);
+              GetBookings();
             }}
-          >
-            <b style={{ fontSize: "25px" }}>Basic</b>
-          </div>
-          <div className={styles.card2}>
-            <p style={{ textAlign: "center", fontSize: "25px" }}>
-              Pre-requirement
-            </p>
-            <ul>
-              <li>Attend Induction training</li>
-              <li>Basic 2D and 3D design skills</li>
-              <li>Basic computer skills</li>
-              <li>Basic electronics knowledge</li>
-            </ul>
-          </div>
-          <div className={styles.card2}>
-            <p style={{ textAlign: "center", fontSize: "25px" }}>
-              Digital fabrication services
-            </p>
-            <ul>
-              <li>2D and 3D modeling</li>
-              <li>Poster making</li>
-              <li>Woodwork</li>
-              <li>Electronics design</li>
-              <li>Molding and casting</li>
-            </ul>
-          </div>
-        </div>
-        {/* Intermediate */}
-        <div className={styles.grid2}>
-          <div
-            className={styles.card2}
-            style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
+          />
+          <br />
+          Equipment Type:
+          <br />
+          <Segmented
+            options={equipmentTypeOptions}
+            value={equipmentType}
+            onChange={(val) => {
+              setType(val);
+              GetBookings();
             }}
-          >
-            <b style={{ fontSize: "25px" }}>Intermediate</b>
-          </div>
-          <div className={styles.card2}>
-            <p style={{ textAlign: "center", fontSize: "25px" }}>
-              Pre-requirement
-            </p>
-            <ul>
-              <li>Attend Induction Training</li>
-              <li>PCB design</li>
-              <li>Basic electronics knowledge</li>
-              <li>Advance designing training</li>
-            </ul>
-          </div>
-          <div className={styles.card2}>
-            <p style={{ textAlign: "center", fontSize: "25px" }}>
-              Digital fabrication services
-            </p>
-            <ul>
-              <li>Standard 3D prototyping</li>
-              <li>PCB design and production</li>
-              <li>AR/VR training</li>
-            </ul>
-          </div>
+          />
+          <br />
+          <br />
+          <Row justify="space-evenly">
+            <Col>
+              <div className={styles.card3}>
+                <div style={{ overflowX: "auto" }}>
+                  <table border="1px" cellSpacing="0">
+                    <thead cellPadding="5px">
+                      <tr>
+                        <th>Equipments</th>
+                        <th>9:30-10:30</th>
+                        <th>10:30-11:30</th>
+                        <th>11:30-12:30</th>
+                        <th>1:30-2:30</th>
+                        <th>2:30-3:30</th>
+                        <th>3:30-4:30</th>
+                        <th>4:30-5:30</th>
+                        <th>5:30-6:30</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {Data.map((val, i) => {
+                        if (val.EquipmentName.search("3d") == -1) {
+                          return (
+                            <tr key={i}>
+                              <th>{val.EquipmentName}</th>
+                              {val.Booking.map((items, j) => {
+                                return (
+                                  <td
+                                    key={j}
+                                    className={
+                                      items.booked
+                                        ? styles.booked
+                                        : styles.unbooked
+                                    }
+                                    onClick={handleClick}
+                                    data-value={
+                                      items.time + " " + val.EquipmentId
+                                    }
+                                  ></td>
+                                );
+                              })}
+                            </tr>
+                          );
+                        } else {
+                          return (
+                            <tr key={i}>
+                              <th>{val.EquipmentName}</th>
+                              <td
+                                colSpan="3"
+                                className={styles.unbooked}
+                                onClick={handleClick}
+                                data-value={
+                                  "09:30-12:30" + " " + val.EquipmentId
+                                }
+                              ></td>
+                              <td
+                                colSpan="5"
+                                className={styles.unbooked}
+                                onClick={handleClick}
+                                data-value={
+                                  "01:30-06:30" + " " + val.EquipmentId
+                                }
+                              ></td>
+                            </tr>
+                          );
+                        }
+                      })}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </Col>
+          </Row>
         </div>
-        {/*Advanced */}
-        <div className={styles.grid2}>
-          <div
-            className={styles.card2}
-            style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            <b style={{ fontSize: "25px" }}>Advanced</b>
-          </div>
-          <div className={styles.card2}>
-            <p style={{ textAlign: "center", fontSize: "25px" }}>
-              Pre-requirement
-            </p>
-            <ul>
-              <li>
-                Attend advance induction training for specific machines and pass
-                a competency test
-              </li>
-              <li>Pass Safe Practice</li>
-              <li>Skilled digital designer</li>
-            </ul>
-          </div>
-          <div className={styles.card2}>
-            <p style={{ textAlign: "center", fontSize: "25px" }}>
-              Digital fabrication services
-            </p>
-            <ul>
-              <li>Industrial graded prototyping</li>
-              <li>Metal fabrication</li>
-              <li>Metal molding</li>
-              <li>Repair</li>
-            </ul>
-          </div>
-        </div>
-        <div
-          style={{
-            padding: "10px",
-            display: "flex",
-            justifyContent: "center",
-          }}
-        >
-          <Link href="/booking/equipment" passHref>
-            <button className="button2" style={{ minWidth: "250px" }}>
-              <p className="title2">Book Now</p>
-            </button>
-          </Link>
-        </div>
-      </div>
-    </main>
+      </main>
+    </Header>
   );
 }

@@ -1,12 +1,12 @@
-import styles from "../../styles/Resource.module.css";
-import CardContent from "../../components/resource/cardcontent";
-import { verify } from "jsonwebtoken";
-import Header from "../../components/header";
+import { Card, Col, Row } from "antd";
+import Link from "next/link";
 
-const server = process.env.SERVER;
+import Header from "../../components/header";
+import { verify } from "jsonwebtoken";
 const secreteKEY = process.env.JWT_KEY;
 
 export async function getServerSideProps({ req }) {
+  // check for login
   const jwt = req.cookies.jwt;
 
   let users = null;
@@ -18,85 +18,71 @@ export async function getServerSideProps({ req }) {
     isLoggedIn = false;
   }
 
-  const data = [
-    {
-      id: "id",
-      equipmentName: "Name",
-      description: "gdhajdnk adbjd  a djha daadkjda  daad da adk d",
-    },
-    {
-      id: "id",
-      equipmentName: "Name",
-      description: "gdhajdnk adbjd  a djha daadkjda  daad da adk d",
-    },
-    {
-      id: "id",
-      equipmentName: "Name",
-      description: "gdhajdnk adbjd  a djha daadkjda  daad da adk d",
-    },
-    {
-      id: "id",
-      equipmentName: "Name",
-      description: "gdhajdnk adbjd  a djha daadkjda  daad da adk d",
-    },
-    {
-      id: "id",
-      equipmentName: "Name",
-      description: "gdhajdnk adbjd  a djha daadkjda  daad da adk d",
-    },
-    {
-      id: "id",
-      equipmentName: "Name",
-      description: "gdhajdnk adbjd  a djha daadkjda  daad da adk d",
-    },
-    {
-      id: "id",
-      equipmentName: "Name",
-      description: "gdhajdnk adbjd  a djha daadkjda  daad da adk d",
-    },
-    {
-      id: "id",
-      equipmentName: "Name",
-      description: "gdhajdnk adbjd  a djha daadkjda  daad da adk d",
-    },
-    {
-      id: "id",
-      equipmentName: "Name",
-      description: "gdhajdnk adbjd  a djha daadkjda  daad da adk d",
-    },
-    {
-      id: "id",
-      equipmentName: "Name",
-      description: "gdhajdnk adbjd  a djha daadkjda  daad da adk d",
-    },
-    {
-      id: "id",
-      equipmentName: "Name",
-      description: "gdhajdnk adbjd  a djha daadkjda  daad da adk d",
-    },
-  ];
-
   return {
     props: {
-      data,
       users,
       isLoggedIn,
     },
   };
 }
 
-export default function Training({ data, users, isLoggedIn }) {
-  const Data = data;
+export default function TrainingResource({ isLoggedIn, users }) {
+  const ManualCard = ({ url, title, description }) => {
+    return (
+      <Col style={{ marginBottom: "15px" }}>
+        <Card
+          hoverable
+          style={{
+            display: "grid",
+            justifyContent: "center",
+            width: "300px",
+            height: "300px",
+            borderRadius: "30px",
+          }}
+        >
+          <p className="subtitle">{title}</p>
+          <p style={{ fontSize: "14px" }}>{description}</p>
+          <Link href={url} passHref>
+            <button
+              className="button"
+              style={{ position: "absolute", bottom: "10px", left: "36%" }}
+            >
+              Read more
+            </button>
+          </Link>
+        </Card>
+      </Col>
+    );
+  };
 
   return (
-    <main>
-      <Header isLoggedIn={isLoggedIn} users={users} />
-      <p className="title">Training Manual</p>
-      <div className={styles.grid}>
-        {Data.map((val, i) => {
-          return <CardContent Data={val} key={i} />;
-        })}
-      </div>
-    </main>
+    <Header isLoggedIn={isLoggedIn} users={users}>
+      <main>
+        <p className="title">Training Manual</p>
+
+        <Row justify="space-evenly">
+          <ManualCard
+            title="Title"
+            description="Description"
+            url="https://res.cloudinary.com/jigmecom/image/upload/v1652834190/Resource/TrainingManual/manual_form_3_supwdy.pdf"
+          />
+          <ManualCard
+            title="Title"
+            description="Description"
+            url="https://res.cloudinary.com/jigmecom/image/upload/v1652834190/Resource/TrainingManual/manual_form_3_supwdy.pdf"
+          />
+          <ManualCard
+            title="Title"
+            description="Description"
+            url="https://res.cloudinary.com/jigmecom/image/upload/v1652834190/Resource/TrainingManual/manual_form_3_supwdy.pdf"
+          />
+          <ManualCard
+            title="Title"
+            description="Description"
+            url="https://res.cloudinary.com/jigmecom/image/upload/v1652834190/Resource/TrainingManual/manual_form_3_supwdy.pdf"
+          />
+        </Row>
+      </main>
+    </Header>
   );
 }

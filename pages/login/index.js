@@ -1,27 +1,43 @@
 import { useRouter } from "next/router";
-import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import logo from "../../public/assets/img/logo.png";
-import styles from "../../styles/Login.module.css";
+import { Card, Input, Form } from "antd";
+import Header from "../../components/header";
 
-export default function Login() {
+import { verify } from "jsonwebtoken";
+const secreteKEY = process.env.JWT_KEY;
+
+export async function getServerSideProps({ req }) {
+  // check for login
+  const jwt = req.cookies.jwt;
+
+  let users = null;
+  let isLoggedIn;
+  try {
+    users = verify(jwt, secreteKEY);
+    isLoggedIn = true;
+  } catch (error) {
+    isLoggedIn = false;
+  }
+
+  return {
+    props: {
+      users,
+      isLoggedIn,
+    },
+  };
+}
+
+export default function Login({ isLoggedIn, users }) {
   const router = useRouter();
-  const [User, setUser] = useState({});
   const server = process.env.NEXT_PUBLIC_SERVER;
 
-  const handleChange = (event) => {
-    const name = event.target.name;
-    const value = event.target.value;
-    setUser((values) => ({ ...values, [name]: value }));
-  };
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
+  const handleSubmit = (val) => {
     fetch("/api/auth/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(User),
+      body: JSON.stringify(val),
     })
       .then((response) => {
         return response.json();
@@ -42,49 +58,75 @@ export default function Login() {
   };
 
   return (
-    <main>
-      <br />
-      <p className="title"></p>
-      <div className={styles.grid}>
-        <form onSubmit={handleSubmit}>
-          <div className={styles.card}>
-            <div style={{ display: "flex", justifyContent: "center" }}>
-              <Image src={logo} width={120} height={120} alt="logo" />
-            </div>
-            <br />
-            <br />
-            <label htmlFor="email">Email</label>
-            <input
-              type="text"
-              placeholder="Email Address"
-              name="email"
-              onChange={handleChange}
-            />
-            <label htmlFor="password">Password</label>
-            <input
-              type="password"
-              placeholder="Password"
-              name="password"
-              onChange={handleChange}
-            />
-            <br />
-            <input
-              type="submit"
-              className="button2"
-              style={{ width: "100%", fontSize: "18px" }}
-              value="Login"
-            />
-            <br />
-            <br />
-            <div>
-              Not a member?
-              <span style={{ color: "blue" }}>
-                <Link href="/register">Sign up now</Link>
-              </span>
-            </div>
+    <Header isLoggedIn={isLoggedIn} users={users}>
+      <main
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          margin: "auto",
+        }}
+      >
+        <Card
+          hoverable
+          style={{
+            display: "grid",
+            justifyContent: "center",
+            padding: "1.5em",
+            borderRadius: "40px",
+          }}
+        >
+          <div
+            style={{
+              display: "grid",
+              justifyContent: "center",
+              margin: "15px",
+            }}
+          >
+            <Image src={logo} width={120} height={120} alt="logo" />
           </div>
-        </form>
-      </div>
-    </main>
+          <Form onFinish={handleSubmit}>
+            <Form.Item
+              label="Email"
+              name="email"
+              rules={[
+                {
+                  required: true,
+                  message: "Please input your Email!",
+                },
+              ]}
+            >
+              <Input type="text" placeholder="Email" />
+            </Form.Item>
+            <Form.Item
+              label="Password"
+              name="password"
+              rules={[
+                {
+                  required: true,
+                  message: "Please input your Password!",
+                },
+              ]}
+            >
+              <Input type="password" placeholder="Password" />
+            </Form.Item>
+            <Form.Item>
+              <input
+                type="submit"
+                className="button"
+                style={{ width: "100%", fontSize: "18px" }}
+                value="Login"
+              />
+            </Form.Item>
+          </Form>
+          <div>
+            Not a member?
+            <span style={{ color: "blue" }}>
+              <Link href="/register">Sign up now</Link>
+            </span>
+          </div>
+        </Card>
+      </main>
+    </Header>
   );
 }

@@ -31,14 +31,9 @@
   border-radius: 5px;
 }
 
-.grid3 {
-  display: grid;
-  grid-template-columns: 80% 20%;
-  padding: 30px;
-}
-
 .card3 {
-  min-width: 400px;
+  min-width: 320px;
+  margin: auto;
 }
 
 .card4 {

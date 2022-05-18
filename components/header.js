@@ -1,16 +1,22 @@
 import { useState } from "react";
 import { useRouter } from "next/router";
-import Image from "next/image";
+import { Layout, Menu, Button, Affix } from "antd";
+import { UserOutlined } from "@ant-design/icons";
 import Link from "next/link";
-import styles from "../styles/Header.module.css";
-import logo from "../public/assets/img/logo.png";
-import user from "../public/assets/icons/user.png";
 
-export default function Header({ isLoggedIn, users }) {
-  const router = useRouter();
-  const [login_state, setLogin] = useState(isLoggedIn);
+import Image from "next/image";
+import logo from "../public/assets/img/logo.png";
+
+const { Content } = Layout;
+const { Item, SubMenu } = Menu;
+
+export default function Header({ isLoggedIn, users, children }) {
   const role = users === null ? null : users.role;
+  const [login_state, setLogin] = useState(isLoggedIn);
+
   // when user logged in
+
+  const router = useRouter();
 
   const Logout = async () => {
     let response = await fetch("/api/auth/logout");
@@ -20,103 +26,100 @@ export default function Header({ isLoggedIn, users }) {
     }
   };
 
-  const UserLoggedIn = () => {
-    return (
-      <div
-        style={{
-          float: "right",
-          margin: "30px",
-        }}
-      >
-        <div className={styles.dropdown}>
-          <button className={styles.dropbtn}>
-            {role}
-            <Image src={user} width={40} height={40} alt="User" />
-          </button>
-          <div className={styles.dropcontent}>
-            <Link href="/profile">Profile</Link>
-            <Link href="/booking/equipment">Booking</Link>
-            <button
-              onClick={() => {
-                Logout();
-              }}
-            >
-              Logout
-            </button>
-          </div>
-        </div>
-      </div>
-    );
-  };
-
   return (
-    <header>
-      <nav className={styles.navbar}>
-        <div
-          style={{
-            float: "left",
-            margin: "0 20px 0 20px",
-          }}
-        >
-          <Image src={logo} width={70} height={70} alt="logo" />
+    <Layout>
+      <Affix offsetTop={0}>
+        <div className="header">
+          <Menu theme="light" mode="horizontal" className="menu">
+            <Image src={logo} width={70} height={70} alt="logo" />
+            <Item key={0}>
+              <Link href="/">Home</Link>
+            </Item>
+            <SubMenu key="sub1" title={<span>Machines</span>}>
+              <Item key={1}>
+                <Link href="/machines/carpentry">Carpentry Lab</Link>
+              </Item>
+              <Item key={2}>
+                <Link href="/machines/electronics">Electronic Lab</Link>
+              </Item>
+              <Item key={3}>
+                <Link href="/machines/heavymachines">Heavy Machine Lab</Link>
+              </Item>
+              <Item key={4}>
+                <Link href="/machines/metalworks">Metal Works Lab</Link>
+              </Item>
+            </SubMenu>
+            <SubMenu key="sub2" title={<span>Programs</span>}>
+              <Item key={5}>
+                <Link href="/programs/education">Education Program</Link>
+              </Item>
+              <Item key={6}>
+                <Link href="/programs/training">Training Program</Link>
+              </Item>
+              <Item key={7}>
+                <Link href="/programs/research">Research And Development</Link>
+              </Item>
+            </SubMenu>
+            <Item key={8}>
+              <Link href="/service">Service</Link>
+            </Item>
+            <Item key={9}>
+              <Link href="/news">News And Events</Link>
+            </Item>
+            <SubMenu key="sub3" title={<span>About Us</span>}>
+              <Item key={10}>
+                <Link href="/aboutus">Story of SFL</Link>
+              </Item>
+              <Item key={11}>
+                <Link href="/aboutus/team">Meet the Team</Link>
+              </Item>
+              <Item key={12}>
+                <Link href="/aboutus/virtualtour">Virtual Tour</Link>
+              </Item>
+              <Item key={13}>
+                <Link href="/aboutus/gallery">Gallery</Link>
+              </Item>
+            </SubMenu>
+            {/* show diff for login state */}
+            {login_state ? (
+              <SubMenu
+                key="sub4"
+                title={
+                  <>
+                    <UserOutlined />
+                    <span>{role}</span>
+                  </>
+                }
+              >
+                <Item key={14}>
+                  <Link href="/profile">Profile</Link>
+                </Item>
+                <Item key={15}>
+                  <Link href="/booking">Booking</Link>
+                </Item>
+                <Item key={16}>
+                  <Button
+                    type="link"
+                    onClick={() => {
+                      Logout();
+                    }}
+                  >
+                    Logout
+                  </Button>
+                </Item>
+              </SubMenu>
+            ) : (
+              <Item key={17}>
+                <Link href="/login" passHref>
+                  <Button style={{ borderRadius: "20px" }}>Login</Button>
+                </Link>
+              </Item>
+            )}
+          </Menu>
         </div>
-        <span>
-          <Link href="/">Home</Link>
-        </span>
-        <span>
-          <div className={styles.dropdown}>
-            <button className={styles.dropbtn}>Machines</button>
-            <div className={styles.dropcontent}>
-              <Link href="/machines/carpentry">Carpentry Lab</Link>
-              <Link href="/machines/electronics">Electronic Lab</Link>
-              <Link href="/machines/heavymachines">Heavy machinary Lab</Link>
-              <Link href="/machines/metalworks">Metal works Lab</Link>
-              <Link href="/booking">Booking</Link>
-            </div>
-          </div>
-        </span>
-        <span>
-          <div className={styles.dropdown}>
-            <button className={styles.dropbtn}>Programs</button>
-            <div className={styles.dropcontent}>
-              <Link href="/programs/education">Education program</Link>
-              <Link href="/programs/training">Training program</Link>
-              <Link href="/programs/research">Research and Development</Link>
-            </div>
-          </div>
-        </span>
-        <span>
-          <Link href="/service">Services</Link>
-        </span>
-        <span>
-          <Link href="/news">News and Events</Link>
-        </span>
-        <span>
-          <div className={styles.dropdown}>
-            <button className={styles.dropbtn}>About us</button>
-            <div className={styles.dropcontent}>
-              <Link href="/aboutus">The story of sfl</Link>
-              <Link href="/aboutus/team">Meet the Team</Link>
-              <Link href="/aboutus/virtualtour">Virtual Tour</Link>
-              <Link href="/aboutus/gallery">Gallery</Link>
-            </div>
-          </div>
-        </span>
-        {login_state ? (
-          <UserLoggedIn />
-        ) : (
-          <div
-            style={{
-              float: "left",
-              margin: "20px",
-            }}
-          >
-            <Link href="/login" passHref>
-              <button className={styles.navbtn}>Log In</button>
-            </Link>
-          </div>
-        )}
-      </nav>
-    </header>
+      </Affix>
+
+      <Content>{children}</Content>
+    </Layout>
   );
 }

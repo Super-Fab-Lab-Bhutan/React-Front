@@ -1,30 +1,61 @@
-import Link from "next/link";
 import { useState, createRef } from "react";
-import styles from "../../styles/Register.module.css";
-import Header from "../../components/header";
+import { Card, Col, Form, Input, Row, Select } from "antd";
 import ReCAPTCHA from "react-google-recaptcha";
 
-export default function Startup() {
+import Header from "../../components/header";
+import { verify } from "jsonwebtoken";
+import Link from "next/link";
+
+const secreteKEY = process.env.JWT_KEY;
+
+export async function getServerSideProps({ req }) {
+  // check for login
+  const jwt = req.cookies.jwt;
+
+  let users = null;
+  let isLoggedIn;
+  try {
+    users = verify(jwt, secreteKEY);
+    isLoggedIn = true;
+  } catch (error) {
+    isLoggedIn = false;
+  }
+
+  return {
+    props: {
+      users,
+      isLoggedIn,
+    },
+  };
+}
+
+export default function Startup({ isLoggedIn, users }) {
   const [User, setUser] = useState({});
   const recaptchaRef = createRef();
   const sitekey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
 
-  const handleChange = (event) => {
-    const name = event.target.name;
-    const value = event.target.value;
-    setUser((values) => ({ ...values, [name]: value }));
+  const validateMessages = {
+    required: "${label} is required!",
+    types: {
+      email: "${label} is not a valid email!",
+    },
+    string: {
+      range: "${label} must be at least ${min}",
+    },
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const { password, cpassword } = User;
+  const handleSubmit = async (val) => {
+    const { password, cpassword } = val;
     if (password === cpassword) {
+      //set User data
+      setUser(val);
       // Execute the reCAPTCHA when the form is submitted
       recaptchaRef.current.execute();
     } else {
       alert("Confirmation password is Incorrect");
     }
   };
+
   const onReCAPTCHAChange = async (captchaCode) => {
     // If the reCAPTCHA code is null or undefined indicating that
     // the reCAPTCHA was expired then return early
@@ -32,8 +63,7 @@ export default function Startup() {
       return;
     }
     // Else reCAPTCHA was executed successfully so proceed with the
-    const { password, email, phoneNumber, organization, username, gender } =
-      User;
+    const { password, email, phoneNumber, organization, username } = User;
     let response = await fetch("/api/auth/register", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -57,82 +87,134 @@ export default function Startup() {
   };
 
   return (
-    <>
-      <Header isLoggedIn={false} users={null} />
+    <Header isLoggedIn={isLoggedIn} users={users}>
       <main>
-        <p className="title"></p>
-        <p className={styles.title2}>Startup Membership Form</p>
-        <div className={styles.form_grid}>
-          <form onSubmit={handleSubmit}>
+        <p className="title">Startup Membership Form</p>
+        <Card
+          style={{
+            paddingTop: "10px",
+            maxWidth: "700px",
+            borderRadius: "30px",
+            margin: "auto",
+          }}
+        >
+          <Form onFinish={handleSubmit} validateMessages={validateMessages}>
             <ReCAPTCHA
               ref={recaptchaRef}
               size="invisible"
               sitekey={sitekey}
               onChange={onReCAPTCHAChange}
             />
-            <div className={styles.form}>
-              <div>
-                <label htmlFor="username">Firm Name</label>
-                <br />
-                <input type="text" onChange={handleChange} name="username" />
-              </div>
-              <div>
-                <label htmlFor="organization">Organization</label>
-                <br />
-                <input
-                  type="text"
-                  onChange={handleChange}
+            <Row justify="space-around">
+              <Col>
+                <Form.Item
+                  label="Full Name"
+                  name="username"
+                  rules={[
+                    {
+                      required: true,
+                    },
+                  ]}
+                >
+                  <Input />
+                </Form.Item>
+              </Col>
+              <Col>
+                <Form.Item
+                  label="Startup Name"
                   name="organization"
-                />
-              </div>
-              <div>
-                <label htmlFor="email">Email</label>
-                <br />
-                <input type="text" onChange={handleChange} name="email" />
-              </div>
-              <div>
-                <label htmlFor="phoneNumber">Phone Number</label>
-                <br />
-                <input type="text" onChange={handleChange} name="phoneNumber" />
-              </div>
-              <div>
-                <label htmlFor="password">Password</label>
-                <br />
-                <input
-                  type="password"
-                  onChange={handleChange}
+                  rules={[
+                    {
+                      required: true,
+                    },
+                    {
+                      type: "string",
+                      min: 6,
+                    },
+                  ]}
+                >
+                  <Input />
+                </Form.Item>
+              </Col>
+              <Col>
+                <Form.Item
+                  label="Email"
+                  name="email"
+                  rules={[
+                    {
+                      required: true,
+                    },
+                    {
+                      type: "email",
+                    },
+                  ]}
+                >
+                  <Input />
+                </Form.Item>
+              </Col>
+              <Col>
+                <Form.Item
+                  label="Phone Number"
+                  name="phoneNumber"
+                  rules={[
+                    {
+                      required: true,
+                    },
+                  ]}
+                >
+                  <Input />
+                </Form.Item>
+              </Col>
+              <Col>
+                <Form.Item
+                  label="Password"
                   name="password"
-                />
-              </div>
-              <div>
-                <label htmlFor="cpassword">Confirm Password</label>
-                <br />
-                <input
-                  type="password"
-                  onChange={handleChange}
+                  rules={[
+                    {
+                      required: true,
+                    },
+                  ]}
+                >
+                  <Input.Password />
+                </Form.Item>
+              </Col>
+              <Col>
+                <Form.Item
+                  label="Confirm Password"
                   name="cpassword"
-                />
-              </div>
-            </div>
-            <div style={{ marginRight: "30px" }}>
-              <br />
-              <br />
-              <input
-                className="button2"
-                style={{ width: "100%", fontSize: "18px" }}
-                type="submit"
-                value="Register"
-              />
-              <br />
-              <br />
-              Already a member?
-              <span style={{ color: "blue" }}>
-                <Link href="/login">Login Now</Link>
-              </span>
-            </div>
-          </form>
-        </div>
+                  rules={[
+                    {
+                      required: true,
+                    },
+                  ]}
+                >
+                  <Input.Password />
+                </Form.Item>
+              </Col>
+              <Col
+                span={24}
+                style={{ display: "grid", justifyContent: "center" }}
+              >
+                <Form.Item>
+                  <button
+                    type="submit"
+                    style={{ width: "200px" }}
+                    className="button"
+                  >
+                    Register
+                  </button>
+                </Form.Item>
+              </Col>
+            </Row>
+          </Form>
+          <p style={{ textAlign: "center" }}>
+            Already a member?
+            <span style={{ color: "blue" }}>
+              <Link href="/login">Login Now</Link>
+            </span>
+          </p>
+        </Card>
       </main>
-    </>
+    </Header>
   );
 }

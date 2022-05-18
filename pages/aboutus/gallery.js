@@ -1,23 +1,8 @@
-import styles from "../../styles/AboutUs.module.css";
-
-import { verify } from "jsonwebtoken";
+import { Card, Row, Col } from "antd";
+import Image from "next/image";
 import Header from "../../components/header";
 
-const server = process.env.SERVER;
-const secreteKEY = process.env.JWT_KEY;
-export async function getServerSideProps({req}) {
-  // check for login
-  const jwt = req.cookies.jwt;
-
-  let users = null;
-  let isLoggedIn;
-  try {
-    users = verify(jwt, secreteKEY);
-    isLoggedIn = true;
-  } catch (error) {
-    isLoggedIn = false;
-  }
-
+export async function getServerSideProps({ req }) {
   const galleryData = [
     {
       id: "id",
@@ -81,6 +66,18 @@ export async function getServerSideProps({req}) {
     },
   ];
 
+  // check for login
+  const jwt = req.cookies.jwt;
+
+  let users = null;
+  let isLoggedIn;
+  try {
+    users = verify(jwt, secreteKEY);
+    isLoggedIn = true;
+  } catch (error) {
+    isLoggedIn = false;
+  }
+
   return {
     props: {
       galleryData,
@@ -90,25 +87,30 @@ export async function getServerSideProps({req}) {
   };
 }
 
-export default function gallery({ galleryData, users, isLoggedIn }) {
+export default function gallery({ galleryData, isLoggedIn, users }) {
   const Data = galleryData;
   return (
-    <main>
-      <Header isLoggedIn={isLoggedIn} users={users} />
-      <p className="title">Collection Pictures of SFL</p>
-      <div className={styles.img_grid2}>
-        {Data.map((val, i) => {
-          return (
-            <div
-              className={styles.img_card2}
-              style={{
-                backgroundImage: `url(${val.image})`,
-              }}
-              key={i}
-            />
-          );
-        })}
-      </div>
-    </main>
+    <Header isLoggedIn={isLoggedIn} users={users}>
+      <main>
+        <p className="title">Collection Pictures of SFL</p>
+        <Row gutter={[16, 16]} justify="space-evenly">
+          {Data.map((val, i) => {
+            return (
+              <Col key={i}>
+                <Card
+                  style={{
+                    width: "300px",
+                    height: "260px",
+                  }}
+                >
+                  <Image src={val.image} layout="fill" alt="gallery image" />
+                </Card>
+              </Col>
+            );
+          })}
+        </Row>
+        <br />
+      </main>
+    </Header>
   );
 }

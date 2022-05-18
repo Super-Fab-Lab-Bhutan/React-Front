@@ -1,15 +1,69 @@
 import Head from "next/head";
-import Link from "next/link";
 import Image from "next/image";
-import styles from "../styles/Home.module.css";
-import logo from "../public/assets/img/logo.png";
-import clock from "../public/assets/icons/clock.png";
 
 import Header from "../components/header";
 import { verify } from "jsonwebtoken";
+import { Card, Carousel, Col, Row } from "antd";
+import logo from "../public/assets/img/logo.png";
+import Link from "next/link";
+
+import styles from "../styles/Home.module.css";
+
+const { Meta } = Card;
+
+const server = process.env.SERVER;
 const secreteKEY = process.env.JWT_KEY;
 
 export async function getServerSideProps({ req }) {
+  //program titles and description
+  let education = await fetch(server + "/education-program");
+  education = await education.json();
+  education.description =
+    "Education programs are developed to equip the next generation with the necessary skills and knowledge in the field of technology and digital fabrication.";
+
+  let training = await fetch(server + "/training-program");
+  training = await training.json();
+  training.description =
+    "SFL will offer trainings, workshops, and seminars, all focused on professional development, and building the skills and capacity for digital designing and fabrication.";
+
+  let research = await fetch(server + "/research-program");
+  research = await research.json();
+  research.description =
+    "There is a huge potential for enabling research through the SFL platform. The lab currently enables innovation, invention, and prototyping. To foster a culture of learning, applicable and sustainable in-house research is encouraged. SFL is also open to collaborations with like-minded organizations and individuals.";
+  let Programs = {
+    education,
+    training,
+    research,
+  };
+  // .......
+
+  // Machines
+  let carpentry = await fetch(server + "/machines/carpentry");
+  carpentry = await carpentry.json();
+
+  let electronic = await fetch(server + "/machines/electronic");
+  electronic = await electronic.json();
+
+  let heavymachine = await fetch(server + "/machines/heavy-machinary");
+  heavymachine = await heavymachine.json();
+
+  let metalwork = await fetch(server + "/machines/metal-works");
+  metalwork = await metalwork.json();
+
+  let Machines = {
+    carpentry,
+    electronic,
+    heavymachine,
+    metalwork,
+  };
+  // .......
+
+  // News and Events
+  let News = await fetch(server + "/news-and-events");
+  News = await News.json();
+  News = News.news[News.news.length - 1];
+  // .......
+
   const jwt = req.cookies.jwt;
 
   let users = null;
@@ -22,304 +76,346 @@ export async function getServerSideProps({ req }) {
   }
 
   return {
-    props: { users, isLoggedIn },
+    props: { Programs, Machines, News, users, isLoggedIn },
   };
 }
 
-export default function Home({ users, isLoggedIn }) {
+export default function Home({ isLoggedIn, users, Programs, Machines, News }) {
+  // Card for Learn Section
+  const LearnCard = ({ title, type, image, description, program }) => {
+    return (
+      <Col
+        style={{
+          marginBottom: "10px",
+        }}
+      >
+        <Card
+          hoverable
+          style={{
+            width: "330px",
+            height: "550px",
+            borderRadius: "20px",
+          }}
+          cover={
+            <Image
+              height={200}
+              width={330}
+              style={{
+                borderRadius: "20px",
+              }}
+              alt={type}
+              src={image}
+              // src={"/assets/img/home/printer1.jpg"}
+            />
+          }
+        >
+          <Meta
+            title={title}
+            description={
+              <p className="smtext">
+                {description}
+                <br /> Here are some of our programs:
+                {
+                  <ul>
+                    {program.map((val, i) => {
+                      if (i < 5) {
+                        //limits no of title shown to home page to 4 titles
+                        return (
+                          <li className="smtext" key={i}>
+                            {val.title}
+                          </li>
+                        );
+                      }
+                    })}
+                  </ul>
+                }
+                <Link href={"/programs/" + type} passHref>
+                  <button
+                    className="button"
+                    style={{ position: "absolute", bottom: "5px" }}
+                  >
+                    Read More
+                  </button>
+                </Link>
+              </p>
+            }
+          />
+        </Card>
+      </Col>
+    );
+  };
+
+  // Carousel Card
+  const CarouselCard = ({ title, type, Data }) => {
+    if (Data[0] === undefined) {
+      return;
+    } else {
+      let random = Math.floor(Math.random() * Data.length);
+      let equipmentName = Data[random].equipmentName;
+      let description = Data[random].description;
+      let image = Data[random].image;
+      return (
+        <Card
+          style={{
+            borderRadius: "30px",
+            // backgroundColor:"blue"
+          }}
+        >
+          <Row justify="space-around">
+            <Col
+              style={{
+                maxWidth: "50%",
+              }}
+            >
+              <p className="title">{title}</p>
+              <p className="subtitle">{equipmentName}</p>
+              <p className="smtext">{description}</p>
+              <Link href={"/machines/" + type} passHref>
+                <button className="button">Read More</button>
+              </Link>
+            </Col>
+            <Col>
+              <Image
+                width={320}
+                height={300}
+                // src={image}
+                src={
+                  "https://th.bing.com/th/id/OIP.V5-vEYnDM0u49_jqpqjr5gHaHY?pid=ImgDet&rs=1"
+                }
+                alt={type}
+              />
+            </Col>
+          </Row>
+        </Card>
+      );
+    }
+  };
   return (
-    <div style={{ textAlign: "center" }}>
+    <Header isLoggedIn={isLoggedIn} users={users}>
       <Head>
-        <title>Super Fab Lab</title>
+        <title>Super Fab Lab Bhutan</title>
         <meta name="description" content="Super Fab Lab Bhutan" />
         <link rel="icon" href="/assets/img/logo.png" />
       </Head>
-      <Header isLoggedIn={isLoggedIn} users={users} />
+
       <main>
-        <div className={styles.video_background_holder}>
-          <div className={styles.video_background_overlay}>
-            <video height="100%" width="100%" playsInline autoPlay loop muted>
-              <source src="assets/video/3d.mp4" type="video/mp4" />
-            </video>
-          </div>
-          <div className={styles.video_background_content}>
-            <div style={{ marginTop: "50px" }}>
-              <Image src={logo} width={170} height={170} alt="logo" />
-            </div>
-            <div>
-              <h1>Welcome To Super Fablab</h1>
-            </div>
-            <div>
-              <p>
-                Inspire the future of learning and creating. Provide digital
-                design tools to ignite a culture of innovation.
-              </p>
-            </div>
-            <div style={{}}>
-              <Link href="/register" passHref>
-                <button className="button">Join Us Today!</button>
-              </Link>
-            </div>
-          </div>
-        </div>
-
-        <div className={styles.container}>
-          <h1>About Us</h1>
-          <div className={styles.card} style={{ margin: "40px" }}>
-            <div style={{ display: "inline-block" }}>
-              <Image src={logo} height={200} width={200} alt="logo" />
-            </div>
-            <div>
-              <h4 style={{ fontSize: "1.5rem", textAlign: "center" }}>
-                Vision
-              </h4>
-              <p
-                style={{
-                  color: "black",
-                  textAlign: "center",
-                  fontSize: "1.2rem",
-                }}
-              >
-                “Inspire the future of learning and creating”
-              </p>
-              <h4 style={{ fontSize: "1.5rem", textAlign: "center" }}>
-                Mission
-              </h4>
-              <p
-                style={{
-                  color: "black",
-                  textAlign: "center",
-                  fontSize: "1.2rem",
-                }}
-              >
-                “Provide digital design tools to ignite a culture of innovation”
-              </p>
-              <hr />
-              <h6
-                style={{
-                  textAlign: "center",
-                  fontSize: "1rem",
-                  color: "black",
-                  fontWeight: "normal",
-                  fontFamily: "bell",
-                }}
-              >
-                The Bhutan Super FabLab is an open platform for learning and
-                innovation; a place to play, learn, mentor, collaborate, and
-                create.Located at Thimphu Tech Park, it is the 2nd Super Fab Lab
-                in the world, providing unique digital fabrication tools and
-                services to its community.It currently consists of four
-                different labs - focused on metalwork, carpentry, electronics
-                production, and industrial graded work.Join us in our journey to
-                learn and create almost anything.
-              </h6>
-            </div>
-          </div>
-        </div>
-        {/* Dynamic */}
-        <div className={styles.container}>
-          <h1>Learn</h1>
-          <p>To Make Almost Anything</p>
-          <div style={{ gridTemplateColumns: "auto auto auto" }}>
-            <div className={styles.card2}>
-              <div
-                style={{
-                  backgroundImage:
-                    "url(https://th.bing.com/th/id/R.1fa6676f82f058e11409b316f2cc6b4e?rik=wXdge7HsT9LrdA&pid=ImgRaw&r=0)",
-                  backgroundSize: "cover",
-                  borderRadius: "20px 20px 0 0",
-                  height: "250px",
-                  width: "350px",
-                }}
-              />
-              <div style={{ padding: "1.5rem" }}>
-                <p className="title2">Education</p>
-                <hr />
-                <p style={{ color: "gray", textAlign: "left" }}>
-                  Education programs are developed to equip the next generation
-                  with the necessary skills and knowledge in the field of
-                  technology and digital fabrication. Here are some of our
-                  programs:
+        <div className={styles.video_wrapper}>
+          <video height="100%" width="100%" playsInline autoPlay loop muted>
+            <source src="/assets/video/3d.mp4" type="video/mp4" />
+          </video>
+          <div
+            style={{
+              position: "relative",
+            }}
+          >
+            <Row justify="space-evenly">
+              <Col span={24}>
+                <Image height={140} width={140} src={logo} alt="sfl logo" />
+              </Col>
+              <Col style={{ color: "white" }} span={24}>
+                <p className="title">Welcome To Super FabLab</p>
+                <p>
+                  Inspire the future of learning and creating. Provide digital
+                  design tools to ignite a culture of innovation.
                 </p>
-                <ul style={{ color: "gray", textAlign: "left" }}>
-                  <li>hi</li>
-                </ul>
-              </div>
-              <div>
-                <Link href="/programs/education" passHref>
-                  <button className="button2">Read More</button>
+                <Link href="/register" passHref>
+                  <button className="button" style={{ color: "white" }}>
+                    Join Us Today
+                  </button>
                 </Link>
-              </div>
-            </div>
-            <div className={styles.card2}>
-              <div
-                style={{
-                  backgroundImage:
-                    "url(https://th.bing.com/th/id/R.1fa6676f82f058e11409b316f2cc6b4e?rik=wXdge7HsT9LrdA&pid=ImgRaw&r=0)",
-                  backgroundSize: "cover",
-                  borderRadius: "20px 20px 0 0",
-                  height: "250px",
-                  width: "350px",
-                }}
-              />
-              <div style={{ padding: "1.5rem" }}>
-                <p className="title2">Professional Development</p>
-                <hr />
-                <p style={{ color: "gray", textAlign: "left" }}>
-                  SFL will offer trainings, workshops, and seminars, all focused
-                  on professional development, and building the skills and
-                  capacity for digital designing and fabrication. Here are some
-                  of the training:
-                </p>
-                <ul style={{ color: "gray", textAlign: "left" }}>
-                  <li>hi</li>
-                </ul>
-              </div>
-              <div>
-                <Link href="/programs/training" passHref>
-                  <button className="button2">Read More</button>
-                </Link>
-              </div>
-            </div>
-            <div className={styles.card2}>
-              <div
-                style={{
-                  backgroundImage:
-                    "url(https://th.bing.com/th/id/R.1fa6676f82f058e11409b316f2cc6b4e?rik=wXdge7HsT9LrdA&pid=ImgRaw&r=0)",
-                  backgroundSize: "cover",
-                  borderRadius: "20px 20px 0 0",
-                  height: "250px",
-                  width: "350px",
-                }}
-              />
-              <div style={{ padding: "1.5rem" }}>
-                <p className="title2">Research and Collaboration</p>
-                <hr />
-                <p style={{ color: "gray", textAlign: "left" }}>
-                  There is a huge potential for enabling research through the
-                  SFL platform. The lab currently enables innovation, invention,
-                  and prototyping. To foster a culture of learning, applicable
-                  and sustainable in-house research is encouraged. SFL is also
-                  open to collaborations with like-minded organizations and
-                  individuals.
-                </p>
-                <ul style={{ color: "gray", textAlign: "left" }}>
-                  <li>hi</li>
-                </ul>
-              </div>
-              <div>
-                <Link href="/programs/research" passHref>
-                  <button className="button2">Read More</button>
-                </Link>
-              </div>
-            </div>
+              </Col>
+            </Row>
           </div>
         </div>
-        {/* ...... */}
-        <div className={styles.container}>
-          <h1>Create</h1>
-          <p>Through Digital Tools And Open Community Ecosystem</p>
-          {/* <div className={styles.card}>
-            <div>Description</div>
-            <div>Image</div>
-            <div>Specs</div>
-          </div> */}
-        </div>
-        <div className={styles.container}>
-          <h1>Collaborate</h1>
-          <p>In An Innovative Space</p>
-          <div style={{ gridTemplateColumns: "auto auto auto" }}>
-            <div className={styles.card3}>
-              <div
+        <br />
+        <div className="center">
+          <b className="title">About Us</b>
+          <br />
+          <Card
+            hoverable
+            style={{
+              borderRadius: "30px",
+              margin: "auto",
+              maxWidth: "90%",
+            }}
+          >
+            <Row justify="space-evenly">
+              <Col>
+                <Image height={250} width={250} src={logo} alt="sfl logo" />
+              </Col>
+              <Col
                 style={{
-                  backgroundImage:
-                    "url(https://th.bing.com/th/id/R.1fa6676f82f058e11409b316f2cc6b4e?rik=wXdge7HsT9LrdA&pid=ImgRaw&r=0)",
-                  backgroundSize: "cover",
-                  position: "absolute",
-                  borderRadius: "20px",
-                  height: "280px",
-                  width: "280px",
-                  textAlign: "right",
-                  padding: "30px",
-                  color: "black",
+                  maxWidth: "60%",
                 }}
               >
                 <div>
-                  <p className="title2">Work with us as a Volunteer</p>
-                  <p>
-                    Get a chance to become a part of SFL and get work
-                    experience.It&apos;s an opportunity to get free access to
-                    the facilities provided by SFL.
+                  <h4 style={{ fontSize: "1.5rem", textAlign: "center" }}>
+                    Vision
+                  </h4>
+                  <p
+                    style={{
+                      color: "black",
+                      textAlign: "center",
+                      fontSize: "1.2rem",
+                    }}
+                  >
+                    “Inspire the future of learning and creating”
                   </p>
+                  <h4 style={{ fontSize: "1.5rem", textAlign: "center" }}>
+                    Mission
+                  </h4>
+                  <p
+                    style={{
+                      color: "black",
+                      textAlign: "center",
+                      fontSize: "1.2rem",
+                    }}
+                  >
+                    “Provide digital design tools to ignite a culture of
+                    innovation”
+                  </p>
+                  <hr />
+                  <h6
+                    style={{
+                      textAlign: "center",
+                      fontSize: "1rem",
+                      color: "black",
+                      fontWeight: "normal",
+                      fontFamily: "bell",
+                    }}
+                  >
+                    The Bhutan Super FabLab is an open platform for learning and
+                    innovation; a place to play, learn, mentor, collaborate, and
+                    create.Located at Thimphu Tech Park, it is the 2nd Super Fab
+                    Lab in the world, providing unique digital fabrication tools
+                    and services to its community.It currently consists of four
+                    different labs - focused on metalwork, carpentry,
+                    electronics production, and industrial graded work.Join us
+                    in our journey to learn and create almost anything.
+                  </h6>
                 </div>
-              </div>
-            </div>
+              </Col>
+            </Row>
+          </Card>
 
-            <div className={styles.card3}>
-              <div
-                style={{
-                  backgroundImage:
-                    "url(https://th.bing.com/th/id/R.1fa6676f82f058e11409b316f2cc6b4e?rik=wXdge7HsT9LrdA&pid=ImgRaw&r=0)",
-                  backgroundSize: "cover",
-                  position: "absolute",
-                  borderRadius: "20px",
-                  height: "280px",
-                  width: "280px",
-                  textAlign: "right",
-                  padding: "30px",
-                  color: "black",
-                }}
-              >
-                <div>
-                  <p className="title2">Apply for Internships</p>
-                  <p>
-                    SFL is a great place to learn and get exposure.You will be
-                    able to do research and projects with our staff and even our
-                    collaborators.
-                  </p>
-                </div>
-              </div>
-            </div>
+          <b className="title">Learn</b>
+          <p className="subtitle">To Make Almost Anything</p>
+          <Row justify="space-evenly">
+            <LearnCard
+              title="Education"
+              type="education"
+              image="/assets/img/home/printer1.jpg"
+              description={Programs.education.description}
+              program={Programs.education.program}
+            />
+            <LearnCard
+              title="Training"
+              type="training"
+              image="/assets/img/home/laser.jpg"
+              description={Programs.training.description}
+              program={Programs.training.program}
+            />
+            <LearnCard
+              title="Research"
+              type="research"
+              image="/assets/img/home/molding.jpg"
+              description={Programs.research.description}
+              program={Programs.research.program}
+            />
+          </Row>
+          <br />
 
-            <div className={styles.card3}>
-              <div
-                style={{
-                  backgroundImage:
-                    "url(https://th.bing.com/th/id/R.1fa6676f82f058e11409b316f2cc6b4e?rik=wXdge7HsT9LrdA&pid=ImgRaw&r=0)",
-                  backgroundSize: "cover",
-                  position: "absolute",
-                  borderRadius: "20px",
-                  height: "280px",
-                  width: "280px",
-                  textAlign: "left",
-                  padding: "30px",
-                  color: "black",
-                }}
-              >
-                <div>
-                  <p className="title2">Become a Member</p>
-                  <p>
-                    We have great membership plans :
-                    <br />
-                    SFL Youth
-                    <br />
-                    SFL Community
-                    <br />
-                    SFL creator
-                    <br />
-                    SFl Business
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
+          <b className="title">Create</b>
+          <p className="subtitle">
+            Through Digital Tools And Open Community Ecosystem
+          </p>
         </div>
-        <div className={styles.container}>
-          <h1>Visit Us</h1>
-          <div className={styles.card} style={{ width: "500px" }}>
-            <div>
-              <Image src={clock} height={90} width={90} alt="clock" />
-            </div>
+        {/* machine carousel */}
+        <div
+          style={{
+            borderRadius: "30px",
+            width: "90%",
+            margin: "auto",
+          }}
+        >
+          <Carousel style={{ padding: "10px" }} autoplay>
+            <CarouselCard
+              title="Carpentry Lab"
+              type="carpentry"
+              Data={Machines.carpentry.equipment}
+            />
+            <CarouselCard
+              title="Electronic Lab"
+              type="electronics"
+              Data={Machines.electronic.equipment}
+            />
+            <CarouselCard
+              title="Heavy Machines Lab"
+              type="heavymachines"
+              Data={Machines.heavymachine.equipment}
+            />
+            <CarouselCard
+              title="Laser Lab"
+              type="metalworks"
+              Data={Machines.metalwork.equipment}
+            />
+          </Carousel>
+        </div>
+        <div className="center">
+          <b className="title">Collaborate</b>
+          <p className="subtitle">In An Innovative Space</p>
+        </div>
+        <div>
+          <Row justify="space-evenly">
+            <Col style={{ borderRadius: "30px" }}>
+              <Image
+                height={300}
+                width={300}
+                style={{ borderRadius: "30px" }}
+                src="/assets/img/home/b3.jpg"
+                alt="err"
+              />
+            </Col>
+            <Col style={{ borderRadius: "30px" }}>
+              <Image
+                height={300}
+                width={300}
+                style={{ borderRadius: "30px" }}
+                src="/assets/img/home/b5.jpg"
+                alt="err"
+              />
+            </Col>
+            <Col style={{ borderRadius: "30px" }}>
+              <Image
+                height={300}
+                width={300}
+                style={{ borderRadius: "30px" }}
+                src="/assets/img/home/sensor.jpg"
+                alt="err"
+              />
+            </Col>
+          </Row>
+        </div>
+        <div className="center">
+          <b className="title">Vist Us</b>
+          <Card
+            hoverable
+            style={{
+              minHeight: "300px",
+              minWidth: "340px",
+              maxWidth: "550px",
+              borderRadius: "30px",
+              display: "grid",
+              justifyContent: "center",
+              textAlign: "center",
+            }}
+          >
+            <Image
+              width={90}
+              height={90}
+              src={"/assets/img/home/clock.png"}
+              alt="clock"
+            />
             <h3
               style={{ color: "black", fontFamily: "bell", fontSize: "2rem" }}
             >
@@ -332,31 +428,34 @@ export default function Home({ users, isLoggedIn }) {
               <br /> Open hours you can walk in anytime for a lab visit. You can
               also book a schedule to use a specific machine at a suitable time.
             </p>
-          </div>
+          </Card>
+          <br />
+          <b className="title">News And Events</b>
         </div>
-        <div className={styles.container}>
-          <h1>News And Events</h1>
-        </div>
-        <div
+
+        <Card
           style={{
-            backgroundImage:
-              "url(https://th.bing.com/th/id/R.1fa6676f82f058e11409b316f2cc6b4e?rik=wXdge7HsT9LrdA&pid=ImgRaw&r=0)",
+            backgroundImage: `url(${News.image})`,
             backgroundSize: "cover",
-            // position: "absolute",
-            height: "280px",
-            width: "100%",
-            margin: "0 8vh 8vh 0",
+            opacity: "0.9",
+            minHeight: "200px",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            marginTop: "10px",
+            marginBottom: "50px",
+            color: "white",
           }}
         >
-          <div className={styles.container} style={{ color: "white" }}>
-            <h1>Title</h1>
-            <p>Description.....</p>
-            <Link href="/news" passHref>
-              <button className="button2">Update More</button>
-            </Link>
-          </div>
-        </div>
+          <b className="title">{News.title}</b>
+          <p>{News.description.slice(0, 200) + "..."}</p>
+          <Link href="/news" passHref>
+            <button className="button" style={{ color: "white" }}>
+              Update More
+            </button>
+          </Link>
+        </Card>
       </main>
-    </div>
+    </Header>
   );
 }

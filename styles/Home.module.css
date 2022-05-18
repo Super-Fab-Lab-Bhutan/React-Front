@@ -1,135 +1,18 @@
-/*Video css*/
-.video_background_holder {
-  margin-top: 14vh;
-  position: relative;
-  background-color: black;
-  height: calc(100vh - 72px);
-  min-height: 35rem;
+.video_wrapper {
   width: 100%;
+  height: 380px;
+  position: relative;
   overflow: hidden;
-  z-index: -1;
-}
-
-.video_background_holder video {
-  position: relative;
-  top: 50%;
-  left: 50%;
-  min-width: 100%;
-  min-height: 80%;
-  width: 100%;
-  height: auto;
-  z-index: -1;
-  -ms-transform: translateX(-50%) translateY(-50%);
-  -moz-transform: translateX(-50%) translateY(-50%);
-  -webkit-transform: translateX(-50%) translateY(-50%);
-  transform: translateX(-50%) translateY(-50%);
-}
-
-.container {
-  display: grid;
-  justify-content: center;
-  align-items: center;
-}
-
-.video_background_content div {
-  position: relative;
+  text-align: center;
   display: flex;
-  justify-content: center;
   align-items: center;
-  z-index: 1;
-  color: white;
+  justify-content: center;
 }
-
-.video_background_content h1 {
-  font-family: "Times New Roman", Times, serif;
-  font-weight: normal;
-  font-size: 3rem;
-}
-
-.video_background_content p {
-  font-size: 1.3rem;
-}
-
-.button {
-  width: fit-content;
-  border-radius: 15px;
-  font-weight: bold;
-  font-family: "Times New Roman", Times, serif;
-  padding: 5px 12px 5px 12px;
-  background-color: transparent;
-  border-color: rgb(202, 157, 32);
-  color: white;
-}
-
-.button:hover,
-.button:focus,
-.button:active {
-  background-color: rgb(202, 157, 32);
-}
-
-.video_background_overlay {
+.video_wrapper video {
+  object-fit: cover;
   position: absolute;
   top: 0;
   left: 0;
   height: 100%;
   width: 100%;
-  background-color: black;
-  opacity: 0.5;
-  z-index: -1;
-}
-
-.card {
-  margin: 1rem;
-  padding: 1.5rem;
-  color: inherit;
-  text-decoration: none;
-  border: 1px solid #eaeaea;
-  border-radius: 20px;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-  transition: color 0.15s ease, border-color 0.15s ease;
-  min-width: 350px;
-  min-height: 350px;
-  display: grid;
-  justify-content: center;
-  z-index: -1;
-  float: left;
-}
-
-.card div {
-  float: left;
-}
-
-.card2 {
-  margin: 1rem;
-  /* padding: 1.5rem; */
-  color: inherit;
-  /* text-decoration: none; */
-  border: 1px solid #eaeaea;
-  border-radius: 20px;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-  transition: color 0.15s ease, border-color 0.15s ease;
-  max-width: 350px;
-  height: 650px;
-  display: grid;
-  grid-template-rows: 35% 55% 10%;
-  /* justify-content: center; */
-  z-index: -1;
-  float: left;
-}
-
-.card2 div {
-  float: left;
-}
-
-.card3 {
-  margin: 1rem;
-  color: inherit;
-  border: 1px solid #eaeaea;
-  border-radius: 20px;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-  transition: color 0.15s ease, border-color 0.15s ease;
-  min-width: 280px;
-  min-height: 280px;
-  z-index: -1;
-  float: left;
 }
