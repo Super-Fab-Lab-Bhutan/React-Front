@@ -46,7 +46,7 @@ export default function News({ data, users, isLoggedIn }) {
             height={320}
             width={350}
             // src={data.image}
-            src={val.image}
+            src={"https://res.cloudinary.com/jigmecom/image/upload/v1652889015/smartm_x9kxyw.jpg"}
             alt="news image"
           />
           <Card

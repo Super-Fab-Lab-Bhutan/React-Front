@@ -82,7 +82,8 @@ export default function Metalworks({ data, users, isLoggedIn }) {
                         height={220}
                         style={{ borderRadius: "20px" }}
                         alt="example"
-                        src={val.image}
+                        // src={val.image},
+                        src={"https://res.cloudinary.com/jigmecom/image/upload/v1652889015/smartm_x9kxyw.jpg"}
                       />
                     }
                   >
@@ -97,7 +98,8 @@ export default function Metalworks({ data, users, isLoggedIn }) {
                         setModalData({
                           equipmentName: val.equipmentName,
                           description: val.description,
-                          image: val.image,
+                          // image: val.image,
+                          image: "https://res.cloudinary.com/jigmecom/image/upload/v1652889015/smartm_x9kxyw.jpg",
                         });
                         showModal();
                       }}

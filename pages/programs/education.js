@@ -81,7 +81,10 @@ export default function Education({ data, pastProject, users, isLoggedIn }) {
           <Image
             width={320}
             height={300}
-            src={data.image}
+            // src={data.image},
+            src={
+              "https://res.cloudinary.com/jigmecom/image/upload/v1652889015/smartm_x9kxyw.jpg"
+            }
             style={{
               borderRadius: "40px",
             }}
@@ -105,7 +108,9 @@ export default function Education({ data, pastProject, users, isLoggedIn }) {
                 setModalData({
                   title: data.title,
                   description: data.description,
-                  image: data.image,
+                  // image: data.image,
+                  image:
+                    "https://res.cloudinary.com/jigmecom/image/upload/v1652889015/smartm_x9kxyw.jpg",
                 });
                 showModal();
               }}
