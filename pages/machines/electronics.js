@@ -88,7 +88,7 @@ export default function Electronic({ data, users, isLoggedIn }) {
                   >
                     <Meta
                       title={val.equipmentName}
-                      description={val.description.slice(0, 40) + "..."}
+                      description={val.description.slice(0, 55) + "..."}
                     />
                     <br />
                     <button
@@ -118,10 +118,11 @@ export default function Electronic({ data, users, isLoggedIn }) {
             title={ModalData.equipmentName}
             visible={isModalVisible}
             footer={null}
+            width={800}
             onCancel={handleCancel}
           >
-            <Row gutter={[16, 16]}>
-              <Col span={12}>
+            <Row justify="space-evenly">
+              <Col>
                 <Card bordered={false}>
                   <Image
                     width={300}
@@ -131,7 +132,7 @@ export default function Electronic({ data, users, isLoggedIn }) {
                   ></Image>
                 </Card>
               </Col>
-              <Col span={12}>
+              <Col>
                 <Card>{ModalData.description}</Card>
               </Col>
             </Row>

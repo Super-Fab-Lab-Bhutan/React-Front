@@ -37,7 +37,7 @@ export default function VideoResource({ data, isLoggedIn, users }) {
         <Card
           style={{
             width: "300px",
-            height: "300px",
+            height: "330px",
             borderRadius: "30px",
             textAlign: "center",
           }}

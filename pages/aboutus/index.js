@@ -1,157 +1,15 @@
-// import styles from "../../styles/AboutUs.module.css";
 import Image from "next/image";
+import { Card, Col, Row } from "antd";
 // image from local storage
 import logo from "../../public/assets/img/logo.png";
 import office from "../../public/assets/img/aboutus/office.jpg";
 
 import { verify } from "jsonwebtoken";
 import Header from "../../components/header";
-import { Card, Col, Row, Space } from "antd";
 const secreteKEY = process.env.JWT_KEY;
+const public_serv = process.env.NEXT_PUBLIC_SERVER;
 
 export async function getServerSideProps({ req }) {
-  const teamData = [
-    {
-      id: "id",
-      username: "Name",
-      image:
-        "https://th.bing.com/th/id/R.1fa6676f82f058e11409b316f2cc6b4e?rik=wXdge7HsT9LrdA&pid=ImgRaw&r=0",
-      role: "Description",
-    },
-    {
-      id: "id2",
-      username: "Name",
-      image:
-        "https://th.bing.com/th/id/R.1fa6676f82f058e11409b316f2cc6b4e?rik=wXdge7HsT9LrdA&pid=ImgRaw&r=0",
-      role: "Description",
-    },
-    {
-      id: "id",
-      username: "Name",
-      image:
-        "https://th.bing.com/th/id/R.1fa6676f82f058e11409b316f2cc6b4e?rik=wXdge7HsT9LrdA&pid=ImgRaw&r=0",
-      role: "Description",
-    },
-    {
-      id: "id",
-      username: "Name",
-      image:
-        "https://th.bing.com/th/id/R.1fa6676f82f058e11409b316f2cc6b4e?rik=wXdge7HsT9LrdA&pid=ImgRaw&r=0",
-      role: "Description",
-    },
-    {
-      id: "id",
-      username: "Name",
-      image:
-        "https://th.bing.com/th/id/R.1fa6676f82f058e11409b316f2cc6b4e?rik=wXdge7HsT9LrdA&pid=ImgRaw&r=0",
-      role: "Description",
-    },
-    {
-      id: "id",
-      username: "Name",
-      image:
-        "https://th.bing.com/th/id/R.1fa6676f82f058e11409b316f2cc6b4e?rik=wXdge7HsT9LrdA&pid=ImgRaw&r=0",
-      role: "Description",
-    },
-    {
-      id: "id",
-      username: "Name",
-      image:
-        "https://th.bing.com/th/id/R.1fa6676f82f058e11409b316f2cc6b4e?rik=wXdge7HsT9LrdA&pid=ImgRaw&r=0",
-      role: "Description",
-    },
-    {
-      id: "id",
-      username: "Name",
-      image:
-        "https://th.bing.com/th/id/R.1fa6676f82f058e11409b316f2cc6b4e?rik=wXdge7HsT9LrdA&pid=ImgRaw&r=0",
-      role: "Description",
-    },
-    {
-      id: "id",
-      username: "Name",
-      image:
-        "https://th.bing.com/th/id/R.1fa6676f82f058e11409b316f2cc6b4e?rik=wXdge7HsT9LrdA&pid=ImgRaw&r=0",
-      role: "Description",
-    },
-    {
-      id: "id",
-      username: "Name",
-      image:
-        "https://th.bing.com/th/id/R.1fa6676f82f058e11409b316f2cc6b4e?rik=wXdge7HsT9LrdA&pid=ImgRaw&r=0",
-      role: "Description",
-    },
-    {
-      id: "id",
-      username: "Name",
-      image:
-        "https://th.bing.com/th/id/R.1fa6676f82f058e11409b316f2cc6b4e?rik=wXdge7HsT9LrdA&pid=ImgRaw&r=0",
-      role: "Description",
-    },
-  ];
-  const galleryData = [
-    {
-      id: "id",
-      image:
-        "https://th.bing.com/th/id/R.1fa6676f82f058e11409b316f2cc6b4e?rik=wXdge7HsT9LrdA&pid=ImgRaw&r=0",
-    },
-    {
-      id: "id",
-      image:
-        "https://th.bing.com/th/id/R.1fa6676f82f058e11409b316f2cc6b4e?rik=wXdge7HsT9LrdA&pid=ImgRaw&r=0",
-    },
-    {
-      id: "id",
-      image:
-        "https://th.bing.com/th/id/R.1fa6676f82f058e11409b316f2cc6b4e?rik=wXdge7HsT9LrdA&pid=ImgRaw&r=0",
-    },
-    {
-      id: "id",
-      image:
-        "https://th.bing.com/th/id/R.1fa6676f82f058e11409b316f2cc6b4e?rik=wXdge7HsT9LrdA&pid=ImgRaw&r=0",
-    },
-    {
-      id: "id",
-      image:
-        "https://th.bing.com/th/id/R.1fa6676f82f058e11409b316f2cc6b4e?rik=wXdge7HsT9LrdA&pid=ImgRaw&r=0",
-    },
-    {
-      id: "id",
-      image:
-        "https://th.bing.com/th/id/R.1fa6676f82f058e11409b316f2cc6b4e?rik=wXdge7HsT9LrdA&pid=ImgRaw&r=0",
-    },
-    {
-      id: "id",
-      image:
-        "https://th.bing.com/th/id/R.1fa6676f82f058e11409b316f2cc6b4e?rik=wXdge7HsT9LrdA&pid=ImgRaw&r=0",
-    },
-    {
-      id: "id",
-      image:
-        "https://th.bing.com/th/id/R.1fa6676f82f058e11409b316f2cc6b4e?rik=wXdge7HsT9LrdA&pid=ImgRaw&r=0",
-    },
-    {
-      id: "id",
-      image:
-        "https://th.bing.com/th/id/R.1fa6676f82f058e11409b316f2cc6b4e?rik=wXdge7HsT9LrdA&pid=ImgRaw&r=0",
-    },
-    {
-      id: "id",
-      image:
-        "https://th.bing.com/th/id/R.1fa6676f82f058e11409b316f2cc6b4e?rik=wXdge7HsT9LrdA&pid=ImgRaw&r=0",
-    },
-    {
-      id: "id",
-      image:
-        "https://th.bing.com/th/id/R.1fa6676f82f058e11409b316f2cc6b4e?rik=wXdge7HsT9LrdA&pid=ImgRaw&r=0",
-    },
-    {
-      id: "id",
-      image:
-        "https://th.bing.com/th/id/R.1fa6676f82f058e11409b316f2cc6b4e?rik=wXdge7HsT9LrdA&pid=ImgRaw&r=0",
-    },
-  ];
-
   // check for login
   const jwt = req.cookies.jwt;
 
@@ -164,6 +22,14 @@ export async function getServerSideProps({ req }) {
     isLoggedIn = false;
   }
 
+  //get teams data
+  let teamData = await fetch(public_serv + "/team");
+  teamData = await teamData.json();
+
+  //get gallery image
+  let galleryData = await fetch(public_serv + "/getimages");
+  galleryData = await galleryData.json();
+
   return {
     props: {
       teamData,
@@ -175,32 +41,8 @@ export async function getServerSideProps({ req }) {
 }
 
 export default function AboutUs({ teamData, galleryData, isLoggedIn, users }) {
-  const TeamData = teamData;
-  const GalleryData = galleryData;
-
-  // const Team = ({ Data }) => {
-  //   return (
-  //     <>
-  //       <p className="title">Meet Our Team</p>
-  //       <div className={styles.img_grid}>
-  //         {Data.map((val, i) => {
-  //           return (
-  //             <div
-  //               className={styles.img_card}
-  //               style={{
-  //                 backgroundImage: `url(${val.image})`,
-  //               }}
-  //               key={i}
-  //             >
-  //               <p>{val.username}</p>
-  //               <p>{val.role}</p>
-  //             </div>
-  //           );
-  //         })}
-  //       </div>
-  //     </>
-  //   );
-  // };
+  const TeamData = teamData.team;
+  const GalleryData = galleryData.gallery;
 
   return (
     <Header isLoggedIn={isLoggedIn} users={users}>
@@ -262,7 +104,7 @@ export default function AboutUs({ teamData, galleryData, isLoggedIn, users }) {
               </Col>
             </Row>
           </Card>
-
+          <br />
           <p className="title">Objectives</p>
           <Card
             style={{ borderRadius: "30px", maxWidth: "700px", margin: "auto" }}
@@ -310,11 +152,33 @@ export default function AboutUs({ teamData, galleryData, isLoggedIn, users }) {
               src="https://www.youtube.com/embed/-tKVN2mAKRI"
             ></iframe>
           </div>
-          {/* <Team Data={TeamData} /> */}
+          <p className="title">Meet Our Team</p>
+          <Row justify="space-evenly">
+            {TeamData.map((val, i) => {
+              return (
+                <Col key={i}>
+                  <Card
+                    hoverable
+                    style={{ borderRadius: "30px", width: 240 }}
+                    cover={
+                      <Image
+                        alt="example"
+                        width={240}
+                        height={280}
+                        src={public_serv + "/" + val.image}
+                      />
+                    }
+                  >
+                    <Card.Meta title={val.name} description={val.description} />
+                  </Card>
+                </Col>
+              );
+            })}
+          </Row>
+          <br />
           <p className="title">Gallery</p>
-
           <Row gutter={[16, 16]} justify="space-evenly">
-            {galleryData.map((val, i) => {
+            {GalleryData.map((val, i) => {
               return (
                 <Col key={i}>
                   <Card
@@ -323,7 +187,11 @@ export default function AboutUs({ teamData, galleryData, isLoggedIn, users }) {
                       height: "260px",
                     }}
                   >
-                    <Image src={val.image} layout="fill" alt="gallery image" />
+                    <Image
+                      src={public_serv + "/" + val.image}
+                      layout="fill"
+                      alt="gallery image"
+                    />
                   </Card>
                 </Col>
               );

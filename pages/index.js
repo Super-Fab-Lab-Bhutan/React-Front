@@ -13,6 +13,7 @@ const { Meta } = Card;
 
 const server = process.env.SERVER;
 const secreteKEY = process.env.JWT_KEY;
+const public_serv = process.env.NEXT_PUBLIC_SERVER;
 
 export async function getServerSideProps({ req }) {
   //program titles and description
@@ -61,7 +62,7 @@ export async function getServerSideProps({ req }) {
   // News and Events
   let News = await fetch(server + "/news-and-events");
   News = await News.json();
-  News = News.news[News.news.length - 1];
+  News = News.news[0];
   // .......
 
   const jwt = req.cookies.jwt;
@@ -178,10 +179,7 @@ export default function Home({ isLoggedIn, users, Programs, Machines, News }) {
               <Image
                 width={320}
                 height={300}
-                // src={image}
-                src={
-                  "https://th.bing.com/th/id/OIP.V5-vEYnDM0u49_jqpqjr5gHaHY?pid=ImgDet&rs=1"
-                }
+                src={public_serv + "/" + image}
                 alt={type}
               />
             </Col>
@@ -435,24 +433,24 @@ export default function Home({ isLoggedIn, users, Programs, Machines, News }) {
 
         <Card
           style={{
-            backgroundImage: `url(${News.image})`,
+            backgroundImage: `url(${public_serv + "/" + News.image})`,
+
             backgroundSize: "cover",
-            opacity: "0.9",
+            opacity: "0.8",
             minHeight: "200px",
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
             marginTop: "10px",
             marginBottom: "50px",
-            color: "white",
+            // color: "white",
+            textAlign: "center",
           }}
         >
           <b className="title">{News.title}</b>
           <p>{News.description.slice(0, 200) + "..."}</p>
           <Link href="/news" passHref>
-            <button className="button" style={{ color: "white" }}>
-              Update More
-            </button>
+            <button className="button">Update More</button>
           </Link>
         </Card>
       </main>

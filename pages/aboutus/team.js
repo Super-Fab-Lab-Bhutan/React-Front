@@ -17,40 +17,42 @@ export async function getServerSideProps({ req }) {
     isLoggedIn = false;
   }
 
-  //get gallery image
-  let galleryData = await fetch(public_serv + "/getimages");
-  galleryData = await galleryData.json();
+  //get teams data
+  let teamData = await fetch(public_serv + "/team");
+  teamData = await teamData.json();
 
   return {
     props: {
-      galleryData,
+      teamData,
       users,
       isLoggedIn,
     },
   };
 }
 
-export default function gallery({ galleryData, isLoggedIn, users }) {
-  const GalleryData = galleryData.gallery;
+export default function Team({ teamData, isLoggedIn, users }) {
+  const TeamData = teamData.team;
   return (
     <Header isLoggedIn={isLoggedIn} users={users}>
       <main>
-        <p className="title">Collection Pictures of SFL</p>
+        <p className="title">Meet Our Team</p>
         <Row gutter={[16, 16]} justify="space-evenly">
-          {GalleryData.map((val, i) => {
+          {TeamData.map((val, i) => {
             return (
               <Col key={i}>
                 <Card
-                  style={{
-                    width: "300px",
-                    height: "260px",
-                  }}
+                  hoverable
+                  style={{ borderRadius: "30px", width: 240 }}
+                  cover={
+                    <Image
+                      alt="example"
+                      width={240}
+                      height={280}
+                      src={public_serv + "/" + val.image}
+                    />
+                  }
                 >
-                  <Image
-                    src={public_serv + "/" + val.image}
-                    layout="fill"
-                    alt="gallery image"
-                  />
+                  <Card.Meta title={val.name} description={val.description} />
                 </Card>
               </Col>
             );
