@@ -43,12 +43,12 @@ export default function Login({ isLoggedIn, users }) {
         return response.json();
       })
       .then((data) => {
-        console.log(data);
+        // console.log(data);
         if (data.status == 200) {
           if (data.role != "admin") {
             router.replace("/");
           } else {
-            console.log("admin");
+            // console.log("admin");
             router.replace(server + "/admin");
           }
         } else {

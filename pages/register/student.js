@@ -64,7 +64,7 @@ export default function Student({ isLoggedIn, users }) {
         }
       );
       uploadResponse = await uploadResponse.json();
-      console.log(uploadResponse.url);
+      // console.log(uploadResponse.url);
     } catch (err) {
       console.log(err);
     }

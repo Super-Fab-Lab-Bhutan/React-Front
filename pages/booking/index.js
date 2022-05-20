@@ -102,7 +102,7 @@ export default function Booking({ initialData, isLoggedIn, users }) {
     var data = event.target.dataset.value;
     var time = data.split(" ")[0];
     var EquipmentId = data.split(" ")[1];
-    console.log(date + time + EquipmentId);
+    // console.log(date + time + EquipmentId);
     if (confirm(`are you sure you want to book on ${date} from ${time}`)) {
       sendData(EquipmentId, date, time);
     }

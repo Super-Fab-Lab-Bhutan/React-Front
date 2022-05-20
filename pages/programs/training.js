@@ -25,7 +25,7 @@ export async function getServerSideProps({ req }) {
   // past projects
   let pastProject = await fetch(server + "/titles");
   pastProject = await pastProject.json();
-  console.log(pastProject.program);
+
   const ProgramType = "Training";
   // filter by type
   pastProject = pastProject.program.filter((val) => val.type === ProgramType);
