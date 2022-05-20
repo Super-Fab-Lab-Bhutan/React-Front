@@ -6,7 +6,7 @@ import Header from "../../components/header";
 
 const server = process.env.SERVER;
 const secreteKEY = process.env.JWT_KEY;
-
+const public_serv = process.env.NEXT_PUBLIC_SERVER;
 export async function getServerSideProps({ req }) {
   // fetch data from api
   let data = await fetch(server + "/training-program");
@@ -81,10 +81,7 @@ export default function Training({ data, pastProject, users, isLoggedIn }) {
           <Image
             width={320}
             height={300}
-            // src={data.image}
-            src={
-              "https://res.cloudinary.com/jigmecom/image/upload/v1652889015/smartm_x9kxyw.jpg"
-            }
+            src={public_serv + "/" + data.image}
             style={{
               borderRadius: "40px",
             }}
@@ -108,9 +105,7 @@ export default function Training({ data, pastProject, users, isLoggedIn }) {
                 setModalData({
                   title: data.title,
                   description: data.description,
-                  // image: data.image,
-                  image:
-                    "https://res.cloudinary.com/jigmecom/image/upload/v1652889015/smartm_x9kxyw.jpg",
+                  image: public_serv + "/" + data.image,
                 });
                 showModal();
               }}

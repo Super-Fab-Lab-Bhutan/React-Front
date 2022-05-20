@@ -1,10 +1,16 @@
 import { useState, createRef } from "react";
 import { Card, Col, Form, Input, Row, Select } from "antd";
+
 import ReCAPTCHA from "react-google-recaptcha";
 
 import Header from "../../components/header";
 import { verify } from "jsonwebtoken";
 import Link from "next/link";
+
+const sitekey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
+const API_KEY = process.env.NEXT_PUBLIC_CLOUD_API;
+const upload_preset = process.env.NEXT_PUBLIC_UPLOAD_PRESET;
+const cloudName = process.env.NEXT_PUBLIC_IMAGE_CLOUD_NAME;
 
 const secreteKEY = process.env.JWT_KEY;
 
@@ -31,8 +37,8 @@ export async function getServerSideProps({ req }) {
 
 export default function Student({ isLoggedIn, users }) {
   const [User, setUser] = useState({});
+  const [file, setFile] = useState();
   const recaptchaRef = createRef();
-  const sitekey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
 
   const validateMessages = {
     required: "${label} is required!",
@@ -42,6 +48,26 @@ export default function Student({ isLoggedIn, users }) {
     string: {
       range: "${label} must be at least ${min}",
     },
+  };
+
+  const handleUploadFile = async ({ File, Preset }) => {
+    try {
+      const formData = new FormData();
+      formData.append("file", File);
+      formData.append("upload_preset", Preset); // this is yout upload opreset
+      formData.append("api_key", API_KEY); // This is your upload key
+      const uploadResponse = await fetch(
+        `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`,
+        {
+          method: "post",
+          body: formData,
+        }
+      );
+      uploadResponse = await uploadResponse.json();
+      console.log(uploadResponse.url);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   const handleSubmit = async (val) => {
@@ -65,6 +91,12 @@ export default function Student({ isLoggedIn, users }) {
     // Else reCAPTCHA was executed successfully so proceed with the
     const { password, email, phoneNumber, organization, username, gender } =
       User;
+
+    // let FileUrl = await handleUploadFile({
+    //   File: file,
+    //   Preset: upload_preset,
+    // });
+    
     let response = await fetch("/api/auth/register", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -95,7 +127,7 @@ export default function Student({ isLoggedIn, users }) {
         <Card
           style={{
             paddingTop: "10px",
-            maxWidth: "700px",
+            maxWidth: "750px",
             borderRadius: "30px",
             margin: "auto",
           }}
@@ -167,7 +199,7 @@ export default function Student({ isLoggedIn, users }) {
                   <Input />
                 </Form.Item>
               </Col>
-              <Col span={22}>
+              <Col>
                 <Form.Item
                   label="Gender"
                   name="gender"
@@ -185,6 +217,24 @@ export default function Student({ isLoggedIn, users }) {
                     <Select.Option value="Female">Female</Select.Option>
                     <Select.Option value="Other">Other</Select.Option>
                   </Select>
+                </Form.Item>
+              </Col>
+              <Col
+                style={{
+                  width: "200px",
+                }}
+              >
+                <Form.Item label="Upload file">
+                  <input
+                    type="file"
+                    onChange={(e) => {
+                      setFile(e.target.files[0]);
+                      // handleUploadFile({
+                      //   File: e.target.files[0],
+                      //   Preset: upload_preset,
+                      // });
+                    }}
+                  />
                 </Form.Item>
               </Col>
               <Col>

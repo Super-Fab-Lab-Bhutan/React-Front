@@ -4,7 +4,8 @@ import Link from "next/link";
 import Header from "../../components/header";
 import { verify } from "jsonwebtoken";
 const secreteKEY = process.env.JWT_KEY;
-
+const server = process.env.SERVER;
+const public_serv = process.env.NEXT_PUBLIC_SERVER;
 export async function getServerSideProps({ req }) {
   // check for login
   const jwt = req.cookies.jwt;
@@ -17,16 +18,21 @@ export async function getServerSideProps({ req }) {
   } catch (error) {
     isLoggedIn = false;
   }
+  //get data from backend
+  let data = await fetch(server + "/trainingresources");
+  data = await data.json();
 
   return {
     props: {
+      data,
       users,
       isLoggedIn,
     },
   };
 }
 
-export default function TrainingResource({ isLoggedIn, users }) {
+export default function TrainingResource({ data, isLoggedIn, users }) {
+  const Data = data.file;
   const ManualCard = ({ url, title, description }) => {
     return (
       <Col style={{ marginBottom: "15px" }}>
@@ -59,28 +65,17 @@ export default function TrainingResource({ isLoggedIn, users }) {
     <Header isLoggedIn={isLoggedIn} users={users}>
       <main>
         <p className="title">Training Manual</p>
-
         <Row justify="space-evenly">
-          <ManualCard
-            title="Title"
-            description="Description"
-            url="https://res.cloudinary.com/jigmecom/image/upload/v1652834190/Resource/TrainingManual/manual_form_3_supwdy.pdf"
-          />
-          <ManualCard
-            title="Title"
-            description="Description"
-            url="https://res.cloudinary.com/jigmecom/image/upload/v1652834190/Resource/TrainingManual/manual_form_3_supwdy.pdf"
-          />
-          <ManualCard
-            title="Title"
-            description="Description"
-            url="https://res.cloudinary.com/jigmecom/image/upload/v1652834190/Resource/TrainingManual/manual_form_3_supwdy.pdf"
-          />
-          <ManualCard
-            title="Title"
-            description="Description"
-            url="https://res.cloudinary.com/jigmecom/image/upload/v1652834190/Resource/TrainingManual/manual_form_3_supwdy.pdf"
-          />
+          {Data.map((val, i) => {
+            return (
+              <ManualCard
+                title={val.name}
+                description={val.description}
+                url={public_serv + "/" + val.FileUrl}
+                key={i}
+              />
+            );
+          })}
         </Row>
       </main>
     </Header>

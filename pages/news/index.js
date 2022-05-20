@@ -5,6 +5,7 @@ import { Card, Row, Col, Space } from "antd";
 
 const server = process.env.SERVER;
 const secreteKEY = process.env.JWT_KEY;
+const public_serv = process.env.NEXT_PUBLIC_SERVER;
 
 export async function getServerSideProps({ req }) {
   // fetch data from api
@@ -45,8 +46,7 @@ export default function News({ data, users, isLoggedIn }) {
           <Image
             height={320}
             width={350}
-            // src={data.image}
-            src={"https://res.cloudinary.com/jigmecom/image/upload/v1652889015/smartm_x9kxyw.jpg"}
+            src={public_serv + "/" + data.image}
             alt="news image"
           />
           <Card

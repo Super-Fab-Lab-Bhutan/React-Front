@@ -46,7 +46,7 @@ export default function Header({ isLoggedIn, users, children }) {
                 <Link href="/machines/heavymachines">Heavy Machine Lab</Link>
               </Item>
               <Item key={4}>
-                <Link href="/machines/metalworks">Metal Works Lab</Link>
+                <Link href="/machines/metalworks">Laser Lab</Link>
               </Item>
             </SubMenu>
             <SubMenu key="sub2" title={<span>Programs</span>}>

@@ -5,6 +5,7 @@ import Header from "../../components/header";
 import { verify } from "jsonwebtoken";
 const server = process.env.SERVER;
 const secreteKEY = process.env.JWT_KEY;
+const public_serv = process.env.NEXT_PUBLIC_SERVER;
 
 export async function getServerSideProps({ req }) {
   // fetch data from api
@@ -82,8 +83,7 @@ export default function Carpentry({ data, users, isLoggedIn }) {
                         height={220}
                         style={{ borderRadius: "20px" }}
                         alt="example"
-                        // src={val.image},
-                        src={"https://res.cloudinary.com/jigmecom/image/upload/v1652889015/smartm_x9kxyw.jpg"}
+                        src={public_serv + "/" + val.image}
                       />
                     }
                   >
@@ -98,8 +98,7 @@ export default function Carpentry({ data, users, isLoggedIn }) {
                         setModalData({
                           equipmentName: val.equipmentName,
                           description: val.description,
-                          // image: val.image,
-                          image: "https://res.cloudinary.com/jigmecom/image/upload/v1652889015/smartm_x9kxyw.jpg",
+                          image: public_serv + "/" + val.image,
                         });
                         showModal();
                       }}
