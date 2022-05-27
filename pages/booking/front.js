@@ -118,7 +118,7 @@ export default function FrontBooking({ Machines, isLoggedIn, users }) {
         </p>
         <ul>
           <li>
-            The training program will consist of dos and don'ts of the labs,
+            The training program will consist of dos and don&apos;ts of the labs,
             Standard operating procedures of the lab.
           </li>
           <li>

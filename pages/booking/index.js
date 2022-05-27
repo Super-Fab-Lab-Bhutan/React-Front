@@ -57,8 +57,6 @@ const { TabPane } = Tabs;
 export default function Booking({ initialData, isLoggedIn, users }) {
   const equipmentTypeOptions = ["Carpentry", "Electronic", "Heavy", "Metal"];
 
-  console.log(initialData);
-  // console.log(users);
   const [Data, setData] = useState(initialData);
   const [date, setDate] = useState(new Date());
 
