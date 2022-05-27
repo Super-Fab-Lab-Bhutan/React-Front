@@ -1,16 +1,4 @@
-import {
-  Button,
-  Card,
-  Checkbox,
-  Col,
-  DatePicker,
-  Modal,
-  Radio,
-  Row,
-  Segmented,
-  Space,
-  Tabs,
-} from "antd";
+import { Card, Checkbox, Col, DatePicker, Modal, Radio, Row, Tabs } from "antd";
 import styles from "../../styles/Booking.module.css";
 
 import Header from "../../components/header";
@@ -90,17 +78,9 @@ export default function Booking({ initialData, isLoggedIn, users }) {
         })
         .then((data) => {
           setData(data);
-          // console.log(data);
-          // GetEquipmentData();
         });
     } catch (error) {}
   };
-
-  //handle data
-  // const [equipmentData, setEquipmentData] = useState();
-  // const GetEquipmentData = () => {
-  //   console.log(Data);
-  // };
 
   //...Modal
   const [showModalView, setModalView] = useState(false);
@@ -326,9 +306,13 @@ export default function Booking({ initialData, isLoggedIn, users }) {
             <br />
             <Tabs tabPosition="top">
               {equipmentTypeOptions.map((val, i) => {
+                let EquipmentData = Data.filter((data) => {
+                  return data.Type == val;
+                });
+
                 return (
                   <TabPane tab={val} key={i}>
-                    <BookingTable TableData={Data} />
+                    <BookingTable TableData={EquipmentData} />
                   </TabPane>
                 );
               })}
