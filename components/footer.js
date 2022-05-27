@@ -43,9 +43,11 @@ export default function Footer() {
         <Col>
           <p>We&apos;d love to hear from you!</p>
           <br />
-          <button className="button" style={{ color: "white" }}>
-            Stay In Touch
-          </button>
+          <Link href="/aboutus" passHref>
+            <button className="button" style={{ color: "white" }}>
+              Stay In Touch
+            </button>
+          </Link>
           <br />
           <br />
           <Space wrap size="middle">

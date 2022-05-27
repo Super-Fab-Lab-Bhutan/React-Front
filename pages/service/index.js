@@ -39,14 +39,14 @@ export default function Service({ isLoggedIn, users }) {
           <p className="title">We Offer Awsome Services</p>
           <p className="subtitle">Sustainable Solutions to your Problems</p>
         </div>
-        <Row justify="space-evenly">
-          <Col style={{ marginBottom: "10px" }}>
+        <Row gutter={[16, 16]} justify="space-evenly">
+          <Col>
             <Card
               hoverable
               style={{
                 borderRadius: "30px",
                 width: "220px",
-                height: "330px",
+                minHeight: "330px",
               }}
             >
               <p className="subtitle">CONSULTATION</p>
@@ -73,13 +73,13 @@ export default function Service({ isLoggedIn, users }) {
               </div>
             </Card>
           </Col>
-          <Col style={{ marginBottom: "10px" }}>
+          <Col>
             <Card
               hoverable
               style={{
                 borderRadius: "30px",
                 width: "220px",
-                height: "330px",
+                minHeight: "330px",
               }}
             >
               <p className="subtitle">REPAIR</p>
@@ -92,13 +92,13 @@ export default function Service({ isLoggedIn, users }) {
               </p>
             </Card>
           </Col>
-          <Col style={{ marginBottom: "10px" }}>
+          <Col>
             <Card
               hoverable
               style={{
                 borderRadius: "30px",
                 width: "220px",
-                height: "330px",
+                minHeight: "330px",
               }}
             >
               <p className="subtitle">PROTOTYPING</p>
@@ -112,13 +112,13 @@ export default function Service({ isLoggedIn, users }) {
               </p>
             </Card>
           </Col>
-          <Col style={{ marginBottom: "10px" }}>
+          <Col>
             <Card
               hoverable
               style={{
                 borderRadius: "30px",
                 width: "220px",
-                height: "330px",
+                minHeight: "330px",
               }}
             >
               <p className="subtitle">INCUBATION</p>

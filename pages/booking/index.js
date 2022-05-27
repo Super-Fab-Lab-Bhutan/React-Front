@@ -1,9 +1,23 @@
-import { Col, DatePicker, Row, Segmented } from "antd";
+import {
+  Button,
+  Card,
+  Checkbox,
+  Col,
+  DatePicker,
+  Modal,
+  Radio,
+  Row,
+  Segmented,
+  Space,
+  Tabs,
+} from "antd";
 import styles from "../../styles/Booking.module.css";
+
 import Header from "../../components/header";
 
 import { verify } from "jsonwebtoken";
 import { useState } from "react";
+import Link from "next/link";
 const secreteKEY = process.env.JWT_KEY; //server side
 const server = process.env.NEXT_PUBLIC_SERVER; //client side
 
@@ -50,29 +64,47 @@ export async function getServerSideProps({ req }) {
   };
 }
 
+const { TabPane } = Tabs;
+
 export default function Booking({ initialData, isLoggedIn, users }) {
   const equipmentTypeOptions = ["Carpentry", "Electronic", "Heavy", "Metal"];
 
+  console.log(initialData);
+  // console.log(users);
   const [Data, setData] = useState(initialData);
   const [date, setDate] = useState(new Date());
-  const [equipmentType, setType] = useState(equipmentTypeOptions[0]);
 
   //calls api to update booking
   const GetBookings = async () => {
     try {
-      let data = await fetch(server + "/user/Bookings", {
+      await fetch(server + "/user/Bookings", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          date: newdate,
+          date: date,
           role: users.role,
-          type: equipmentType,
         }),
-      });
-      data = await data.json();
-      setData(data);
+      })
+        .then((res) => {
+          return res.json();
+        })
+        .then((data) => {
+          setData(data);
+          // console.log(data);
+          // GetEquipmentData();
+        });
     } catch (error) {}
   };
+
+  //handle data
+  // const [equipmentData, setEquipmentData] = useState();
+  // const GetEquipmentData = () => {
+  //   console.log(Data);
+  // };
+
+  //...Modal
+  const [showModalView, setModalView] = useState(false);
+  // .....
 
   // send booking
   async function sendData(EquipmentId, date, time) {
@@ -96,117 +128,224 @@ export default function Booking({ initialData, isLoggedIn, users }) {
       console.log(err);
     }
   }
-  const holidays = [new Date(2022, 4, 3), new Date(2023, 0, 11)];
+  // const holidays = [new Date(2022, 4, 3), new Date(2023, 0, 11)];
 
   const handleClick = (event) => {
     var data = event.target.dataset.value;
     var time = data.split(" ")[0];
     var EquipmentId = data.split(" ")[1];
-    // console.log(date + time + EquipmentId);
     if (confirm(`are you sure you want to book on ${date} from ${time}`)) {
       sendData(EquipmentId, date, time);
     }
+  };
+
+  const BookingTable = ({ TableData }) => {
+    return (
+      <div style={{ overflowX: "auto" }}>
+        <table border="1px" cellSpacing="0">
+          <thead cellPadding="5px">
+            <tr>
+              <th style={{ width: "250px" }}>Equipments</th>
+              <th>9:30-10:30</th>
+              <th>10:30-11:30</th>
+              <th>11:30-12:30</th>
+              <th>1:30-2:30</th>
+              <th>2:30-3:30</th>
+              <th>3:30-4:30</th>
+              <th>4:30-5:30</th>
+              <th>5:30-6:30</th>
+            </tr>
+          </thead>
+          <tbody>
+            {TableData.map((val, i) => {
+              if (val.EquipmentName.search("3d") == -1) {
+                return (
+                  <tr key={i}>
+                    <th>{val.EquipmentName}</th>
+                    {val.Booking.map((items, j) => {
+                      return (
+                        <td
+                          key={j}
+                          className={
+                            items.booked ? styles.booked : styles.unbooked
+                          }
+                          onClick={handleClick}
+                          data-value={items.time + " " + val.EquipmentId}
+                        ></td>
+                      );
+                    })}
+                  </tr>
+                );
+              } else {
+                return (
+                  <tr key={i}>
+                    <th>{val.EquipmentName}</th>
+                    <td
+                      colSpan="3"
+                      className={styles.unbooked}
+                      onClick={handleClick}
+                      data-value={"09:30-12:30" + " " + val.EquipmentId}
+                    ></td>
+                    <td
+                      colSpan="5"
+                      className={styles.unbooked}
+                      onClick={handleClick}
+                      data-value={"01:30-06:30" + " " + val.EquipmentId}
+                    ></td>
+                  </tr>
+                );
+              }
+            })}
+          </tbody>
+        </table>
+      </div>
+    );
+  };
+
+  const [InductionDay, setInductionDay] = useState();
+  const [InductionDate, setInductionDate] = useState();
+  const [showInductionDate, setShowInductionDate] = useState(false);
+  const [checkTerms, setCheckTerms] = useState(false);
+
+  const BookInduction = async () => {
+    try {
+      let response = await fetch(server + "/user/bookingInduction", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ date: InductionDate, userID: users.id }),
+      });
+      response = await response.json();
+      if (response.value === "true") {
+        alert(response.message);
+      } else {
+        alert(response.message);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const InductionForm = () => {
+    return (
+      <Card bordered={false} title="Induction Training Form">
+        <p>
+          Induction training is only on Thursday and Friday(3:00pm - 5:00pm)
+        </p>
+        <span>Select Day:</span>
+        <br />
+        <Radio.Group
+          value={InductionDay}
+          onChange={(e) => {
+            setInductionDay(e.target.value);
+            setShowInductionDate(true);
+          }}
+        >
+          <Radio value="Thursday">Thursday</Radio>
+          <Radio value="Friday">Friday</Radio>
+        </Radio.Group>
+        <br />
+        <br />
+        {showInductionDate ? (
+          <>
+            <DatePicker
+              placement="bottomLeft"
+              // disabledDate={(e) => {
+              //   return e;
+              // }}
+              onChange={(e, val) => {
+                setInductionDate(val);
+              }}
+            />
+            <br />
+            <br />
+            <Checkbox
+              checked={checkTerms}
+              onChange={(e) => {
+                setCheckTerms(e.target.checked);
+              }}
+            >
+              I have read and agreed to the{" "}
+              <Link
+                href={
+                  server +
+                  "/" +
+                  "uploads/files/1653046420611-SP400-flexx_8027_Operationmanual_EN.pdf"
+                }
+              >
+                Terms and Conditions
+              </Link>{" "}
+              of SFL
+            </Checkbox>
+            <br />
+            <br />
+            {checkTerms ? (
+              <button
+                className="button"
+                onClick={() => {
+                  BookInduction();
+                }}
+                style={{ width: 150 }}
+              >
+                Submit
+              </button>
+            ) : null}
+          </>
+        ) : null}
+      </Card>
+    );
   };
 
   return (
     <Header isLoggedIn={isLoggedIn} users={users}>
       <main>
         <p className="title">Booking</p>
-
-        <div style={{ padding: "10px" }}>
-          Date:{" "}
-          <DatePicker
-            onChange={(x, val) => {
-              setDate(val);
-              GetBookings();
-            }}
-          />
-          <br />
-          Equipment Type:
-          <br />
-          <Segmented
-            options={equipmentTypeOptions}
-            value={equipmentType}
-            onChange={(val) => {
-              setType(val);
-              GetBookings();
-            }}
-          />
-          <br />
-          <br />
-          <Row justify="space-evenly">
-            <Col>
-              <div className={styles.card3}>
-                <div style={{ overflowX: "auto" }}>
-                  <table border="1px" cellSpacing="0">
-                    <thead cellPadding="5px">
-                      <tr>
-                        <th>Equipments</th>
-                        <th>9:30-10:30</th>
-                        <th>10:30-11:30</th>
-                        <th>11:30-12:30</th>
-                        <th>1:30-2:30</th>
-                        <th>2:30-3:30</th>
-                        <th>3:30-4:30</th>
-                        <th>4:30-5:30</th>
-                        <th>5:30-6:30</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {Data.map((val, i) => {
-                        if (val.EquipmentName.search("3d") == -1) {
-                          return (
-                            <tr key={i}>
-                              <th>{val.EquipmentName}</th>
-                              {val.Booking.map((items, j) => {
-                                return (
-                                  <td
-                                    key={j}
-                                    className={
-                                      items.booked
-                                        ? styles.booked
-                                        : styles.unbooked
-                                    }
-                                    onClick={handleClick}
-                                    data-value={
-                                      items.time + " " + val.EquipmentId
-                                    }
-                                  ></td>
-                                );
-                              })}
-                            </tr>
-                          );
-                        } else {
-                          return (
-                            <tr key={i}>
-                              <th>{val.EquipmentName}</th>
-                              <td
-                                colSpan="3"
-                                className={styles.unbooked}
-                                onClick={handleClick}
-                                data-value={
-                                  "09:30-12:30" + " " + val.EquipmentId
-                                }
-                              ></td>
-                              <td
-                                colSpan="5"
-                                className={styles.unbooked}
-                                onClick={handleClick}
-                                data-value={
-                                  "01:30-06:30" + " " + val.EquipmentId
-                                }
-                              ></td>
-                            </tr>
-                          );
-                        }
-                      })}
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            </Col>
-          </Row>
-        </div>
+        <Row gutter={[16, 16]} justify="space-evenly">
+          <Col>
+            <div style={{ padding: "10px" }}>
+              Date:{" "}
+              <DatePicker
+                onChange={(x, val) => {
+                  setDate(val);
+                  GetBookings();
+                }}
+              />
+              <br />
+              <br />
+              <button
+                className="button"
+                onClick={() => {
+                  setModalView(true);
+                }}
+              >
+                Enroll For Induction Training
+              </button>
+            </div>
+          </Col>
+          <Col>
+            Select Machine Labs:
+            <br />
+            <Tabs tabPosition="top">
+              {equipmentTypeOptions.map((val, i) => {
+                return (
+                  <TabPane tab={val} key={i}>
+                    <BookingTable TableData={Data} />
+                  </TabPane>
+                );
+              })}
+            </Tabs>
+          </Col>
+        </Row>
+        <Modal
+          visible={showModalView}
+          footer={null}
+          onCancel={() => {
+            setModalView(false);
+          }}
+          width={500}
+        >
+          <InductionForm />
+        </Modal>
+        <br />
       </main>
     </Header>
   );

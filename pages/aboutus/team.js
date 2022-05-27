@@ -48,6 +48,7 @@ export default function Team({ teamData, isLoggedIn, users }) {
                       alt="example"
                       width={240}
                       height={280}
+                      style={{ borderRadius: "30px 30px 0 0" }}
                       src={public_serv + "/" + val.image}
                     />
                   }

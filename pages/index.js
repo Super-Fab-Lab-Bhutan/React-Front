@@ -165,7 +165,8 @@ export default function Home({ isLoggedIn, users, Programs, Machines, News }) {
           <Row justify="space-around">
             <Col
               style={{
-                maxWidth: "50%",
+                maxWidth: "350px",
+                // minHeight: "390px",
               }}
             >
               <p className="title">{title}</p>
@@ -332,7 +333,7 @@ export default function Home({ isLoggedIn, users, Programs, Machines, News }) {
         <div
           style={{
             borderRadius: "30px",
-            width: "90%",
+            maxWidth: "850px",
             margin: "auto",
           }}
         >

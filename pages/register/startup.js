@@ -214,6 +214,7 @@ export default function Startup({ isLoggedIn, users }) {
             </span>
           </p>
         </Card>
+        <br />
       </main>
     </Header>
   );

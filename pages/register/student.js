@@ -96,7 +96,7 @@ export default function Student({ isLoggedIn, users }) {
     //   File: file,
     //   Preset: upload_preset,
     // });
-    
+
     let response = await fetch("/api/auth/register", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -286,6 +286,7 @@ export default function Student({ isLoggedIn, users }) {
             </span>
           </p>
         </Card>
+        <br />
       </main>
     </Header>
   );

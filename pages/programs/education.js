@@ -171,6 +171,7 @@ export default function Education({ data, pastProject, users, isLoggedIn }) {
             <Card>{modalData.description}</Card>
           </Space>
         </Modal>
+        <br />
       </main>
     </Header>
   );

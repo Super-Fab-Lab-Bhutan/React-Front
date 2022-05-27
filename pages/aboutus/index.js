@@ -153,7 +153,7 @@ export default function AboutUs({ teamData, galleryData, isLoggedIn, users }) {
             ></iframe>
           </div>
           <p className="title">Meet Our Team</p>
-          <Row justify="space-evenly">
+          <Row gutter={[16, 16]} justify="space-evenly">
             {TeamData.map((val, i) => {
               return (
                 <Col key={i}>
@@ -165,6 +165,7 @@ export default function AboutUs({ teamData, galleryData, isLoggedIn, users }) {
                         alt="example"
                         width={240}
                         height={280}
+                        style={{ borderRadius: "30px 30px 0 0" }}
                         src={public_serv + "/" + val.image}
                       />
                     }

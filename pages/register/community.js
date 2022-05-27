@@ -215,6 +215,7 @@ export default function Community({ isLoggedIn, users }) {
             </span>
           </p>
         </Card>
+        <br />
       </main>
     </Header>
   );

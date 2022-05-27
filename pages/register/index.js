@@ -31,13 +31,13 @@ export default function Register({ isLoggedIn, users }) {
     <Header isLoggedIn={isLoggedIn} users={users}>
       <main>
         <p className="title">Register</p>
-        <Row justify="space-evenly">
-          <Col style={{ marginBottom: "10px" }}>
+        <Row gutter={[16, 16]} justify="space-evenly">
+          <Col>
             <Card
               style={{
                 borderRadius: "30px",
                 width: "230px",
-                height: "350px",
+                minHeight: "350px",
               }}
             >
               <p className="subtitle">SFL Youth</p>
@@ -60,12 +60,12 @@ export default function Register({ isLoggedIn, users }) {
               </Link>
             </Card>
           </Col>
-          <Col style={{ marginBottom: "10px" }}>
+          <Col>
             <Card
               style={{
                 borderRadius: "30px",
                 width: "230px",
-                height: "350px",
+                minHeight: "350px",
               }}
             >
               <p className="subtitle">SFL Open</p>
@@ -88,12 +88,12 @@ export default function Register({ isLoggedIn, users }) {
               </Link>
             </Card>
           </Col>
-          <Col style={{ marginBottom: "10px" }}>
+          <Col>
             <Card
               style={{
                 borderRadius: "30px",
                 width: "230px",
-                height: "350px",
+                minHeight: "350px",
                 display: "grid",
                 justifyContent: "center",
               }}
@@ -118,12 +118,12 @@ export default function Register({ isLoggedIn, users }) {
               </Link>
             </Card>
           </Col>
-          <Col style={{ marginBottom: "10px" }}>
+          <Col>
             <Card
               style={{
                 borderRadius: "30px",
                 width: "230px",
-                height: "350px",
+                minHeight: "350px",
                 display: "grid",
                 justifyContent: "center",
               }}
@@ -148,6 +148,7 @@ export default function Register({ isLoggedIn, users }) {
             </Card>
           </Col>
         </Row>
+        <br />
       </main>
     </Header>
   );

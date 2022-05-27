@@ -48,35 +48,44 @@ export default function Header({ isLoggedIn, users, children }) {
               <Item key={4}>
                 <Link href="/machines/metalworks">Laser Lab</Link>
               </Item>
+              {login_state ? (
+                <Item key={5}>
+                  <Link href="/booking">Booking</Link>
+                </Item>
+              ) : (
+                <Item key={5}>
+                  <Link href="/booking/front">Booking</Link>
+                </Item>
+              )}
             </SubMenu>
             <SubMenu key="sub2" title={<span>Programs</span>}>
-              <Item key={5}>
+              <Item key={6}>
                 <Link href="/programs/education">Education Program</Link>
               </Item>
-              <Item key={6}>
+              <Item key={7}>
                 <Link href="/programs/training">Training Program</Link>
               </Item>
-              <Item key={7}>
+              <Item key={8}>
                 <Link href="/programs/research">Research And Development</Link>
               </Item>
             </SubMenu>
-            <Item key={8}>
+            <Item key={9}>
               <Link href="/service">Service</Link>
             </Item>
-            <Item key={9}>
+            <Item key={10}>
               <Link href="/news">News And Events</Link>
             </Item>
             <SubMenu key="sub3" title={<span>About Us</span>}>
-              <Item key={10}>
+              <Item key={11}>
                 <Link href="/aboutus">Story of SFL</Link>
               </Item>
-              <Item key={11}>
+              <Item key={12}>
                 <Link href="/aboutus/team">Meet the Team</Link>
               </Item>
-              <Item key={12}>
+              <Item key={13}>
                 <Link href="/aboutus/virtualtour">Virtual Tour</Link>
               </Item>
-              <Item key={13}>
+              <Item key={14}>
                 <Link href="/aboutus/gallery">Gallery</Link>
               </Item>
             </SubMenu>
@@ -91,13 +100,13 @@ export default function Header({ isLoggedIn, users, children }) {
                   </>
                 }
               >
-                <Item key={14}>
+                <Item key={15}>
                   <Link href="/profile">Profile</Link>
                 </Item>
-                <Item key={15}>
+                <Item key={16}>
                   <Link href="/booking">Booking</Link>
                 </Item>
-                <Item key={16}>
+                <Item key={17}>
                   <Button
                     type="link"
                     onClick={() => {
@@ -109,7 +118,7 @@ export default function Header({ isLoggedIn, users, children }) {
                 </Item>
               </SubMenu>
             ) : (
-              <Item key={17}>
+              <Item key={18}>
                 <Link href="/login" passHref>
                   <Button style={{ borderRadius: "20px" }}>Login</Button>
                 </Link>
@@ -118,7 +127,6 @@ export default function Header({ isLoggedIn, users, children }) {
           </Menu>
         </div>
       </Affix>
-
       <Content>{children}</Content>
     </Layout>
   );
