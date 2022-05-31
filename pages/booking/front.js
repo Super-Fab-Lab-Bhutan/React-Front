@@ -1,9 +1,11 @@
-import Header from "../../components/header";
-
-import { verify } from "jsonwebtoken";
 import { Card, Carousel, Col, Row } from "antd";
 import Image from "next/image";
 import Link from "next/link";
+import parse from "html-react-parser";
+
+import { verify } from "jsonwebtoken";
+import Header from "../../components/header";
+
 const secreteKEY = process.env.JWT_KEY;
 const server = process.env.SERVER;
 const public_serv = process.env.NEXT_PUBLIC_SERVER;
@@ -85,7 +87,7 @@ export default function FrontBooking({ Machines, isLoggedIn, users }) {
             >
               <p className="title">{title}</p>
               <p className="subtitle">{equipmentName}</p>
-              <p className="smtext">{description}</p>
+              <p className="smtext">{parse(`${description}`)}</p>
               <Link href="/booking" passHref>
                 <button className="button">Book Now</button>
               </Link>
@@ -118,8 +120,8 @@ export default function FrontBooking({ Machines, isLoggedIn, users }) {
         </p>
         <ul>
           <li>
-            The training program will consist of dos and don&apos;ts of the labs,
-            Standard operating procedures of the lab.
+            The training program will consist of dos and don&apos;ts of the
+            labs, Standard operating procedures of the lab.
           </li>
           <li>
             For all the machines, separate training sessions and competency

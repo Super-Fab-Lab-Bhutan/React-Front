@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useRouter } from "next/router";
+import Head from "next/head";
 import { Layout, Menu, Button, Affix } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 import Link from "next/link";
@@ -7,10 +8,10 @@ import Link from "next/link";
 import Image from "next/image";
 import logo from "../public/assets/img/logo.png";
 
-const { Content } = Layout;
+const { Content, Header } = Layout;
 const { Item, SubMenu } = Menu;
 
-export default function Header({ isLoggedIn, users, children }) {
+export default function HeaderLayout({ isLoggedIn, users, children }) {
   const role = users === null ? null : users.role;
   const [login_state, setLogin] = useState(isLoggedIn);
 
@@ -29,9 +30,28 @@ export default function Header({ isLoggedIn, users, children }) {
   return (
     <Layout>
       <Affix offsetTop={0}>
-        <div className="header">
-          <Menu theme="light" mode="horizontal" className="menu">
+        <Header
+          style={{ height: "100px", backgroundColor: "white", color: "white" }}
+        >
+          <div
+            style={{
+              height: "80px",
+              width: "80px",
+              float: "left",
+              margin: "16px 24px 16px 0",
+            }}
+          >
             <Image src={logo} width={70} height={70} alt="logo" />
+          </div>
+          <Menu
+            theme="light"
+            mode="horizontal"
+            style={{
+              height: "101px",
+              paddingTop: "20px",
+              justifyContent: "center",
+            }}
+          >
             <Item key={0}>
               <Link href="/">Home</Link>
             </Item>
@@ -125,9 +145,19 @@ export default function Header({ isLoggedIn, users, children }) {
               </Item>
             )}
           </Menu>
-        </div>
+        </Header>
       </Affix>
-      <Content>{children}</Content>
+      <Content>
+        <Head>
+          <title>Jigme Namgyel Wangchuck SuperFablab</title>
+          <meta
+            name="description"
+            content="Jigme Namgyel Wangchuck SuperFablab"
+          />
+          <link rel="icon" href="/assets/img/logo.png" />
+        </Head>
+        {children}
+      </Content>
     </Layout>
   );
 }

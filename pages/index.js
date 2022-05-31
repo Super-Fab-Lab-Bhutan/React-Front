@@ -1,13 +1,12 @@
-import Head from "next/head";
 import Image from "next/image";
+import { Card, Carousel, Col, Row } from "antd";
+import Link from "next/link";
 import parse from "html-react-parser";
 
 import Header from "../components/header";
 import { verify } from "jsonwebtoken";
-import { Card, Carousel, Col, Row } from "antd";
-import logo from "../public/assets/img/logo.png";
-import Link from "next/link";
 
+import logo from "../public/assets/img/logo.png";
 import styles from "../styles/Home.module.css";
 
 const { Meta } = Card;
@@ -194,12 +193,6 @@ export default function Home({ isLoggedIn, users, Programs, Machines, News }) {
   };
   return (
     <Header isLoggedIn={isLoggedIn} users={users}>
-      <Head>
-        <title>Super Fab Lab Bhutan</title>
-        <meta name="description" content="Super Fab Lab Bhutan" />
-        <link rel="icon" href="/assets/img/logo.png" />
-      </Head>
-
       <main>
         <div className={styles.video_wrapper}>
           <video height="100%" width="100%" playsInline autoPlay loop muted>
@@ -210,23 +203,9 @@ export default function Home({ isLoggedIn, users, Programs, Machines, News }) {
               position: "relative",
             }}
           >
-            <Row justify="space-evenly">
-              <Col span={24}>
-                <Image height={140} width={140} src={logo} alt="sfl logo" />
-              </Col>
-              <Col style={{ color: "white" }} span={24}>
-                <p className="title">Welcome To Super FabLab</p>
-                <p>
-                  Inspire the future of learning and creating. Provide digital
-                  design tools to ignite a culture of innovation.
-                </p>
-                <Link href="/register" passHref>
-                  <button className="button" style={{ color: "white" }}>
-                    Join Us Today
-                  </button>
-                </Link>
-              </Col>
-            </Row>
+            <p className="title">
+              Welcome To Jigme Namgyel Wangchuck SuperFablab
+            </p>
           </div>
         </div>
         <br />

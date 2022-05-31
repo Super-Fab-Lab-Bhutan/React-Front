@@ -37,7 +37,7 @@ export default function Footer() {
           <br />
           <Space size="middle">
             <MailFilled />
-            <p>DHI, drive@gmail.com</p>
+            <p>bhutansuperfablab@gmail.com</p>
           </Space>
         </Col>
         <Col>
