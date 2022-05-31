@@ -8,10 +8,6 @@ import { verify } from "jsonwebtoken";
 import Link from "next/link";
 
 const sitekey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
-const API_KEY = process.env.NEXT_PUBLIC_CLOUD_API;
-const upload_preset = process.env.NEXT_PUBLIC_UPLOAD_PRESET;
-const cloudName = process.env.NEXT_PUBLIC_IMAGE_CLOUD_NAME;
-
 const secreteKEY = process.env.JWT_KEY;
 
 export async function getServerSideProps({ req }) {
@@ -50,26 +46,7 @@ export default function Student({ isLoggedIn, users }) {
     },
   };
 
-  const handleUploadFile = async ({ File, Preset }) => {
-    try {
-      const formData = new FormData();
-      formData.append("file", File);
-      formData.append("upload_preset", Preset); // this is yout upload opreset
-      formData.append("api_key", API_KEY); // This is your upload key
-      const uploadResponse = await fetch(
-        `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`,
-        {
-          method: "post",
-          body: formData,
-        }
-      );
-      uploadResponse = await uploadResponse.json();
-      // console.log(uploadResponse.url);
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
+  
   const handleSubmit = async (val) => {
     const { password, cpassword } = val;
     if (password === cpassword) {
