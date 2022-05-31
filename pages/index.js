@@ -1,5 +1,6 @@
 import Head from "next/head";
 import Image from "next/image";
+import parse from "html-react-parser";
 
 import Header from "../components/header";
 import { verify } from "jsonwebtoken";
@@ -11,6 +12,7 @@ import styles from "../styles/Home.module.css";
 
 const { Meta } = Card;
 
+// server side pre rendering .....
 const server = process.env.SERVER;
 const secreteKEY = process.env.JWT_KEY;
 const public_serv = process.env.NEXT_PUBLIC_SERVER;
@@ -81,6 +83,7 @@ export async function getServerSideProps({ req }) {
   };
 }
 
+// client side ....
 export default function Home({ isLoggedIn, users, Programs, Machines, News }) {
   // Card for Learn Section
   const LearnCard = ({ title, type, image, description, program }) => {
@@ -171,7 +174,7 @@ export default function Home({ isLoggedIn, users, Programs, Machines, News }) {
             >
               <p className="title">{title}</p>
               <p className="subtitle">{equipmentName}</p>
-              <p className="smtext">{description}</p>
+              <p className="smtext">{parse(`${description}`)}</p>
               <Link href={"/machines/" + type} passHref>
                 <button className="button">Read More</button>
               </Link>
@@ -365,44 +368,44 @@ export default function Home({ isLoggedIn, users, Programs, Machines, News }) {
           <p className="subtitle">In An Innovative Space</p>
         </div>
         <div>
-          <Row justify="space-evenly">
+          <Row gutter={[16, 16]} justify="space-evenly">
             <Col style={{ borderRadius: "30px" }}>
               <Card
                 hoverable
-                title={
-                  <b
-                    style={{
-                      fontSize: "20px",
-                      textAlign: "right",
-                      color: "gray",
-                    }}
-                  >
-                    Work With us as a volunter
-                  </b>
-                }
+                // title={
+                //   <b
+                //     style={{
+                //       fontSize: "20px",
+                //       textAlign: "right",
+                //       color: "black",
+                //     }}
+                //   >
+                //     Work With us as a volunter
+                //   </b>
+                // }
                 className={styles.col_container}
               >
                 <div className={styles.col_image}>
                   <Image
                     height={300}
                     width={300}
-                    style={{ borderRadius: "30px" }}
+                    style={{ borderRadius: "30px", opacity: 0.72 }}
                     src="/assets/img/home/b3.jpg"
                     alt="err"
                   />
                 </div>
-                {/* <b
+                <b
                   style={{
                     position: "absolute",
                     fontSize: "20px",
                     top: "10%",
                     right: "5%",
                     textAlign: "right",
-                    color: "gray",
+                    color: "black",
                   }}
                 >
                   Work With us as a volunter
-                </b> */}
+                </b>
                 <div className={styles.col_text}>
                   <p>
                     Get a chance to become a part of SFL and get work
@@ -413,37 +416,42 @@ export default function Home({ isLoggedIn, users, Programs, Machines, News }) {
               </Card>
             </Col>
             <Col style={{ borderRadius: "30px" }}>
-              <Card hoverable title={
-                  <b
-                    style={{
-                      fontSize: "20px",
-                      textAlign: "right",
-                      color: "gray",
-                    }}
-                  >
-                  Apply For Internship</b>
-                } className={styles.col_container}>
+              <Card
+                hoverable
+                // title={
+                //   <b
+                //     style={{
+                //       fontSize: "20px",
+                //       textAlign: "right",
+                //       color: "black",
+                //     }}
+                //   >
+                //     Apply For Internship
+                //   </b>
+                // }
+                className={styles.col_container}
+              >
                 <div className={styles.col_image}>
                   <Image
                     height={300}
                     width={300}
-                    style={{ borderRadius: "30px" }}
+                    style={{ borderRadius: "30px", opacity: 0.72 }}
                     src="/assets/img/home/b5.jpg"
                     alt="err"
                   />
                 </div>
-                {/* <b
+                <b
                   style={{
                     position: "absolute",
                     fontSize: "20px",
                     top: "10%",
                     right: "5%",
                     textAlign: "right",
-                    color: "gray",
+                    color: "black",
                   }}
                 >
                   Apply For Internship
-                </b> */}
+                </b>
                 <div className={styles.col_text}>
                   <p>
                     SFL is a great place to learn and get exposure.You will be
@@ -454,38 +462,42 @@ export default function Home({ isLoggedIn, users, Programs, Machines, News }) {
               </Card>
             </Col>
             <Col style={{ borderRadius: "30px" }}>
-              <Card hoverable title={
-                  <b
-                    style={{
-                      fontSize: "20px",
-                      textAlign: "right",
-                      color: "gray",
-                    }}
-                  >
-                  Become a Member
-                </b>
-                } className={styles.col_container}>
+              <Card
+                hoverable
+                // title={
+                //   <b
+                //     style={{
+                //       fontSize: "20px",
+                //       textAlign: "center",
+                //       color: "black",
+                //     }}
+                //   >
+                //     Become a Member
+                //   </b>
+                // }
+                className={styles.col_container}
+              >
                 <div className={styles.col_image}>
                   <Image
                     height={300}
                     width={300}
-                    style={{ borderRadius: "30px" }}
+                    style={{ borderRadius: "30px", opacity: 0.72 }}
                     src="/assets/img/home/sensor.jpg"
                     alt="err"
                   />
                 </div>
-                {/* <b
+                <b
                   style={{
                     position: "absolute",
                     fontSize: "20px",
                     top: "10%",
                     right: "5%",
                     textAlign: "right",
-                    color: "gray",
+                    color: "black",
                   }}
                 >
                   Become a Member
-                </b> */}
+                </b>
                 <div className={styles.col_text}>
                   <p>
                     We have great membership plans :
@@ -557,7 +569,7 @@ export default function Home({ isLoggedIn, users, Programs, Machines, News }) {
           }}
         >
           <b className="title">{News.title}</b>
-          <p>{News.description.slice(0, 200) + "..."}</p>
+          <p>{parse(`${News.description.slice(0, 200)}...`)}</p>
           <Link href="/news" passHref>
             <button className="button">Update More</button>
           </Link>

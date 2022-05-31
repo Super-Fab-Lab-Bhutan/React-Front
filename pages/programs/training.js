@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Image from "next/image";
+import parse from "html-react-parser";
 import { Modal, Space, Card } from "antd";
 import { verify } from "jsonwebtoken";
 import Header from "../../components/header";
@@ -97,7 +98,7 @@ export default function Training({ data, pastProject, users, isLoggedIn }) {
             <p className="subtitle">{data.title}</p>
             <hr />
             <p style={{ fontSize: "15px", textAlign: "center", color: "gray" }}>
-              {data.description.slice(0, 200)}...
+              {parse(`${data.description.slice(0, 200)}...`)}
             </p>
             <button
               className="button"
@@ -168,7 +169,7 @@ export default function Training({ data, pastProject, users, isLoggedIn }) {
                 src={modalData.image}
               ></Image>
             </Card>
-            <Card>{modalData.description}</Card>
+            <Card bordered={false}>{parse(`${modalData.description}`)}</Card>
           </Space>
         </Modal>
         <br />

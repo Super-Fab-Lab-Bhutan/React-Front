@@ -1,5 +1,6 @@
 import { Card, Col, Row } from "antd";
 import Link from "next/link";
+import parse from "html-react-parser";
 
 import Header from "../../components/header";
 import { verify } from "jsonwebtoken";
@@ -35,7 +36,7 @@ export default function MachineResource({ data, isLoggedIn, users }) {
   const Data = data.file;
   const ManualCard = ({ url, title, description }) => {
     return (
-      <Col style={{ marginBottom: "15px" }}>
+      <Col>
         <Card
           hoverable
           style={{
@@ -47,7 +48,7 @@ export default function MachineResource({ data, isLoggedIn, users }) {
           }}
         >
           <p className="subtitle">{title}</p>
-          <p style={{ fontSize: "14px" }}>{description}</p>
+          <p style={{ fontSize: "14px" }}>{parse(`${description}`)}</p>
           <Link href={url} passHref>
             <button
               className="button"
@@ -65,8 +66,7 @@ export default function MachineResource({ data, isLoggedIn, users }) {
     <Header isLoggedIn={isLoggedIn} users={users}>
       <main>
         <p className="title">Machine Manual</p>
-
-        <Row justify="space-evenly">
+        <Row gutter={[16, 16]} justify="space-evenly">
           {Data.map((val, i) => {
             return (
               <ManualCard
@@ -78,6 +78,7 @@ export default function MachineResource({ data, isLoggedIn, users }) {
             );
           })}
         </Row>
+        <br />
       </main>
     </Header>
   );

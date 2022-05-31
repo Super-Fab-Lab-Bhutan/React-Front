@@ -1,7 +1,9 @@
-import { verify } from "jsonwebtoken";
-import Header from "../../components/header";
 import Image from "next/image";
 import { Card, Row, Col, Space } from "antd";
+import parse from "html-react-parser";
+
+import { verify } from "jsonwebtoken";
+import Header from "../../components/header";
 
 const server = process.env.SERVER;
 const secreteKEY = process.env.JWT_KEY;
@@ -57,7 +59,7 @@ export default function News({ data, users, isLoggedIn }) {
           >
             <p className="subtitle">{data.title}</p>
             <hr />
-            <p style={{ color: "gray" }}>{data.description}</p>
+            <p style={{ color: "gray" }}>{parse(`${data.description}`)}</p>
           </Card>
         </Space>
       </Card>

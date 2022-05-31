@@ -1,4 +1,5 @@
 import { Card, Space, Modal, Row, Col } from "antd";
+import parse from "html-react-parser";
 import Image from "next/image";
 import { useState } from "react";
 import Header from "../../components/header";
@@ -89,7 +90,7 @@ export default function Carpentry({ data, users, isLoggedIn }) {
                   >
                     <Meta
                       title={val.equipmentName}
-                      description={val.description.slice(0, 55) + "..."}
+                      description={parse(`${val.description.slice(0, 55)}...`)}
                     />
                     <br />
                     <button
@@ -134,7 +135,9 @@ export default function Carpentry({ data, users, isLoggedIn }) {
                 </Card>
               </Col>
               <Col>
-                <Card>{ModalData.description}</Card>
+                <Card bordered={false}>
+                  {parse(`${ModalData.description}`)}
+                </Card>
               </Col>
             </Row>
           </Modal>

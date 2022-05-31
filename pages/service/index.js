@@ -45,8 +45,8 @@ export default function Service({ isLoggedIn, users }) {
               hoverable
               style={{
                 borderRadius: "30px",
-                width: "220px",
-                minHeight: "330px",
+                width: "260px",
+                minHeight: "350px",
               }}
             >
               <p className="subtitle">CONSULTATION</p>
@@ -78,8 +78,8 @@ export default function Service({ isLoggedIn, users }) {
               hoverable
               style={{
                 borderRadius: "30px",
-                width: "220px",
-                minHeight: "330px",
+                width: "260px",
+                minHeight: "350px",
               }}
             >
               <p className="subtitle">REPAIR</p>
@@ -97,8 +97,8 @@ export default function Service({ isLoggedIn, users }) {
               hoverable
               style={{
                 borderRadius: "30px",
-                width: "220px",
-                minHeight: "330px",
+                width: "260px",
+                minHeight: "350px",
               }}
             >
               <p className="subtitle">PROTOTYPING</p>
@@ -117,8 +117,8 @@ export default function Service({ isLoggedIn, users }) {
               hoverable
               style={{
                 borderRadius: "30px",
-                width: "220px",
-                minHeight: "330px",
+                width: "260px",
+                minHeight: "350px",
               }}
             >
               <p className="subtitle">INCUBATION</p>

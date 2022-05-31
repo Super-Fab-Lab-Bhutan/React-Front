@@ -1,5 +1,6 @@
 import { Card, Space, Modal, Row, Col } from "antd";
 import Image from "next/image";
+import parse from "html-react-parser";
 import { useState } from "react";
 import Header from "../../components/header";
 import { verify } from "jsonwebtoken";
@@ -88,7 +89,7 @@ export default function Electronic({ data, users, isLoggedIn }) {
                   >
                     <Meta
                       title={val.equipmentName}
-                      description={val.description.slice(0, 55) + "..."}
+                      description={parse(`${val.description.slice(0, 55)}...`)}
                     />
                     <br />
                     <button
@@ -133,7 +134,9 @@ export default function Electronic({ data, users, isLoggedIn }) {
                 </Card>
               </Col>
               <Col>
-                <Card>{ModalData.description}</Card>
+                <Card bordered={false}>
+                  {parse(`${ModalData.description}`)}
+                </Card>
               </Col>
             </Row>
           </Modal>

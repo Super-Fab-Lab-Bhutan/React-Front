@@ -1,4 +1,5 @@
 import { useState } from "react";
+import parse from "html-react-parser";
 import Image from "next/image";
 import { Modal, Space, Card, Row, Col } from "antd";
 import { verify } from "jsonwebtoken";
@@ -97,7 +98,7 @@ export default function Education({ data, pastProject, users, isLoggedIn }) {
             <p className="subtitle">{data.title}</p>
             <hr />
             <p style={{ fontSize: "15px", textAlign: "center", color: "gray" }}>
-              {data.description.slice(0, 200)}...
+              {parse(`${data.description.slice(0, 200)}...`)}
             </p>
             <button
               className="button"
@@ -168,7 +169,7 @@ export default function Education({ data, pastProject, users, isLoggedIn }) {
                 src={modalData.image}
               ></Image>
             </Card>
-            <Card>{modalData.description}</Card>
+            <Card bordered={false}>{parse(`${modalData.description}`)}</Card>
           </Space>
         </Modal>
         <br />

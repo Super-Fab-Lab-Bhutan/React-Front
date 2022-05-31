@@ -1,5 +1,5 @@
 import { Card, Col, Row } from "antd";
-
+import parse from "html-react-parser";
 import Header from "../../components/header";
 import { verify } from "jsonwebtoken";
 const secreteKEY = process.env.JWT_KEY;
@@ -33,11 +33,11 @@ export default function VideoResource({ data, isLoggedIn, users }) {
 
   const VideoCard = ({ url, title, description }) => {
     return (
-      <Col style={{ marginBottom: "15px" }}>
+      <Col>
         <Card
           style={{
-            width: "300px",
-            height: "330px",
+            width: "340px",
+            minHeight: "300px",
             borderRadius: "30px",
             textAlign: "center",
           }}
@@ -50,7 +50,7 @@ export default function VideoResource({ data, isLoggedIn, users }) {
             }}
             src={url}
           ></iframe>
-          <Card.Meta title={title} description={description} />
+          <Card.Meta title={title} description={parse(`${description}`)} />
         </Card>
       </Col>
     );
@@ -60,12 +60,12 @@ export default function VideoResource({ data, isLoggedIn, users }) {
     <Header isLoggedIn={isLoggedIn} users={users}>
       <main>
         <p className="title">Tutorials</p>
-        <Row justify="space-evenly">
+        <Row gutter={[16, 16]} justify="space-evenly">
           {Data.map((val, i) => {
             //make youtube watch url to embed url
             const regex = new RegExp("v=([^.]+)");
-            let url = regex.exec(val.FileUrl)[1];
-            url = "https://www.youtube.com/embed/" + url;
+            let uid = regex.exec(val.FileUrl)[1];
+            let url = "https://www.youtube.com/embed/" + uid;
             return (
               <VideoCard
                 title={val.name}
@@ -77,6 +77,7 @@ export default function VideoResource({ data, isLoggedIn, users }) {
             );
           })}
         </Row>
+        <br />
       </main>
     </Header>
   );

@@ -32,7 +32,7 @@ export default function Resource({ isLoggedIn, users }) {
       <main>
         <p className="title">Resources</p>
         <p className="subtitle">Learn from a vibrant ecosystem of innovators</p>
-        <Row justify="space-evenly">
+        <Row gutter={[16, 16]} justify="space-evenly">
           <Col>
             <p className="subtitle">Training Resources</p>
             <Image
@@ -79,6 +79,7 @@ export default function Resource({ isLoggedIn, users }) {
             </center>
           </Col>
         </Row>
+        <br />
       </main>
     </Header>
   );
