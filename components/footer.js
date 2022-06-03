@@ -21,7 +21,7 @@ export default function Footer() {
       <Row justify="space-evenly">
         <Col>
           <Image width={90} height={70} src={dhi_logo} alt="DHI logo" />
-          <p>Druk Holdings & Investments Limited</p>
+          <p>Druk Holding & Investments Limited</p>
         </Col>
         <Col>
           <p>Contact Us</p>
