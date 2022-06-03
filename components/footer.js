@@ -32,7 +32,7 @@ export default function Footer() {
           <br />
           <Space size="middle">
             <PhoneFilled />
-            <p>+975-2-336257/8</p>
+            <p>+975-2-332333</p>
           </Space>
           <br />
           <Space size="middle">
