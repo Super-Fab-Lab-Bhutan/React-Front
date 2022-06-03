@@ -203,9 +203,15 @@ export default function Home({ isLoggedIn, users, Programs, Machines, News }) {
               position: "relative",
             }}
           >
-            <p className="title">
+            <p className="title" style={{ color: "white" }}>
               Welcome To Jigme Namgyel Wangchuck SuperFablab
             </p>
+
+            <Link href="/register" passHref>
+              <button className="button" style={{ color: "white" }}>
+                Join Us Today
+              </button>
+            </Link>
           </div>
         </div>
         <br />
