@@ -149,7 +149,7 @@ export default function AboutUs({ teamData, galleryData, isLoggedIn, users }) {
                 width: "100%",
                 height: "100%",
               }}
-              src="https://www.youtube.com/watch?v=tKVwA2OHpnM"
+              src="https://youtu.be/embed/tKVwA2OHpnM"
             ></iframe>
           </div>
           <p className="title">Meet Our Team</p>
