@@ -48,7 +48,7 @@ export default function virtualtour({ isLoggedIn, users }) {
                 width: "100%",
                 height: "100%",
               }}
-              src="https://youtu.be/tKVwA2OHpnM"
+              src="https://www.youtube.com/watch?v=tKVwA2OHpnM"
             ></iframe>
           </div>
         </div>
