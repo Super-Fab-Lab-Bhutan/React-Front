@@ -271,13 +271,13 @@ export default function Home({ isLoggedIn, users, Programs, Machines, News }) {
                       fontFamily: "bell",
                     }}
                   >
-                    The Bhutan Super FabLab is an open platform for learning and
-                    innovation; a place to play, learn, mentor, collaborate, and
-                    create.Located at Thimphu Tech Park, it is the 2nd Super Fab
-                    Lab in the world, providing unique digital fabrication tools
-                    and services to its community.It currently consists of four
-                    different labs - focused on metalwork, carpentry,
-                    electronics production, and industrial graded work.Join us
+                    The Jigme Namgyel Wangchuck Super FabLab is an open platform
+                    for learning and innovation; a place to play, learn, mentor,
+                    collaborate, and create. Located at Thimphu Tech Park, it is 
+                    the 2nd Super Fab Lab in the world, providing unique digital 
+                    fabrication tools and services to its community. It currently 
+                    consists of four different labs - focused on metalwork, carpentry,
+                    electronics production, and industrial graded work. Join us
                     in our journey to learn and create almost anything.
                   </h6>
                 </div>
@@ -314,7 +314,7 @@ export default function Home({ isLoggedIn, users, Programs, Machines, News }) {
 
           <b className="title">Create</b>
           <p className="subtitle">
-            Through Digital Tools And Open Community Ecosystem
+            Through Digital Tools and Open Community Ecosystem
           </p>
         </div>
         {/* machine carousel */}
@@ -389,13 +389,13 @@ export default function Home({ isLoggedIn, users, Programs, Machines, News }) {
                     color: "black",
                   }}
                 >
-                  Work With us as a volunter
+                  Work With us as a volunteer
                 </b>
                 <div className={styles.col_text}>
                   <p>
-                    Get a chance to become a part of SFL and get work
-                    experience.It&apos;s an opportunity to get free access to
-                    the facilities provided by SFL.
+                    Get a chance to become a part of JNWSFL.
+                    It&apos;s an opportunity to get free access to
+                    the facilities provided by JNWSFL.
                   </p>
                 </div>
               </Card>
@@ -439,8 +439,8 @@ export default function Home({ isLoggedIn, users, Programs, Machines, News }) {
                 </b>
                 <div className={styles.col_text}>
                   <p>
-                    SFL is a great place to learn and get exposure.You will be
-                    able to do research and projects with our staff and even our
+                    JNWSFL is a great place to learn and get exposure. You will be
+                    able to conduct research and projects with our staff and even our
                     collaborators.
                   </p>
                 </div>
@@ -487,13 +487,13 @@ export default function Home({ isLoggedIn, users, Programs, Machines, News }) {
                   <p>
                     We have great membership plans :
                     <br />
-                    SFL Youth
+                    JNWSFL Youth
                     <br />
-                    SFL Community
+                    JNWSFL Community
                     <br />
-                    SFL creator
+                    JNWSFL creator
                     <br />
-                    SFl Business
+                    JNWSFL Business
                   </p>
                 </div>
               </Card>
@@ -501,7 +501,7 @@ export default function Home({ isLoggedIn, users, Programs, Machines, News }) {
           </Row>
         </div>
         <div className="center">
-          <b className="title">Vist Us</b>
+          <b className="title">Visit Us</b>
           <Card
             hoverable
             style={{
@@ -526,9 +526,9 @@ export default function Home({ isLoggedIn, users, Programs, Machines, News }) {
               When
             </h3>
             <p style={{ color: "grey", fontSize: "1.1rem" }}>
-              Monday to Friday: 9:00 AM -6:00 PM
+              Monday to Friday: 9:00 AM - 6:00 PM
               <br />
-              Saturday and Sunday:
+              {/* Saturday and Sunday: */}
               <br /> Open hours you can walk in anytime for a lab visit. You can
               also book a schedule to use a specific machine at a suitable time.
             </p>
