@@ -65,7 +65,7 @@ export default function VideoResource({ data, isLoggedIn, users }) {
             //make youtube watch url to embed url
             const regex = new RegExp("v=([^.]+)");
             let uid = regex.exec(val.FileUrl)[1];
-            let url = "https://youtu.be/tKVwA2OHpnM" + uid;
+            let url = "https://www.youtube.com/watch?v=tKVwA2OHpnM" + uid;
             return (
               <VideoCard
                 title={val.name}
