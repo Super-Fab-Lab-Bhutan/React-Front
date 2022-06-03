@@ -41,7 +41,7 @@ export default function HeaderLayout({ isLoggedIn, users, children }) {
               margin: "16px 24px 16px 0",
             }}
           >
-            <Image src={logo} width={70} height={70} alt="logo" />
+            <Image src={logo} width={100} height={70} alt="logo" />
           </div>
           <Menu
             theme="light"
