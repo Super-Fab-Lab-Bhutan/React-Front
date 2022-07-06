@@ -5,6 +5,7 @@ import parse from "html-react-parser";
 
 import { verify } from "jsonwebtoken";
 import Header from "../../components/header";
+import Head from "next/head";
 
 const secreteKEY = process.env.JWT_KEY;
 const server = process.env.SERVER;
@@ -100,6 +101,19 @@ export default function FrontBooking({ Machines, isLoggedIn, users }) {
 
   return (
     <Header isLoggedIn={isLoggedIn} users={users}>
+      <Head>
+        <title>Front Booking</title>
+        <meta
+          name="description"
+          content="Front Booking, Jigme Namgyel Wangchuck SuperFablab"
+        />
+        <link rel="icon" href="/assets/img/logo.png" />
+
+        <meta
+          httpEuiv="Content-Type"
+          content="text/html; charset= ISO-8859-1"
+        ></meta>
+      </Head>
       <main style={{ padding: "20px" }}>
         <p className="title">Booking</p>
         <p className="subtitle">

@@ -6,6 +6,7 @@ import ReCAPTCHA from "react-google-recaptcha";
 import Header from "../../components/header";
 import { verify } from "jsonwebtoken";
 import Link from "next/link";
+import Head from "next/head";
 
 const sitekey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
 const secreteKEY = process.env.JWT_KEY;
@@ -46,7 +47,6 @@ export default function Student({ isLoggedIn, users }) {
     },
   };
 
-  
   const handleSubmit = async (val) => {
     const { password, cpassword } = val;
     if (password === cpassword) {
@@ -99,6 +99,19 @@ export default function Student({ isLoggedIn, users }) {
 
   return (
     <Header isLoggedIn={isLoggedIn} users={users}>
+      <Head>
+        <title>Student Registration</title>
+        <meta
+          name="description"
+          content="Student Registration, Jigme Namgyel Wangchuck SuperFablab"
+        />
+        <link rel="icon" href="/assets/img/logo.png" />
+
+        <meta
+          httpEuiv="Content-Type"
+          content="text/html; charset= ISO-8859-1"
+        ></meta>
+      </Head>
       <main>
         <p className="title">Student Membership Form</p>
         <Card

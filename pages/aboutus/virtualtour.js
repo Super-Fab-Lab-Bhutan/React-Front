@@ -1,3 +1,4 @@
+import Head from "next/head";
 import Header from "../../components/header";
 
 export async function getServerSideProps({ req }) {
@@ -24,6 +25,19 @@ export async function getServerSideProps({ req }) {
 export default function virtualtour({ isLoggedIn, users }) {
   return (
     <Header isLoggedIn={isLoggedIn} users={users}>
+      <Head>
+        <title>Virtual Tour</title>
+        <meta
+          name="description"
+          content="AboutUs Virtual Tour, Jigme Namgyel Wangchuck SuperFablab"
+        />
+        <link rel="icon" href="/assets/img/logo.png" />
+
+        <meta
+          httpEuiv="Content-Type"
+          content="text/html; charset= ISO-8859-1"
+        ></meta>
+      </Head>
       <main>
         <div
           style={{

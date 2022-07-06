@@ -4,6 +4,7 @@ import parse from "html-react-parser";
 import { Modal, Space, Card } from "antd";
 import { verify } from "jsonwebtoken";
 import Header from "../../components/header";
+import Head from "next/head";
 
 const server = process.env.SERVER;
 const secreteKEY = process.env.JWT_KEY;
@@ -121,6 +122,19 @@ export default function Training({ data, pastProject, users, isLoggedIn }) {
 
   return (
     <Header isLoggedIn={isLoggedIn} users={users}>
+      <Head>
+        <title>Training Programs</title>
+        <meta
+          name="description"
+          content="Training Programs, Jigme Namgyel Wangchuck SuperFablab"
+        />
+        <link rel="icon" href="/assets/img/logo.png" />
+
+        <meta
+          httpEuiv="Content-Type"
+          content="text/html; charset= ISO-8859-1"
+        ></meta>
+      </Head>
       <main>
         <p className="title">Training Program</p>
         <p className="subtitle">Build Capacity in Digital Fabrication</p>

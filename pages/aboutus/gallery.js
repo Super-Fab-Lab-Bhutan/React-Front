@@ -2,6 +2,7 @@ import { Card, Row, Col } from "antd";
 import Image from "next/image";
 import Header from "../../components/header";
 import { verify } from "jsonwebtoken";
+import Head from "next/head";
 const secreteKEY = process.env.JWT_KEY;
 const public_serv = process.env.NEXT_PUBLIC_SERVER;
 export async function getServerSideProps({ req }) {
@@ -34,6 +35,19 @@ export default function gallery({ galleryData, isLoggedIn, users }) {
   const GalleryData = galleryData.gallery;
   return (
     <Header isLoggedIn={isLoggedIn} users={users}>
+      <Head>
+        <title>Gallery</title>
+        <meta
+          name="description"
+          content="AboutUs Gallery, Jigme Namgyel Wangchuck SuperFablab"
+        />
+        <link rel="icon" href="/assets/img/logo.png" />
+
+        <meta
+          httpEuiv="Content-Type"
+          content="text/html; charset= ISO-8859-1"
+        ></meta>
+      </Head>
       <main>
         <p className="title">Collection Pictures of SFL</p>
         <Row gutter={[16, 16]} justify="space-evenly">

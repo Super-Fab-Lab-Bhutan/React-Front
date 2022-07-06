@@ -4,6 +4,7 @@ import parse from "html-react-parser";
 import { useState } from "react";
 import Header from "../../components/header";
 import { verify } from "jsonwebtoken";
+import Head from "next/head";
 const server = process.env.SERVER;
 const secreteKEY = process.env.JWT_KEY;
 const public_serv = process.env.NEXT_PUBLIC_SERVER;
@@ -56,6 +57,19 @@ export default function Electronic({ data, users, isLoggedIn }) {
 
   return (
     <Header isLoggedIn={isLoggedIn} users={users}>
+      <Head>
+        <title>Electronic Lab</title>
+        <meta
+          name="description"
+          content="Electronic Lab equipments, Jigme Namgyel Wangchuck SuperFablab"
+        />
+        <link rel="icon" href="/assets/img/logo.png" />
+
+        <meta
+          httpEuiv="Content-Type"
+          content="text/html; charset= ISO-8859-1"
+        ></meta>
+      </Head>
       <main>
         <p className="title">Electronics Lab</p>
         <div style={{ padding: "20px" }}>

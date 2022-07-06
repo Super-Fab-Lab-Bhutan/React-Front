@@ -4,6 +4,7 @@ import parse from "html-react-parser";
 import { Modal, Space, Card } from "antd";
 import { verify } from "jsonwebtoken";
 import Header from "../../components/header";
+import Head from "next/head";
 
 const server = process.env.SERVER;
 const secreteKEY = process.env.JWT_KEY;
@@ -122,6 +123,19 @@ export default function Research({ data, pastProject, users, isLoggedIn }) {
 
   return (
     <Header isLoggedIn={isLoggedIn} users={users}>
+      <Head>
+        <title>Research Programs</title>
+        <meta
+          name="description"
+          content="Research and Development Programs, Jigme Namgyel Wangchuck SuperFablab"
+        />
+        <link rel="icon" href="/assets/img/logo.png" />
+
+        <meta
+          httpEuiv="Content-Type"
+          content="text/html; charset= ISO-8859-1"
+        ></meta>
+      </Head>
       <main>
         <p className="title">Research And Development</p>
         <p className="subtitle">Fostering A Sustainable Culture Of Creation</p>
