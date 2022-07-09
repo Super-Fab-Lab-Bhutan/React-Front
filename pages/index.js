@@ -202,9 +202,10 @@ export default function Home({ isLoggedIn, users, Programs, Machines, News }) {
         />
         <link rel="icon" href="/assets/img/logo.png" />
         <meta
-          httpEuiv="Content-Type"
+          httpeuiv="Content-Type"
           content="text/html; charset= ISO-8859-1"
         ></meta>
+        <meta name="robots" content="all" />
       </Head>
       <main>
         <div className={styles.video_wrapper}>

@@ -1,6 +1,19 @@
 /** @type {import('next').NextConfig} */
 
+// const ContentSecurityPolicy = `
+//   default-src 'self';
+//   script-src 'self';
+//   child-src 'none'; 
+//   style-src 'self';
+//   image-src 'self' superfablabbhutan.bt;
+//   font-src 'self' fonts.gstatic.com; 
+// `;
+
 const securityHeaders = [
+  // {
+  //   key: 'Content-Security-Policy',
+  //   value: ContentSecurityPolicy.replace(/\s{2,}/g, ' ').trim()
+  // },
   {
     key: "X-DNS-Prefetch-Control",
     value: "on",

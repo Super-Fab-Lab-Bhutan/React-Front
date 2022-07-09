@@ -4,6 +4,7 @@ import Header from "../../components/header";
 
 import { verify } from "jsonwebtoken";
 import Image from "next/image";
+import Head from "next/head";
 const secreteKEY = process.env.JWT_KEY;
 export async function getServerSideProps({ req }) {
   // check for login

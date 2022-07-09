@@ -47,12 +47,20 @@
   min-height: 50px;
 }
 
+.userbooked{
+  background-color: rgb(70, 152, 163);
+  background-size: cover;
+  min-width: 70px;
+  min-height: 50px;
+}
+
 .unbooked {
   background-color: rgb(69, 194, 69);
   background-size: cover;
   min-width: 70px;
   min-height: 50px;
 }
+
 .unbooked:hover {
   background-color: rgb(52, 176, 39);
 }

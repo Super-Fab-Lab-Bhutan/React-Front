@@ -1,10 +1,20 @@
-import { Card, Checkbox, Col, DatePicker, Modal, Radio, Row, Tabs } from "antd";
+import {
+  Card,
+  Checkbox,
+  Col,
+  DatePicker,
+  Modal,
+  Radio,
+  Row,
+  Tabs,
+  Spin,
+} from "antd";
 import styles from "../../styles/Booking.module.css";
 
 import Header from "../../components/header";
 
 import { verify } from "jsonwebtoken";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import Head from "next/head";
 const secreteKEY = process.env.JWT_KEY; //server side
@@ -31,14 +41,18 @@ export async function getServerSideProps({ req }) {
   }
 
   let DD = new Date();
-  let newdate = `${DD.getFullYear()}-${DD.getMonth()}-${DD.getDate()}`;
+  let newdate = `${DD.getFullYear()}-${DD.getMonth() + 1}-${DD.getDate()}`;
   //get initial booking
   let initialData = [];
   try {
     let data = await fetch(server + "/user/Bookings", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ date: newdate, role: users.role }),
+      body: JSON.stringify({
+        date: newdate,
+        role: users.role,
+        userId: users.id,
+      }),
     });
     data = await data.json();
     initialData = data;
@@ -49,18 +63,20 @@ export async function getServerSideProps({ req }) {
       users,
       isLoggedIn,
       initialData,
+      newdate,
     },
   };
 }
 
 const { TabPane } = Tabs;
 
-export default function Booking({ initialData, isLoggedIn, users }) {
+export default function Booking({ initialData, isLoggedIn, users, newdate }) {
   const equipmentTypeOptions = ["Carpentry", "Electronic", "Heavy", "Metal"];
 
   const [Data, setData] = useState(initialData);
-  const [date, setDate] = useState(new Date());
-
+  const [date, setDate] = useState(newdate);
+  const [state, setStateChange] = useState(Math.random());
+  const [loading, setLoading] = useState(false);
   //calls api to update booking
   const GetBookings = async () => {
     try {
@@ -76,10 +92,16 @@ export default function Booking({ initialData, isLoggedIn, users }) {
           return res.json();
         })
         .then((data) => {
+          console.log(data);
           setData(data);
+          setLoading(false);
         });
     } catch (error) {}
   };
+
+  useEffect(() => {
+    GetBookings();
+  }, [state]);
 
   //...Modal
   const [showModalView, setModalView] = useState(false);
@@ -110,12 +132,14 @@ export default function Booking({ initialData, isLoggedIn, users }) {
   // const holidays = [new Date(2022, 4, 3), new Date(2023, 0, 11)];
 
   const handleClick = (event) => {
+    setLoading(true);
     var data = event.target.dataset.value;
     var time = data.split(" ")[0];
     var EquipmentId = data.split(" ")[1];
     if (confirm(`are you sure you want to book on ${date} from ${time}`)) {
       sendData(EquipmentId, date, time);
     }
+    setStateChange(Math.random());
   };
 
   const BookingTable = ({ TableData }) => {
@@ -142,12 +166,18 @@ export default function Booking({ initialData, isLoggedIn, users }) {
                   <tr key={i}>
                     <th>{val.EquipmentName}</th>
                     {val.Booking.map((items, j) => {
+                      let classStyle;
+                      if (items.booked == 0) {
+                        classStyle = styles.booked;
+                      } else if (items.booked == 1) {
+                        classStyle = styles.userbooked;
+                      } else {
+                        classStyle = styles.unbooked;
+                      }
                       return (
                         <td
                           key={j}
-                          className={
-                            items.booked ? styles.booked : styles.unbooked
-                          }
+                          className={classStyle}
                           onClick={handleClick}
                           data-value={items.time + " " + val.EquipmentId}
                         ></td>
@@ -227,11 +257,7 @@ export default function Booking({ initialData, isLoggedIn, users }) {
         {showInductionDate ? (
           <>
             <DatePicker
-              // defaultValue={InductionDate}
               placement="bottomLeft"
-              // disabledDate={(e) => {
-              //   return e;
-              // }}
               onChange={(e, val) => {
                 setInductionDate(val);
               }}
@@ -299,9 +325,11 @@ export default function Booking({ initialData, isLoggedIn, users }) {
             <div style={{ padding: "10px" }}>
               Date:{" "}
               <DatePicker
+                placeholder={date}
                 onChange={(x, val) => {
                   setDate(val);
-                  GetBookings();
+                  setStateChange(Math.random());
+                  // GetBookings();
                 }}
               />
               <br />
@@ -315,23 +343,54 @@ export default function Booking({ initialData, isLoggedIn, users }) {
                 Enroll For Induction Training
               </button>
             </div>
-          </Col>
-          <Col>
-            {/* Select Machine Labs:
-            <br /> */}
-            <Tabs tabPosition="top">
-              {equipmentTypeOptions.map((val, i) => {
-                let EquipmentData = Data.filter((data) => {
-                  return data.Type == val;
-                });
+            <Card
+              title="Legend"
+              style={{ backgroundColor: "transparent", border: "none" }}
+            >
+              <div style={{ maxWidth: "200px" }}>
+                <div
+                  className={styles.booked}
+                  style={{ float: "left", marginRight: "25px" }}
+                />
+                Booked
+              </div>
+              <br />
+              <div style={{ maxWidth: "200px" }}>
+                <div
+                  className={styles.userbooked}
+                  style={{ float: "left", marginRight: "25px" }}
+                />
+                Your Booking
+              </div>
+              <br />
 
-                return (
-                  <TabPane tab={val} key={i}>
-                    <BookingTable TableData={EquipmentData} />
-                  </TabPane>
-                );
-              })}
-            </Tabs>
+              <div style={{ maxWidth: "200px" }}>
+                <div
+                  className={styles.unbooked}
+                  style={{ float: "left", marginRight: "25px" }}
+                />
+                Available
+              </div>
+              <br />
+            </Card>
+          </Col>
+
+          <Col style={{ padding: "25px" }}>
+            <Spin spinning={loading}>
+              <Tabs tabPosition="top">
+                {equipmentTypeOptions.map((val, i) => {
+                  let EquipmentData = Data.filter((data) => {
+                    return data.Type == val;
+                  });
+
+                  return (
+                    <TabPane tab={val} key={i}>
+                      <BookingTable TableData={EquipmentData} />
+                    </TabPane>
+                  );
+                })}
+              </Tabs>
+            </Spin>
           </Col>
         </Row>
         <Modal
