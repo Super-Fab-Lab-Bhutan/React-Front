@@ -17,7 +17,7 @@ const ContentSecurityPolicy = `
   style-src 'self' 'unsafe-inline';
   base-uri 'self';
   form-action 'self';
-  media-src 'self' superfablabbhutan.bt;
+  media-src 'self' superfablabbhutan.bt youtube.be;
   font-src 'self' fonts.gstatic.com;
 `;
 
