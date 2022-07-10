@@ -6,6 +6,7 @@ import { Card, Input, Form } from "antd";
 import Header from "../../components/header";
 
 import { verify } from "jsonwebtoken";
+import Head from "next/head";
 const secreteKEY = process.env.JWT_KEY;
 
 export async function getServerSideProps({ req }) {
@@ -59,6 +60,19 @@ export default function Login({ isLoggedIn, users }) {
 
   return (
     <Header isLoggedIn={isLoggedIn} users={users}>
+      <Head>
+        <title>Login Page</title>
+        <meta
+          name="description"
+          content="Login Page, Jigme Namgyel Wangchuck SuperFablab"
+        />
+        <link rel="icon" href="/assets/img/logo.png" />
+
+        <meta
+          httpEuiv="Content-Type"
+          content="text/html; charset= ISO-8859-1"
+        ></meta>
+      </Head>
       <main
         style={{
           display: "flex",

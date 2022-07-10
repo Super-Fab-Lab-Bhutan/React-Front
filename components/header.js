@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useRouter } from "next/router";
-import Head from "next/head";
 import { Layout, Menu, Button, Affix } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 import Link from "next/link";
@@ -147,17 +146,7 @@ export default function HeaderLayout({ isLoggedIn, users, children }) {
           </Menu>
         </Header>
       </Affix>
-      <Content>
-        <Head>
-          <title>Jigme Namgyel Wangchuck SuperFablab</title>
-          <meta
-            name="description"
-            content="Jigme Namgyel Wangchuck SuperFablab"
-          />
-          <link rel="icon" href="/assets/img/logo.png" />
-        </Head>
-        {children}
-      </Content>
+      <Content>{children}</Content>
     </Layout>
   );
 }

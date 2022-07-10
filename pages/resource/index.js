@@ -1,3 +1,4 @@
+import Head from "next/head";
 import { Card, Col, Row } from "antd";
 import Link from "next/link";
 import Header from "../../components/header";
@@ -29,6 +30,19 @@ export async function getServerSideProps({ req }) {
 export default function Resource({ isLoggedIn, users }) {
   return (
     <Header isLoggedIn={isLoggedIn} users={users}>
+      <Head>
+        <title>Resource Page</title>
+        <meta
+          name="description"
+          content="Resource, Jigme Namgyel Wangchuck SuperFablab"
+        />
+        <link rel="icon" href="/assets/img/logo.png" />
+
+        <meta
+          httpEuiv="Content-Type"
+          content="text/html; charset= ISO-8859-1"
+        ></meta>
+      </Head>
       <main>
         <p className="title">Resources</p>
         <p className="subtitle">Learn from a vibrant ecosystem of innovators</p>

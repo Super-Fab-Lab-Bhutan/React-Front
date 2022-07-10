@@ -6,6 +6,7 @@ import office from "../../public/assets/img/aboutus/office.jpg";
 
 import { verify } from "jsonwebtoken";
 import Header from "../../components/header";
+import Head from "next/head";
 const secreteKEY = process.env.JWT_KEY;
 const public_serv = process.env.NEXT_PUBLIC_SERVER;
 
@@ -46,6 +47,19 @@ export default function AboutUs({ teamData, galleryData, isLoggedIn, users }) {
 
   return (
     <Header isLoggedIn={isLoggedIn} users={users}>
+      <Head>
+        <title>AboutUs</title>
+        <meta
+          name="description"
+          content="AboutUs Page, Jigme Namgyel Wangchuck SuperFablab"
+        />
+        <link rel="icon" href="/assets/img/logo.png" />
+
+        <meta
+          httpEuiv="Content-Type"
+          content="text/html; charset= ISO-8859-1"
+        ></meta>
+      </Head>
       <main>
         <p className="title">The SFL Story</p>
         <p className="subtitle">Learn Collaborate Create</p>

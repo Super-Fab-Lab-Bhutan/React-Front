@@ -2,6 +2,7 @@ import { Card, Col, Row } from "antd";
 import parse from "html-react-parser";
 import Header from "../../components/header";
 import { verify } from "jsonwebtoken";
+import Head from "next/head";
 const secreteKEY = process.env.JWT_KEY;
 const server = process.env.SERVER;
 export async function getServerSideProps({ req }) {
@@ -58,6 +59,19 @@ export default function VideoResource({ data, isLoggedIn, users }) {
 
   return (
     <Header isLoggedIn={isLoggedIn} users={users}>
+      <Head>
+        <title>Video Resource</title>
+        <meta
+          name="description"
+          content="Video Resource, Jigme Namgyel Wangchuck SuperFablab"
+        />
+        <link rel="icon" href="/assets/img/logo.png" />
+
+        <meta
+          httpEuiv="Content-Type"
+          content="text/html; charset= ISO-8859-1"
+        ></meta>
+      </Head>
       <main>
         <p className="title">Tutorials</p>
         <Row gutter={[16, 16]} justify="space-evenly">

@@ -8,6 +8,7 @@ import { verify } from "jsonwebtoken";
 
 import logo from "../public/assets/img/logo.png";
 import styles from "../styles/Home.module.css";
+import Head from "next/head";
 
 const { Meta } = Card;
 
@@ -96,7 +97,7 @@ export default function Home({ isLoggedIn, users, Programs, Machines, News }) {
           hoverable
           style={{
             width: "330px",
-            height: "550px",
+            height: "570px",
             borderRadius: "20px",
           }}
           cover={
@@ -193,6 +194,18 @@ export default function Home({ isLoggedIn, users, Programs, Machines, News }) {
   };
   return (
     <Header isLoggedIn={isLoggedIn} users={users}>
+      <Head>
+        <title>Jigme Namgyel Wangchuck SuperFablab</title>
+        <meta
+          name="description"
+          content="Home Page, Jigme Namgyel Wangchuck SuperFablab"
+        />
+        <link rel="icon" href="/assets/img/logo.png" />
+        <meta
+          httpEuiv="Content-Type"
+          content="text/html; charset= ISO-8859-1"
+        ></meta>
+      </Head>
       <main>
         <div className={styles.video_wrapper}>
           <video height="100%" width="100%" playsInline autoPlay loop muted>
@@ -273,12 +286,13 @@ export default function Home({ isLoggedIn, users, Programs, Machines, News }) {
                   >
                     The Jigme Namgyel Wangchuck Super FabLab is an open platform
                     for learning and innovation; a place to play, learn, mentor,
-                    collaborate, and create. Located at Thimphu Tech Park, it is 
-                    the 2nd Super Fab Lab in the world, providing unique digital 
-                    fabrication tools and services to its community. It currently 
-                    consists of four different labs - focused on metalwork, carpentry,
-                    electronics production, and industrial graded work. Join us
-                    in our journey to learn and create almost anything.
+                    collaborate, and create. Located at Thimphu Tech Park, it is
+                    the 2nd Super Fab Lab in the world, providing unique digital
+                    fabrication tools and services to its community. It
+                    currently consists of four different labs - focused on
+                    metalwork, carpentry, electronics production, and industrial
+                    graded work. Join us in our journey to learn and create
+                    almost anything.
                   </h6>
                 </div>
               </Col>
@@ -393,9 +407,9 @@ export default function Home({ isLoggedIn, users, Programs, Machines, News }) {
                 </b>
                 <div className={styles.col_text}>
                   <p>
-                    Get a chance to become a part of JNWSFL.
-                    It&apos;s an opportunity to get free access to
-                    the facilities provided by JNWSFL.
+                    Get a chance to become a part of JNWSFL. It&apos;s an
+                    opportunity to get free access to the facilities provided by
+                    JNWSFL.
                   </p>
                 </div>
               </Card>
@@ -439,9 +453,9 @@ export default function Home({ isLoggedIn, users, Programs, Machines, News }) {
                 </b>
                 <div className={styles.col_text}>
                   <p>
-                    JNWSFL is a great place to learn and get exposure. You will be
-                    able to conduct research and projects with our staff and even our
-                    collaborators.
+                    JNWSFL is a great place to learn and get exposure. You will
+                    be able to conduct research and projects with our staff and
+                    even our collaborators.
                   </p>
                 </div>
               </Card>

@@ -6,6 +6,7 @@ import Header from "../../components/header";
 import { verify } from "jsonwebtoken";
 import { useState } from "react";
 import Link from "next/link";
+import Head from "next/head";
 const secreteKEY = process.env.JWT_KEY; //server side
 const server = process.env.NEXT_PUBLIC_SERVER; //client side
 
@@ -234,7 +235,9 @@ export default function Booking({ initialData, isLoggedIn, users }) {
               onChange={(e, val) => {
                 setInductionDate(val);
               }}
-            />{"   "}{InductionDate}
+            />
+            {"   "}
+            {InductionDate}
             <br />
             <br />
             <Checkbox
@@ -276,6 +279,19 @@ export default function Booking({ initialData, isLoggedIn, users }) {
 
   return (
     <Header isLoggedIn={isLoggedIn} users={users}>
+      <Head>
+        <title>Booking Page</title>
+        <meta
+          name="description"
+          content="Booking Page, Jigme Namgyel Wangchuck SuperFablab"
+        />
+        <link rel="icon" href="/assets/img/logo.png" />
+
+        <meta
+          httpEuiv="Content-Type"
+          content="text/html; charset= ISO-8859-1"
+        ></meta>
+      </Head>
       <main>
         <p className="title">Booking</p>
         <Row gutter={[16, 16]} justify="space-evenly">

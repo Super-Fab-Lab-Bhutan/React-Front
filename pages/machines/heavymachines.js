@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useState } from "react";
 import Header from "../../components/header";
 import { verify } from "jsonwebtoken";
+import Head from "next/head";
 const server = process.env.SERVER;
 const secreteKEY = process.env.JWT_KEY;
 const public_serv = process.env.NEXT_PUBLIC_SERVER;
@@ -56,6 +57,19 @@ export default function Heavymachines({ data, users, isLoggedIn }) {
 
   return (
     <Header isLoggedIn={isLoggedIn} users={users}>
+      <Head>
+        <title>Heavy Machine Lab</title>
+        <meta
+          name="description"
+          content="Heavy Machine Lab equipments, Jigme Namgyel Wangchuck SuperFablab"
+        />
+        <link rel="icon" href="/assets/img/logo.png" />
+
+        <meta
+          httpEuiv="Content-Type"
+          content="text/html; charset= ISO-8859-1"
+        ></meta>
+      </Head>
       <main>
         <p className="title">Heavy Machines Lab</p>
         <div style={{ padding: "20px" }}>

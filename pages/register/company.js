@@ -5,6 +5,7 @@ import ReCAPTCHA from "react-google-recaptcha";
 import Header from "../../components/header";
 import { verify } from "jsonwebtoken";
 import Link from "next/link";
+import Head from "next/head";
 
 const secreteKEY = process.env.JWT_KEY;
 
@@ -88,6 +89,19 @@ export default function Company({ isLoggedIn, users }) {
 
   return (
     <Header isLoggedIn={isLoggedIn} users={users}>
+      <Head>
+        <title>Company Registration</title>
+        <meta
+          name="description"
+          content="Company Registration, Jigme Namgyel Wangchuck SuperFablab"
+        />
+        <link rel="icon" href="/assets/img/logo.png" />
+
+        <meta
+          httpEuiv="Content-Type"
+          content="text/html; charset= ISO-8859-1"
+        ></meta>
+      </Head>
       <main>
         <p className="title">Company Membership Form</p>
         <Card

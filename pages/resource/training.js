@@ -4,6 +4,7 @@ import parse from "html-react-parser";
 
 import Header from "../../components/header";
 import { verify } from "jsonwebtoken";
+import Head from "next/head";
 const secreteKEY = process.env.JWT_KEY;
 const server = process.env.SERVER;
 const public_serv = process.env.NEXT_PUBLIC_SERVER;
@@ -64,6 +65,19 @@ export default function TrainingResource({ data, isLoggedIn, users }) {
 
   return (
     <Header isLoggedIn={isLoggedIn} users={users}>
+      <Head>
+        <title>Training Resource</title>
+        <meta
+          name="description"
+          content="Training Resource, Jigme Namgyel Wangchuck SuperFablab"
+        />
+        <link rel="icon" href="/assets/img/logo.png" />
+
+        <meta
+          httpEuiv="Content-Type"
+          content="text/html; charset= ISO-8859-1"
+        ></meta>
+      </Head>
       <main>
         <p className="title">Training Manual</p>
         <Row gutter={[16, 16]} justify="space-evenly">

@@ -4,6 +4,7 @@ import parse from "html-react-parser";
 
 import { verify } from "jsonwebtoken";
 import Header from "../../components/header";
+import Head from "next/head";
 
 const server = process.env.SERVER;
 const secreteKEY = process.env.JWT_KEY;
@@ -68,6 +69,19 @@ export default function News({ data, users, isLoggedIn }) {
 
   return (
     <Header isLoggedIn={isLoggedIn} users={users}>
+      <Head>
+        <title>News and Events</title>
+        <meta
+          name="description"
+          content="News and Events, Jigme Namgyel Wangchuck SuperFablab"
+        />
+        <link rel="icon" href="/assets/img/logo.png" />
+
+        <meta
+          httpEuiv="Content-Type"
+          content="text/html; charset= ISO-8859-1"
+        ></meta>
+      </Head>
       <main>
         <p className="title">News And Events</p>
         <div
