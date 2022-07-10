@@ -43,7 +43,7 @@ export async function getServerSideProps({ req }) {
   let DD = new Date();
   let mm = DD.getMonth() + 1;
   let monthString = "";
-  if (mm > 9) {
+  if (mm < 10) {
     monthString = "0" + String(mm);
   } else {
     monthString = String(mm);
