@@ -13,10 +13,10 @@ const ContentSecurityPolicy = `
   default-src 'self';
   script-src 'self' 'unsafe-eval';
   connect-src 'self' https://superfablabbhutan.bt;
-  img-src 'self' https://superfablabbhutan.bt data: ;
+  img-src 'self' https://superfablabbhutan.bt data:;
   style-src 'self' 'unsafe-inline';
   base-uri 'self';
-  form-action 'self' ;
+  form-action 'self';
   media-src 'self' superfablabbhutan.bt www.youtube.com;
   font-src 'self' fonts.gstatic.com fonts.googleapis.com;
   frame-src 'self' superfablabbhutan.bt www.youtube.com;

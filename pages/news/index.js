@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { Card, Row, Col, Space } from "antd";
+import { Card, Space } from "antd";
 import parse from "html-react-parser";
 
 import { verify } from "jsonwebtoken";
