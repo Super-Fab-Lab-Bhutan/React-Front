@@ -12,9 +12,7 @@ import {
   Popconfirm,
 } from "antd";
 import styles from "../../styles/Booking.module.css";
-
 import Header from "../../components/header";
-
 import { verify } from "jsonwebtoken";
 import { useState, useEffect } from "react";
 import Link from "next/link";
@@ -43,7 +41,14 @@ export async function getServerSideProps({ req }) {
   }
 
   let DD = new Date();
-  let newdate = `${DD.getFullYear()}-${DD.getMonth() + 1}-${DD.getDate()}`;
+  let mm = DD.getMonth() + 1;
+  let monthString = "";
+  if (mm > 9) {
+    monthString = "0" + String(mm);
+  } else {
+    monthString = String(mm);
+  }
+  let newdate = `${DD.getFullYear()}-${monthString}-${DD.getDate()}`;
   //get initial booking
   let initialData = [];
   try {
