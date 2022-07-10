@@ -3,17 +3,29 @@
 // const ContentSecurityPolicy = `
 //   default-src 'self';
 //   script-src 'self';
-//   child-src 'none'; 
+//   child-src 'none';
 //   style-src 'self';
-//   image-src 'self' superfablabbhutan.bt;
-//   font-src 'self' fonts.gstatic.com; 
+//   img-src 'self' superfablabbhutan.bt;
+//   font-src 'self' fonts.gstatic.com;
 // `;
 
+const ContentSecurityPolicy = `
+  default-src 'self';
+  script-src 'self' 'unsafe-eval';
+  connect-src 'self';
+  img-src 'self' https://superfablabbhutan.bt data: ;
+  style-src 'self' 'unsafe-inline';
+  base-uri 'self';
+  form-action 'self';
+  media-src 'self' superfablabbhutan.bt;
+  font-src 'self' fonts.gstatic.com;
+`;
+
 const securityHeaders = [
-  // {
-  //   key: 'Content-Security-Policy',
-  //   value: ContentSecurityPolicy.replace(/\s{2,}/g, ' ').trim()
-  // },
+  {
+    key: "Content-Security-Policy",
+    value: ContentSecurityPolicy.replace(/\s{2,}/g, " ").trim(),
+  },
   {
     key: "X-DNS-Prefetch-Control",
     value: "on",

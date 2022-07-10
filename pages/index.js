@@ -202,7 +202,7 @@ export default function Home({ isLoggedIn, users, Programs, Machines, News }) {
         />
         <link rel="icon" href="/assets/img/logo.png" />
         <meta
-          httpeuiv="Content-Type"
+          httpEquiv="Content-Type"
           content="text/html; charset= ISO-8859-1"
         ></meta>
         <meta name="robots" content="all" />
