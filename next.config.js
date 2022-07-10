@@ -2,30 +2,25 @@
 
 // const ContentSecurityPolicy = `
 //   default-src 'self';
-//   script-src 'self';
-//   child-src 'none';
-//   style-src 'self';
-//   img-src 'self' superfablabbhutan.bt;
-//   font-src 'self' fonts.gstatic.com;
+//   script-src 'self' 'unsafe-eval';
+//   connect-src 'self' https://superfablabbhutan.bt;
+//   img-src 'self' https://superfablabbhutan.bt data:;
+//   style-src 'self' 'unsafe-inline';
+//   base-uri 'self';
+//   form-action 'self';
+//   media-src 'self' superfablabbhutan.bt www.youtube.com;
+//   font-src 'self' fonts.gstatic.com fonts.googleapis.com;
+//   frame-src 'self' superfablabbhutan.bt www.youtube.com;
 // `;
 
-const ContentSecurityPolicy = `
-  default-src 'self';
-  script-src 'self' 'unsafe-eval';
-  connect-src 'self' https://superfablabbhutan.bt;
-  img-src 'self' https://superfablabbhutan.bt data:;
-  style-src 'self' 'unsafe-inline';
-  base-uri 'self';
-  form-action 'self';
-  media-src 'self' superfablabbhutan.bt www.youtube.com;
-  font-src 'self' fonts.gstatic.com fonts.googleapis.com;
-  frame-src 'self' superfablabbhutan.bt www.youtube.com;
-`;
-
 const securityHeaders = [
+  // {
+  //   key: "Content-Security-Policy",
+  //   value: ContentSecurityPolicy.replace(/\s{2,}/g, " ").trim(),
+  // },
   {
     key: "Content-Security-Policy",
-    value: ContentSecurityPolicy.replace(/\s{2,}/g, " ").trim(),
+    value: "default-src 'self'; script-src 'self' 'unsafe-eval'; connect-src 'self' https://superfablabbhutan.bt; img-src 'self' https://superfablabbhutan.bt data:; style-src 'self' 'unsafe-inline'; base-uri 'self'; form-action 'self'; media-src 'self' superfablabbhutan.bt www.youtube.com; font-src 'self' fonts.gstatic.com fonts.googleapis.com; frame-src 'self' superfablabbhutan.bt www.youtube.com",
   },
   {
     key: "X-DNS-Prefetch-Control",
