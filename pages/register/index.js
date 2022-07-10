@@ -39,9 +39,9 @@ export default function Register({ isLoggedIn, users }) {
         <link rel="icon" href="/assets/img/logo.png" />
 
         <meta
-          httpEuiv="Content-Type"
+          httpEquiv="Content-Type"
           content="text/html; charset= ISO-8859-1"
-        ></meta>
+        />
       </Head>
       <main>
         <p className="title">Register</p>

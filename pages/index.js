@@ -204,8 +204,8 @@ export default function Home({ isLoggedIn, users, Programs, Machines, News }) {
         <meta
           httpEquiv="Content-Type"
           content="text/html; charset= ISO-8859-1"
-        ></meta>
-        <meta name="robots" content="all" />
+        />
+        {/* <meta name="robots" content="all" /> */}
       </Head>
       <main>
         <div className={styles.video_wrapper}>

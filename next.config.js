@@ -12,13 +12,20 @@
 const ContentSecurityPolicy = `
   default-src 'self';
   script-src 'self' 'unsafe-eval';
-  connect-src 'self';
+  connect-src 'self' https://superfablabbhutan.bt;
   img-src 'self' https://superfablabbhutan.bt data: ;
   style-src 'self' 'unsafe-inline';
   base-uri 'self';
+<<<<<<< HEAD
   form-action 'self';
   media-src 'self' superfablabbhutan.bt youtube.be;
   font-src 'self' fonts.gstatic.com;
+=======
+  form-action 'self' ;
+  media-src 'self' superfablabbhutan.bt www.youtube.com;
+  font-src 'self' fonts.gstatic.com fonts.googleapis.com;
+  frame-src 'self' superfablabbhutan.bt www.youtube.com;
+>>>>>>> 9b385231620b301da15bc054c34328c46b288418
 `;
 
 const securityHeaders = [

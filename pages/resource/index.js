@@ -1,5 +1,9 @@
 import Head from "next/head";
+<<<<<<< HEAD
 import { Card, Col, Row } from "antd";
+=======
+import { Col, Row } from "antd";
+>>>>>>> 9b385231620b301da15bc054c34328c46b288418
 import Link from "next/link";
 import Header from "../../components/header";
 
@@ -39,9 +43,9 @@ export default function Resource({ isLoggedIn, users }) {
         <link rel="icon" href="/assets/img/logo.png" />
 
         <meta
-          httpEuiv="Content-Type"
+          httpEquiv="Content-Type"
           content="text/html; charset= ISO-8859-1"
-        ></meta>
+        />
       </Head>
       <main>
         <p className="title">Resources</p>

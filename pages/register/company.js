@@ -98,9 +98,9 @@ export default function Company({ isLoggedIn, users }) {
         <link rel="icon" href="/assets/img/logo.png" />
 
         <meta
-          httpEuiv="Content-Type"
+          httpEquiv="Content-Type"
           content="text/html; charset= ISO-8859-1"
-        ></meta>
+        />
       </Head>
       <main>
         <p className="title">Company Membership Form</p>

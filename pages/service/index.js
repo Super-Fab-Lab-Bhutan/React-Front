@@ -39,9 +39,9 @@ export default function Service({ isLoggedIn, users }) {
         <link rel="icon" href="/assets/img/logo.png" />
 
         <meta
-          httpEuiv="Content-Type"
+          httpEquiv="Content-Type"
           content="text/html; charset= ISO-8859-1"
-        ></meta>
+        />
       </Head>
       <main>
         <div
@@ -243,9 +243,6 @@ export default function Service({ isLoggedIn, users }) {
             <br />
             READ more about becoming out volunteer/internship programs
           </p>
-          {/* <Link href="/" passHref>
-            <button className="button">Contact Us</button>
-          </Link> */}
         </Card>
         <br />
       </main>

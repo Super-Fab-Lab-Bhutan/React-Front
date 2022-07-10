@@ -8,6 +8,8 @@ import {
   Row,
   Tabs,
   Spin,
+  message,
+  Popconfirm,
 } from "antd";
 import styles from "../../styles/Booking.module.css";
 
@@ -92,7 +94,6 @@ export default function Booking({ initialData, isLoggedIn, users, newdate }) {
           return res.json();
         })
         .then((data) => {
-          console.log(data);
           setData(data);
           setLoading(false);
         });
@@ -123,22 +124,16 @@ export default function Booking({ initialData, isLoggedIn, users, newdate }) {
         },
       });
       const data = await res.json();
-      alert(data.message);
-      GetBookings(); //refresh data
+      message.info({ content: data.message });
     } catch (err) {
       console.log(err);
     }
   }
   // const holidays = [new Date(2022, 4, 3), new Date(2023, 0, 11)];
 
-  const handleClick = (event) => {
+  const handleClick = (time, EquipmentId) => {
     setLoading(true);
-    var data = event.target.dataset.value;
-    var time = data.split(" ")[0];
-    var EquipmentId = data.split(" ")[1];
-    if (confirm(`are you sure you want to book on ${date} from ${time}`)) {
-      sendData(EquipmentId, date, time);
-    }
+    sendData(EquipmentId, date, time);
     setStateChange(Math.random());
   };
 
@@ -175,12 +170,22 @@ export default function Booking({ initialData, isLoggedIn, users, newdate }) {
                         classStyle = styles.unbooked;
                       }
                       return (
-                        <td
+                        <Popconfirm
                           key={j}
-                          className={classStyle}
-                          onClick={handleClick}
-                          data-value={items.time + " " + val.EquipmentId}
-                        ></td>
+                          title={`are you sure you want to book on ${date} from ${items.time}`}
+                          onConfirm={() => {
+                            handleClick(items.time, val.EquipmentId);
+                          }}
+                          okText="Yes"
+                          cancelText="No"
+                        >
+                          <td
+                            key={j}
+                            className={classStyle}
+                            data-value={items.time + " " + val.EquipmentId}
+                          />
+                          {/* `are you sure you want to book on ${date} from ${time}`   */}
+                        </Popconfirm>
                       );
                     })}
                   </tr>
@@ -189,18 +194,34 @@ export default function Booking({ initialData, isLoggedIn, users, newdate }) {
                 return (
                   <tr key={i}>
                     <th>{val.EquipmentName}</th>
-                    <td
-                      colSpan="3"
-                      className={styles.unbooked}
-                      onClick={handleClick}
-                      data-value={"09:30-12:30" + " " + val.EquipmentId}
-                    ></td>
-                    <td
-                      colSpan="5"
-                      className={styles.unbooked}
-                      onClick={handleClick}
-                      data-value={"01:30-06:30" + " " + val.EquipmentId}
-                    ></td>
+                    <Popconfirm
+                      title={`are you sure you want to book on ${date} from 09:30-12:30`}
+                      onConfirm={() => {
+                        handleClick("09:30-12:30", val.EquipmentId);
+                      }}
+                      okText="Yes"
+                      cancelText="No"
+                    >
+                      <td
+                        colSpan="3"
+                        className={styles.unbooked}
+                        data-value={"09:30-12:30" + " " + val.EquipmentId}
+                      />
+                    </Popconfirm>
+                    <Popconfirm
+                      title={`are you sure you want to book on ${date} from 01:30-06:30`}
+                      onConfirm={() => {
+                        handleClick("01:30-06:30", val.EquipmentId);
+                      }}
+                      okText="Yes"
+                      cancelText="No"
+                    >
+                      <td
+                        colSpan="5"
+                        className={styles.unbooked}
+                        data-value={"01:30-06:30" + " " + val.EquipmentId}
+                      />
+                    </Popconfirm>
                   </tr>
                 );
               }
@@ -225,9 +246,9 @@ export default function Booking({ initialData, isLoggedIn, users, newdate }) {
       });
       response = await response.json();
       if (response.value === "true") {
-        alert(response.message);
+        message.success({ content: response.message });
       } else {
-        alert(response.message);
+        message.error({ content: response.message });
       }
     } catch (error) {
       console.log(error);
@@ -314,9 +335,9 @@ export default function Booking({ initialData, isLoggedIn, users, newdate }) {
         <link rel="icon" href="/assets/img/logo.png" />
 
         <meta
-          httpEuiv="Content-Type"
+          httpEquiv="Content-Type"
           content="text/html; charset= ISO-8859-1"
-        ></meta>
+        />
       </Head>
       <main>
         <p className="title">Booking</p>

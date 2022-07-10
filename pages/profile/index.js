@@ -1,4 +1,7 @@
-import { CheckCircleOutlined, ExclamationCircleOutlined } from "@ant-design/icons";
+import {
+  CheckCircleOutlined,
+  ExclamationCircleOutlined,
+} from "@ant-design/icons";
 import { Card, Button, Popconfirm, Table } from "antd";
 import { verify } from "jsonwebtoken";
 import Head from "next/head";
@@ -150,9 +153,9 @@ export default function Profile({ info, users, isLoggedIn }) {
         <link rel="icon" href="/assets/img/logo.png" />
 
         <meta
-          httpEuiv="Content-Type"
+          httpEquiv="Content-Type"
           content="text/html; charset= ISO-8859-1"
-        ></meta>
+        />
       </Head>
       <main>
         <p className="title">User Profile</p>

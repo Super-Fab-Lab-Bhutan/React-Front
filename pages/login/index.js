@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 import Image from "next/image";
 import Link from "next/link";
 import logo from "../../public/assets/img/logo.png";
-import { Card, Input, Form } from "antd";
+import { Card, Input, Form, message } from "antd";
 import Header from "../../components/header";
 
 import { verify } from "jsonwebtoken";
@@ -47,13 +47,13 @@ export default function Login({ isLoggedIn, users }) {
         // console.log(data);
         if (data.status == 200) {
           if (data.role != "admin") {
-            router.replace("/");
+            message.success({ content: data.message });
+            router.replace("/profile");
           } else {
-            // console.log("admin");
             router.replace(server + "/admin");
           }
         } else {
-          alert(data.message);
+          message.error({ content: data.message });
         }
       });
   };
@@ -69,9 +69,9 @@ export default function Login({ isLoggedIn, users }) {
         <link rel="icon" href="/assets/img/logo.png" />
 
         <meta
-          httpEuiv="Content-Type"
+          httpEquiv="Content-Type"
           content="text/html; charset= ISO-8859-1"
-        ></meta>
+        />
       </Head>
       <main
         style={{
