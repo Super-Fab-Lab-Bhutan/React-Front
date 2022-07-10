@@ -1,9 +1,6 @@
 import Head from "next/head";
-<<<<<<< HEAD
 import { Card, Col, Row } from "antd";
-=======
-import { Col, Row } from "antd";
->>>>>>> 9b385231620b301da15bc054c34328c46b288418
+
 import Link from "next/link";
 import Header from "../../components/header";
 

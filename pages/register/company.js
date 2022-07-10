@@ -1,5 +1,5 @@
 import { useState, createRef } from "react";
-import { Card, Col, Form, Input, Row, Select } from "antd";
+import { Card, Col, Form, Input, Row } from "antd";
 import ReCAPTCHA from "react-google-recaptcha";
 
 import Header from "../../components/header";

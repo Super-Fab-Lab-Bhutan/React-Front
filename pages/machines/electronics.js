@@ -1,4 +1,4 @@
-import { Card, Space, Modal, Row, Col } from "antd";
+import { Card, Modal, Row, Col } from "antd";
 import Image from "next/image";
 import parse from "html-react-parser";
 import { useState } from "react";

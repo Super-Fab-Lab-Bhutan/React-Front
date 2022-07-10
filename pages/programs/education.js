@@ -1,7 +1,7 @@
 import { useState } from "react";
 import parse from "html-react-parser";
 import Image from "next/image";
-import { Modal, Space, Card, Row, Col } from "antd";
+import { Modal, Space, Card } from "antd";
 import { verify } from "jsonwebtoken";
 import Header from "../../components/header";
 import Head from "next/head";
