@@ -110,9 +110,9 @@ export default function FrontBooking({ Machines, isLoggedIn, users }) {
         <link rel="icon" href="/assets/img/logo.png" />
 
         <meta
-          httpEuiv="Content-Type"
+          httpEquiv="Content-Type"
           content="text/html; charset= ISO-8859-1"
-        ></meta>
+        />
       </Head>
       <main style={{ padding: "20px" }}>
         <p className="title">Booking</p>
@@ -184,7 +184,9 @@ export default function FrontBooking({ Machines, isLoggedIn, users }) {
         </Row>
         <br />
         <center>
-          <button className="button">Book your Induction</button>
+          <Link href="/booking" passHref>
+            <button className="button">Book your Induction</button>
+          </Link>
         </center>
         <br />
 

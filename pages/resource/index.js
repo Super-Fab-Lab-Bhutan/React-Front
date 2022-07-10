@@ -1,10 +1,10 @@
-import { Card, Col, Row } from "antd";
+import Head from "next/head";
+import { Col, Row } from "antd";
 import Link from "next/link";
 import Header from "../../components/header";
 
 import { verify } from "jsonwebtoken";
 import Image from "next/image";
-import Head from "next/head";
 const secreteKEY = process.env.JWT_KEY;
 export async function getServerSideProps({ req }) {
   // check for login
@@ -39,9 +39,9 @@ export default function Resource({ isLoggedIn, users }) {
         <link rel="icon" href="/assets/img/logo.png" />
 
         <meta
-          httpEuiv="Content-Type"
+          httpEquiv="Content-Type"
           content="text/html; charset= ISO-8859-1"
-        ></meta>
+        />
       </Head>
       <main>
         <p className="title">Resources</p>
