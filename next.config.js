@@ -13,32 +13,6 @@
 //   frame-src 'self' superfablabbhutan.bt www.youtube.com;
 // `;
 
-<<<<<<< HEAD
-const ContentSecurityPolicy = `
-  default-src 'self';
-  script-src 'self' 'unsafe-eval';
-  connect-src 'self' https://superfablabbhutan.bt;
-  img-src 'self' https://superfablabbhutan.bt data:;
-  style-src 'self' 'unsafe-inline';
-  base-uri 'self';
-<<<<<<< HEAD
-<<<<<<< HEAD
-  form-action 'self';
-  media-src 'self' superfablabbhutan.bt youtube.be;
-  font-src 'self' fonts.gstatic.com;
-=======
-  form-action 'self' ;
-=======
-  form-action 'self';
->>>>>>> 155fec9ed73d746a4a0ef5de369865c4e1c220ac
-  media-src 'self' superfablabbhutan.bt www.youtube.com;
-  font-src 'self' fonts.gstatic.com fonts.googleapis.com;
-  frame-src 'self' superfablabbhutan.bt www.youtube.com;
->>>>>>> 9b385231620b301da15bc054c34328c46b288418
-`;
-
-=======
->>>>>>> c69c43b2ee6eaedb36b5450fa6955e75038cb731
 const securityHeaders = [
   // {
   //   key: "Content-Security-Policy",
@@ -77,7 +51,6 @@ const securityHeaders = [
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    domains: ["th.bing.com", "superfablabbhutan.bt"],
     domains: [
       "th.bing.com",
       "202.144.132.98",
