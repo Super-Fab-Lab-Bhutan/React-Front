@@ -1,4 +1,10 @@
 User-agent: *
 Allow: /*
+<<<<<<< HEAD
 Disallow: /api/* 
 Sitemap: https://jnwbhutansuperfablab.bt/api/sitemap
+=======
+Disallow: /api/*
+
+Sitemap: https://jnwbhutansuperfablab.bt/api/sitemap
+>>>>>>> 297b37bff74ced9a15fb7e5456f13781ffd4134c

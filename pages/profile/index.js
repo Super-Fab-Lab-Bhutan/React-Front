@@ -2,7 +2,7 @@ import {
   CheckCircleOutlined,
   ExclamationCircleOutlined,
 } from "@ant-design/icons";
-import { Card, Button, Popconfirm, Table } from "antd";
+import { Card, Button, Popconfirm, Table, message } from "antd";
 import { verify } from "jsonwebtoken";
 import Head from "next/head";
 import { useEffect, useState } from "react";
@@ -82,10 +82,10 @@ export default function Profile({ info, users, isLoggedIn }) {
       })
       .then((data) => {
         if (data) {
-          alert("Cancel booking successful");
+          message.success("Cancel booking successful");
           setStateChange(Math.random());
         } else {
-          alert("Error could not delete booking");
+          message.error("Error could not delete booking");
         }
       });
   };
