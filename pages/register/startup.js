@@ -1,5 +1,5 @@
 import { useState, createRef } from "react";
-import { Card, Col, Form, Input, Row } from "antd";
+import { Card, Col, Form, Input, Row, message } from "antd";
 import ReCAPTCHA from "react-google-recaptcha";
 
 import Header from "../../components/header";
@@ -53,7 +53,7 @@ export default function Startup({ isLoggedIn, users }) {
       // Execute the reCAPTCHA when the form is submitted
       recaptchaRef.current.execute();
     } else {
-      alert("Confirmation password is Incorrect");
+      message.error("Confirmation password is Incorrect");
     }
   };
 
@@ -80,9 +80,9 @@ export default function Startup({ isLoggedIn, users }) {
     });
     response = await response.json();
     if (response.status === 200) {
-      alert("Successfully registered");
+      message.success("Successfully registered");
     } else {
-      alert(response.message);
+      message.info(response.message);
     }
     recaptchaRef.current.reset();
   };
