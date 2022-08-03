@@ -1,27 +1,28 @@
 /** @type {import('next').NextConfig} */
 
-// const ContentSecurityPolicy = `
-//   default-src 'self';
-//   script-src 'self' 'unsafe-eval';
-//   connect-src 'self' https://superfablabbhutan.bt;
-//   img-src 'self' https://superfablabbhutan.bt data:;
-//   style-src 'self' 'unsafe-inline';
-//   base-uri 'self';
-//   form-action 'self';
-//   media-src 'self' superfablabbhutan.bt www.youtube.com;
-//   font-src 'self' fonts.gstatic.com fonts.googleapis.com;
-//   frame-src 'self' superfablabbhutan.bt www.youtube.com;
-// `;
+const ContentSecurityPolicy = `
+ default-src 'self';
+ script-src 'self' 'unsafe-eval';
+ script-src-elem 'self' https://www.google.com https://www.gstatic.com ;
+ connect-src 'self' ${process.env.SERVER};
+ img-src 'self' ${process.env.SERVER} data:;
+ style-src 'self' 'unsafe-inline';
+ base-uri 'self';
+ form-action 'self';
+ media-src 'self' ${process.env.SERVER} www.youtube.com; 
+ font-src 'self' fonts.gstatic.com fonts.googleapis.com; 
+ frame-src 'self' ${process.env.SERVER} www.youtube.com https://www.google.com https://www.gstatic.com
+ `;
 
 const securityHeaders = [
-  // {
-  //   key: "Content-Security-Policy",
-  //   value: ContentSecurityPolicy.replace(/\s{2,}/g, " ").trim(),
-  // },
   {
     key: "Content-Security-Policy",
-    value: "default-src 'self'; script-src 'self' 'unsafe-eval';script-src-elem 'self' https://www.google.com https://www.gstatic.com ; connect-src 'self' https://superfablabbhutan.bt; img-src 'self' https://superfablabbhutan.bt data:; style-src 'self' 'unsafe-inline'; base-uri 'self'; form-action 'self'; media-src 'self' superfablabbhutan.bt www.youtube.com; font-src 'self' fonts.gstatic.com fonts.googleapis.com; frame-src 'self' superfablabbhutan.bt www.youtube.com https://www.google.com https://www.gstatic.com",
+    value: ContentSecurityPolicy.replace(/\s{2,}/g, " ").trim(),
   },
+  // {
+  //   key: "Content-Security-Policy",
+  //   value: "default-src 'self'; script-src 'self' 'unsafe-eval';script-src-elem 'self' https://www.google.com https://www.gstatic.com ; connect-src 'self' http://localhost:5000 https://superfablabbhutan.bt; img-src 'self' https://superfablabbhutan.bt data:; style-src 'self' 'unsafe-inline'; base-uri 'self'; form-action 'self'; media-src 'self' superfablabbhutan.bt www.youtube.com; font-src 'self' fonts.gstatic.com fonts.googleapis.com; frame-src 'self' superfablabbhutan.bt www.youtube.com https://www.google.com https://www.gstatic.com",
+  // },
   {
     key: "X-DNS-Prefetch-Control",
     value: "on",

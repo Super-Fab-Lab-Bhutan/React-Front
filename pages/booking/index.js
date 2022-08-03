@@ -40,15 +40,7 @@ export async function getServerSideProps({ req }) {
     };
   }
 
-  let DD = new Date();
-  let mm = DD.getMonth() + 1;
-  let monthString = "";
-  if (mm < 10) {
-    monthString = "0" + String(mm);
-  } else {
-    monthString = String(mm);
-  }
-  let newdate = `${DD.getFullYear()}-${monthString}-${DD.getDate()}`;
+  let newdate = new Date().toJSON().substring(0, 10);
   //get initial booking
   let initialData = [];
   try {
@@ -91,6 +83,7 @@ export default function Booking({ initialData, isLoggedIn, users, newdate }) {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
+          userId: users.id,
           date: date,
           role: users.role,
         }),
@@ -128,7 +121,7 @@ export default function Booking({ initialData, isLoggedIn, users, newdate }) {
           "Content-Type": "application/json",
         },
       });
-      const data = await res.json(); 
+      const data = await res.json();
       message.info({ content: data.message });
       GetBookings();
     } catch (err) {
@@ -162,18 +155,19 @@ export default function Booking({ initialData, isLoggedIn, users, newdate }) {
           </thead>
           <tbody>
             {TableData.map((val, i) => {
-              if (val.EquipmentName.search("3d") == -1) {
+              if (!val.EquipmentName.toLowerCase().includes("3d")) {
                 return (
                   <tr key={i}>
                     <th>{val.EquipmentName}</th>
                     {val.Booking.map((items, j) => {
+                      //check for booking and assign style to div
                       let classStyle;
                       if (items.booked == 0) {
-                        classStyle = styles.booked;
+                        classStyle = styles.booked; //booked by other
                       } else if (items.booked == 1) {
-                        classStyle = styles.userbooked;
+                        classStyle = styles.userbooked; //booked by current user
                       } else {
-                        classStyle = styles.unbooked;
+                        classStyle = styles.unbooked; //not booked
                       }
                       return (
                         <Popconfirm
@@ -190,13 +184,31 @@ export default function Booking({ initialData, isLoggedIn, users, newdate }) {
                             className={classStyle}
                             data-value={items.time + " " + val.EquipmentId}
                           />
-                          {/* `are you sure you want to book on ${date} from ${time}`   */}
                         </Popconfirm>
                       );
                     })}
                   </tr>
                 );
               } else {
+                let classStyle1;
+                //check for booking and assign style to div
+                if (val.Booking[0].booked == 0) {
+                  classStyle1 = styles.booked; //booked by other
+                } else if (val.Booking[0].booked == 1) {
+                  classStyle1 = styles.userbooked; //booked by current user
+                } else {
+                  classStyle1 = styles.unbooked; //not booked
+                }
+
+                let classStyle2;
+                if (val.Booking[1].booked == 0) {
+                  classStyle2 = styles.booked;
+                } else if (val.Booking[1].booked == 1) {
+                  classStyle2 = styles.userbooked;
+                } else {
+                  classStyle2 = styles.unbooked;
+                }
+
                 return (
                   <tr key={i}>
                     <th>{val.EquipmentName}</th>
@@ -210,9 +222,11 @@ export default function Booking({ initialData, isLoggedIn, users, newdate }) {
                     >
                       <td
                         colSpan="3"
-                        className={styles.unbooked}
+                        className={classStyle1}
                         data-value={"09:30-12:30" + " " + val.EquipmentId}
-                      />
+                      >
+                        {/* Available - {val.Booking[0].remaining} */}
+                      </td>
                     </Popconfirm>
                     <Popconfirm
                       title={`are you sure you want to book on ${date} from 01:30-06:30`}
@@ -224,9 +238,11 @@ export default function Booking({ initialData, isLoggedIn, users, newdate }) {
                     >
                       <td
                         colSpan="5"
-                        className={styles.unbooked}
+                        className={classStyle2}
                         data-value={"01:30-06:30" + " " + val.EquipmentId}
-                      />
+                      >
+                        {/* Available - {val.Booking[1].remaining} */}
+                      </td>
                     </Popconfirm>
                   </tr>
                 );
@@ -303,8 +319,7 @@ export default function Booking({ initialData, isLoggedIn, users, newdate }) {
               <Link
                 href={
                   server +
-                  "/" +
-                  "uploads/files/1653046420611-SP400-flexx_8027_Operationmanual_EN.pdf"
+                  "/uploads/files/1653046420611-SP400-flexx_8027_Operationmanual_EN.pdf"
                 }
               >
                 Terms and Conditions
@@ -356,7 +371,6 @@ export default function Booking({ initialData, isLoggedIn, users, newdate }) {
                 onChange={(x, val) => {
                   setDate(val);
                   setStateChange(Math.random());
-                  // GetBookings();
                 }}
               />
               <br />

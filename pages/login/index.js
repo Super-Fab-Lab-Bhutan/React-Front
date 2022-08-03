@@ -139,6 +139,9 @@ export default function Login({ isLoggedIn, users }) {
               <Link href="/register">Sign up now</Link>
             </span>
           </div>
+          <div>
+            <Link href="/resetpassword">Forgot Passsword!</Link>
+          </div>
         </Card>
       </main>
     </Header>

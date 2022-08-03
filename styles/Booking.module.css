@@ -45,6 +45,7 @@
   background-size: cover;
   min-width: 70px;
   min-height: 50px;
+  text-align: center;
 }
 
 .userbooked{
@@ -52,6 +53,7 @@
   background-size: cover;
   min-width: 70px;
   min-height: 50px;
+  text-align: center;
 }
 
 .unbooked {
@@ -59,6 +61,7 @@
   background-size: cover;
   min-width: 70px;
   min-height: 50px;
+  text-align: center;
 }
 
 .unbooked:hover {

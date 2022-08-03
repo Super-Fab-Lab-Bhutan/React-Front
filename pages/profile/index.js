@@ -2,7 +2,7 @@ import {
   CheckCircleOutlined,
   ExclamationCircleOutlined,
 } from "@ant-design/icons";
-import { Card, Button, Popconfirm, Table, message } from "antd";
+import { Card, Button, Popconfirm, Table, message, DatePicker } from "antd";
 import { verify } from "jsonwebtoken";
 import Head from "next/head";
 import { useEffect, useState } from "react";
@@ -32,10 +32,12 @@ export async function getServerSideProps({ req }) {
   }
   // fetch data from api
 
+  let newdate = new Date().toJSON().substring(0, 10);
+
   let data = await fetch(server + "/profile", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ userID: users.id }),
+    body: JSON.stringify({ userID: users.id, date: newdate }),
   });
   let info = await data.json();
 
@@ -44,20 +46,22 @@ export async function getServerSideProps({ req }) {
       info,
       users,
       isLoggedIn,
+      newdate,
     }, // will be passed to the page component as props
   };
 }
 
-export default function Profile({ info, users, isLoggedIn }) {
+export default function Profile({ info, users, isLoggedIn, newdate }) {
   const [State, setStateChange] = useState(Math.random());
   const [UserData, setUserData] = useState(info.UserData);
   const [Data, setData] = useState(info.bookings);
+  const [date, setDate] = useState(newdate);
 
   const GetData = async () => {
     let data = await fetch(server + "/profile", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ userID: users.id }),
+      body: JSON.stringify({ userID: users.id, date: date }),
     });
     data = await data.json();
     let bookings = data.bookings;
@@ -206,6 +210,15 @@ export default function Profile({ info, users, isLoggedIn }) {
           </p>
         </Card>
         <p className="title">My Bookings</p>
+        <div style={{ display: "grid", justifyContent: "center" }}>
+          <DatePicker
+            placeholder={date}
+            onChange={(e, val) => {
+              setDate(val);
+              setStateChange(Math.random());
+            }}
+          />
+        </div>
         <div style={{ padding: "25px", overflow: "auto" }}>
           <Table bordered dataSource={Data} columns={columns} />
         </div>
