@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { Card, Carousel, Col, Row } from "antd";
 import Link from "next/link";
-import parse from "html-react-parser";
+import parse, { domToReact } from "html-react-parser";
 
 import Header from "../components/header";
 import { verify } from "jsonwebtoken";
@@ -50,14 +50,14 @@ export async function getServerSideProps({ req }) {
   let heavymachine = await fetch(server + "/machines/heavy-machinary");
   heavymachine = await heavymachine.json();
 
-  let metalwork = await fetch(server + "/machines/metal-works");
-  metalwork = await metalwork.json();
+  let laser = await fetch(server + "/machines/laser");
+  laser = await laser.json();
 
   let Machines = {
     carpentry,
     electronic,
     heavymachine,
-    metalwork,
+    laser,
   };
   // .......
 
@@ -291,7 +291,7 @@ export default function Home({ isLoggedIn, users, Programs, Machines, News }) {
                     the 2nd Super Fab Lab in the world, providing unique digital
                     fabrication tools and services to its community. It
                     currently consists of four different labs - focused on
-                    metalwork, carpentry, electronics production, and industrial
+                    laser, carpentry, electronics production, and industrial
                     graded work. Join us in our journey to learn and create
                     almost anything.
                   </h6>
@@ -358,8 +358,8 @@ export default function Home({ isLoggedIn, users, Programs, Machines, News }) {
             />
             <CarouselCard
               title="Laser Lab"
-              type="metalworks"
-              Data={Machines.metalwork.equipment}
+              type="laser"
+              Data={Machines.laser.equipment}
             />
           </Carousel>
         </div>
@@ -554,8 +554,8 @@ export default function Home({ isLoggedIn, users, Programs, Machines, News }) {
 
         <Card
           style={{
-            backgroundImage: `url(${public_serv + "/" + News.image})`,
-
+            // backgroundImage: `url(${public_serv + "/" + News.image})`,
+            backgroundColor: "grey",
             backgroundSize: "cover",
             opacity: "0.8",
             minHeight: "200px",
@@ -568,7 +568,9 @@ export default function Home({ isLoggedIn, users, Programs, Machines, News }) {
             textAlign: "center",
           }}
         >
-          <b className="title">{News.title}</b>
+          <b className="title" style={{ color: "blue" }}>
+            {News.title}
+          </b>
           <p>{parse(`${News.description.slice(0, 200)}...`)}</p>
           <Link href="/news" passHref>
             <button className="button">Update More</button>

@@ -70,7 +70,7 @@ export async function getServerSideProps({ req }) {
 const { TabPane } = Tabs;
 
 export default function Booking({ initialData, isLoggedIn, users, newdate }) {
-  const equipmentTypeOptions = ["Carpentry", "Electronic", "Heavy", "Metal"];
+  const equipmentTypeOptions = ["Carpentry", "Electronic", "Laser", "Metal"];
 
   const [Data, setData] = useState(initialData);
   const [date, setDate] = useState(newdate);
